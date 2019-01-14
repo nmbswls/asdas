@@ -1,0 +1,447 @@
+fileFormatVersion: 2
+guid: 2bdcf1a0816294bf08d8b2b599cfb5ba
+timeCreated: 1546971186
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: EmitNumbers_atlas1_0
+    21300002: EmitNumbers_atlas1_1
+    21300004: EmitNumbers_atlas1_2
+    21300006: EmitNumbers_atlas1_3
+    21300008: EmitNumbers_atlas1_4
+    21300010: EmitNumbers_atlas1_5
+    21300012: EmitNumbers_atlas1_6
+    21300014: EmitNumbers_atlas1_7
+    21300016: EmitNumbers_atlas1_8
+    21300018: EmitNumbers_atlas1_9
+    21300020: EmitNumbers_atlas1_10
+    21300022: EmitNumbers_atlas1_11
+    21300024: EmitNumbers_atlas1_12
+    21300026: EmitNumbers_atlas1_13
+    21300028: EmitNumbers_atlas1_14
+    21300030: EmitNumbers_atlas1_15
+    21300032: EmitNumbers_atlas1_16
+    21300034: EmitNumbers_atlas1_17
+    21300036: EmitNumbers_atlas1_18
+    21300038: EmitNumbers_atlas1_19
+    21300040: EmitNumbers_atlas1_20
+    21300042: EmitNumbers_atlas1_21
+    21300044: EmitNumbers_atlas1_22
+    21300046: EmitNumbers_atlas1_23
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 172
+        width: 76
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 184
+        width: 68
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_2
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 223
+        width: 17
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_3
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 223
+        width: 25
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_4
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 223
+        width: 23
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_5
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 186
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_6
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 186
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_7
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 186
+        width: 23
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_8
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 150
+        width: 20
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_9
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 138
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_10
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 138
+        width: 17
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_11
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 138
+        width: 26
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_12
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 149
+        width: 25
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_13
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 148
+        width: 24
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_14
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 148
+        width: 24
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_15
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 101
+        width: 23
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_16
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 100
+        width: 23
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_17
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 113
+        width: 20
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_18
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 101
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_19
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 112
+        width: 23
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_20
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 112
+        width: 23
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_21
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 112
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_22
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 112
+        width: 23
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmitNumbers_atlas1_23
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 75
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

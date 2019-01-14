@@ -1,0 +1,7 @@
+{
+	"atkType": 2,
+	"damage": 10000,
+	"atkInteval": 1000,
+	"atkRange": 1500,
+	"atkPreanimTime": 200
+}
