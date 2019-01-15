@@ -38,11 +38,11 @@ public class EnemyController : IUnitController
 
 	void Update ()
 	{
-		flocking ();
 		avoidCol ();
 	}
 
 	void FixedUpdate(){
+		flocking ();
 		physicsComponent.doMove = false;
 		if (!hasPath) {
 			return;
@@ -56,12 +56,16 @@ public class EnemyController : IUnitController
 
 		Vector2 dd = (targetPos - this.transform.position);
 
+
+
 		if (dd.magnitude < 0.1f) {
 			pathIdx++;
 		}
+
+//		rBody.velocity += pCtrl.offsetV;
 		//physicsComponent.moveToTarget ();
 		physicsComponent.doMove = true;
-		physicsComponent.moveToTarget = new Vector2(this.transform.position.x,this.transform.position.y) + dd.normalized * 3 * Time.fixedDeltaTime;
+		physicsComponent.moveToTarget = new Vector2(this.transform.position.x,this.transform.position.y) + dd.normalized * 3 * Time.fixedDeltaTime + offsetV *  Time.fixedDeltaTime;
 	}
 
 

@@ -15,8 +15,6 @@ public class PathSeekBehaviour : MonoBehaviour
 	public GameLife target;
 
 
-	int maxI = 30;
-	int maxJ = 30;
 
 	public List<Vector3> pathPos = new List<Vector3>();
 
@@ -88,10 +86,10 @@ public class PathSeekBehaviour : MonoBehaviour
 
 	void Start ()
 	{
-		map = new SearchMapNode[maxI][];
-		for (int i = 0; i < maxI; i++) {
-			map [i] = new SearchMapNode[maxJ];
-			for (int j = 0; j < maxJ; j++) {
+		map = new SearchMapNode[MapManager.MAP_HEIGHT][];
+		for (int i = 0; i < MapManager.MAP_HEIGHT; i++) {
+			map [i] = new SearchMapNode[MapManager.MAP_WIDTH];
+			for (int j = 0; j < MapManager.MAP_WIDTH; j++) {
 				map [i] [j] = new SearchMapNode (i,j,!MapManager.getInstance().staticBlocks[i][j]);
 			}
 		}
@@ -123,8 +121,8 @@ public class PathSeekBehaviour : MonoBehaviour
 			tryCount++;
 			int startY = node.row - 1 > 0 ? node.row - 1  : 0;
 			int startX = node.col - 1 > 0 ? node.col - 1  : 0;
-			int endX = node.col + 1 <= maxJ-1 ? node.col + 1 : maxJ-1;
-			int endY = node.row + 1 <= maxI-1 ? node.row + 1 : maxI-1;
+			int endX = node.col + 1 <= MapManager.MAP_WIDTH-1 ? node.col + 1 : MapManager.MAP_WIDTH-1;
+			int endY = node.row + 1 <= MapManager.MAP_HEIGHT-1 ? node.row + 1 : MapManager.MAP_HEIGHT-1;
 			for (int i = startY; i <= endY; i++) {
 				for (int j = startX; j <= endX; j++) {
 					//
@@ -209,7 +207,7 @@ public class PathSeekBehaviour : MonoBehaviour
 		int startIntX = (int)Mathf.Ceil (start.x);
 		float k = (start.y - end.y) / (start.x - end.x);
 		float nowY = (startIntX - start.x) * k + start.y;
-		float lastY = -1;
+		float lastY = nowY;
 
 		int xInt = startIntX;
 
@@ -220,7 +218,7 @@ public class PathSeekBehaviour : MonoBehaviour
 			}
 		}
 			
-		while(xInt < end.x){
+		while(xInt < (int)end.x){
 			xInt++;
 			lastY = nowY;
 			nowY += 1 * k;
@@ -244,7 +242,7 @@ public class PathSeekBehaviour : MonoBehaviour
 			yt = tmp;
 		}
 		for (int i = (int)yf; i <= (int)yt; i++) {
-			if (MapManager.getInstance ().staticBlocks [x] [i]) {
+			if (MapManager.getInstance ().staticBlocks [i] [x]) {
 				return true;
 			}
 		}

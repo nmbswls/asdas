@@ -162,12 +162,14 @@ public class GameLife : MonoBehaviour
 	void FixedUpdate(){
 		//rBody.position += deltaPos;
 		//rBody.position += new Vector3(thrustVec.x * Time.fixedDeltaTime,thrustVec.y * ,0);
+
+
 		if (knockLast > 0) {
 			rBody.velocity = new Vector3 (thrustVec.x, thrustVec.y, 0);
 		} else {
 			rBody.velocity = new Vector3 (vReal.x, vReal.y, 0);
 			if (!isPlayer) {
-				rBody.velocity += pCtrl.offsetV;
+				//rBody.velocity += pCtrl.offsetV;
 			}
 		}
 
