@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1782413323151436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.13, y: -1.96, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 4625472684363760}
@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1570186818908548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.750588, y: -3.4622984, z: 0}
+  m_LocalPosition: {x: 18.11, y: -7.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109114019417104}
@@ -125,10 +125,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf2f7c5b0ae34ddc86911d5b9ee3811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  posXInt: 0
+  posYInt: 0
+  height: 0
+  shadow: {fileID: 0}
+  actualObj: {fileID: 0}
   initialized: 0
   atkType: 2
   damage: 0
-  atkInterval: 0
+  atkInterval: 800
   atkRange: 1500
   atkPreanimTime: 300
   posInCell: {x: 0, y: 0, z: 0}

@@ -71,7 +71,7 @@ public class PathTest : MonoBehaviour
 	public int nowIndex = 0;
 
 	void setTarget(){
-		target = GameManager.getInstance ().player;
+		target = BattleManager.getInstance ().player;
 //		target.followers.Add (this);
 	}
 	void OnEnable(){
