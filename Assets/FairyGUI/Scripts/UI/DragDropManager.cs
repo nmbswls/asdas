@@ -25,6 +25,7 @@ namespace FairyGUI
 			}
 		}
 
+
 		public DragDropManager()
 		{
 			_agent = (GLoader)UIObjectFactory.NewObject(ObjectType.Loader);

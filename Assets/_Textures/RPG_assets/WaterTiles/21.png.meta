@@ -3,7 +3,23 @@ guid: f260fabfbd8a2463282ef318e8352d22
 timeCreated: 1546910516
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: 21_0
+    21300002: 21_1
+    21300004: 21_2
+    21300006: 21_3
+    21300008: 21_4
+    21300010: 21_5
+    21300012: 21_6
+    21300014: 21_7
+    21300016: 21_8
+    21300018: 21_9
+    21300020: 21_10
+    21300022: 21_11
+    21300024: 21_12
+    21300026: 21_13
+    21300028: 21_14
+    21300030: 21_15
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -40,13 +56,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 150
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -78,7 +94,21 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: 21_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 
