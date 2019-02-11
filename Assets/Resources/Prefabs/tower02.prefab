@@ -125,8 +125,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf2f7c5b0ae34ddc86911d5b9ee3811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  posXInt: 0
+  posYInt: 0
+  height: 0
+  shadow: {fileID: 0}
+  actualObj: {fileID: 0}
   initialized: 0
   atkType: 1
+  property: -1
   damage: 20000
   atkInterval: 500
   atkRange: 5000
