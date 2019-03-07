@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4625472684363760}
   - component: {fileID: 114772908384853316}
   - component: {fileID: 61286090751960180}
+  - component: {fileID: 114853503166119452}
   m_Layer: 0
   m_Name: tower02
   m_TagString: Untagged
@@ -128,6 +129,7 @@ MonoBehaviour:
   posXInt: 0
   posYInt: 0
   height: 0
+  isHighLight: 0
   shadow: {fileID: 0}
   actualObj: {fileID: 0}
   initialized: 0
@@ -137,12 +139,29 @@ MonoBehaviour:
   atkInterval: 500
   atkRange: 5000
   atkPreanimTime: 300
+  castPreTime: 800
+  castTimeDuration: 1500
+  skillEffect: 0
   posInCell: {x: 0, y: 0, z: 0}
+  buffManager: {fileID: 0}
   hateTarget: {fileID: 0}
   bulletPrefab: {fileID: 1797645343894190, guid: 835dd9499217544e48fb29f0515d5b98,
     type: 2}
   coolDown: 2000
   atkTimer: 0
+--- !u!114 &114853503166119452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1570186818908548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9652919eafb7246a4a61ba2c3af98bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bindTarget: {fileID: 0}
+  withUI: 0
 --- !u!212 &212094129812664376
 SpriteRenderer:
   m_ObjectHideFlags: 1
