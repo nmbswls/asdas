@@ -1,0 +1,35 @@
+{
+	"1001": {
+		"skillId": 1001,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isPassive": false,
+		"isPermanent": false,
+		"checkPoint": 0,
+		"x": [1, 0, 0],
+		"y": [1, 0, 0],
+		"z": [1, 0, 0]
+	},
+	"1002": {
+		"skillId": 1002,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isPassive": true,
+		"isPermanent": false,
+		"checkPoint": 0,
+		"x": [1, 0, 0],
+		"y": [1, 0, 0],
+		"z": [1, 0, 0]
+	},
+	"1003": {
+		"skillId": 1003,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isPassive": true,
+		"isPermanent": true,
+		"checkPoint": 0,
+		"x": [10, 0, 0],
+		"y": [10, 0, 0],
+		"z": [10, 0, 0]
+	}
+}

@@ -1,0 +1,65 @@
+{
+	"t01": {
+		"tid": "t01",
+		"tname": "雷峰塔",
+		"tdesp": "一组雷峰塔",
+		"atkType": 0,
+		"damage": 10000,
+		"mingzhong":2,
+		"atkInteval": 2000,
+		"atkRange": 3000,
+		"atkPreanimTime": 500,
+		"skills": [{
+			"skillId": 1001,
+			"skillLevel": 1
+		},{
+			"skillId": 1002,
+			"skillLevel": 1
+		},{
+			"skillId": 1003,
+			"skillLevel": 1
+		}]
+	},
+	"t02": {
+		"tid": "t02",
+		"tname": "阿萨德塔",
+		"tdesp": "一组阿萨德塔",
+		"atkType": 1,
+		"damage": 10000,
+		"mingzhong":5,
+		"atkInteval": 2000,
+		"atkRange": 3000,
+		"atkPreanimTime": 500,
+		"skills": [{
+			"skillId": 1002,
+			"skillLevel": 1
+		}]
+	},
+	"t03": {
+		"tid": "t03",
+		"tname": "虎丘塔",
+		"tdesp": "一组虎丘塔",
+		"atkType": 2,
+		"damage": 10000,
+		"mingzhong":3,
+		"atkInteval": 2000,
+		"atkRange": 3000,
+		"atkPreanimTime": 500,
+		"skills": [{
+			"skillId": 1003,
+			"skillLevel": 1
+		}]
+	},
+	"default": {
+		"tid": "default",
+		"tname": "默认塔",
+		"tdesp": "一组默认塔",
+		"atkType": 2,
+		"damage": 10000,
+		"mingzhong":10,
+		"atkInteval": 2000,
+		"atkRange": 3000,
+		"atkPreanimTime": 500,
+		"skills": []
+	}
+}

@@ -1,0 +1,52 @@
+{
+	"01": {
+		"memoId": "01",
+		"desp": "雷峰塔",
+		"fixedX":100,
+		"fixedY":100,
+		"memoType":0
+	},
+	"02": {
+		"memoId": "02",
+		"desp": "ssssshasdajoidjaslfasfasd",
+		"fixedX":140,
+		"fixedY":160,
+		"memoType":0
+	},
+	"03": {
+		"memoId": "03",
+		"desp": "虎丘塔",
+		"fixedX":200,
+		"fixedY":10,
+		"memoType":0
+	},
+	"16": {
+		"memoId": "16",
+		"desp": "combination 1",
+		"fixedX":200,
+		"fixedY":10,
+		"memoType":0
+	},
+	"17": {
+		"memoId": "17",
+		"desp": "combination 2",
+		"fixedX":200,
+		"fixedY":10,
+		"memoType":0
+	},
+	"18": {
+		"memoId": "18",
+		"desp": "combination 333",
+		"fixedX":200,
+		"fixedY":10,
+		"memoType":0
+	},
+	
+	"default": {
+		"memoId": "default",
+		"desp": "empty",
+		"fixedX":0,
+		"fixedY":0,
+		"memoType":0
+	}
+}

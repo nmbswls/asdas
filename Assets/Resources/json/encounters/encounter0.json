@@ -1,0 +1,88 @@
+{
+	"100": {
+		"eId": 100,
+		"type": 1,
+		"stages": {
+			"0": {
+				"sId": 0,
+				"desp": "开始了",
+				"converts": [{
+					"nextStageIdx": 1,
+					"choiceDesp": "选项1"
+				}, {
+					"nextStageIdx": 2,
+					"choiceDesp": "选项1"
+				}]
+			},
+			"1": {
+				"sId": 1,
+				"desp": "开始了1234",
+				"converts": [{
+					"nextStageIdx": 10,
+					"choiceDesp": "fight!"
+				}]
+			},
+			"2": {
+				"sId": 2,
+				"desp": "开始了????",
+				"isFinishStage": true,
+				"res": {
+					"type": 0,
+					"reward": 200
+				},
+				"converts": []
+			},
+			"10": {
+				"sId": 10,
+				"isBattleStage": true,
+				"converts": [{
+					"nextStageIdx": 11,
+					"choiceDesp": "ying le"
+				}, {
+					"nextStageIdx": 12,
+					"choiceDesp": "shule le"
+				}]
+			},
+			"11": {
+				"sId": 11,
+				"converts": [{
+					"nextStageIdx": 13,
+					"choiceDesp": "ying le"
+				}]
+			},
+			"12": {
+				"sId": 12,
+				"converts": [{
+					"nextStageIdx": 14,
+					"choiceDesp": "shu le"
+				}]
+			},
+			"13": {
+				"sId": 13,
+				"isFinishStage": true,
+				"res": {
+					"type": 1,
+					"reward": 200
+				},
+				"converts": []
+			},
+			"14": {
+				"sId": 14,
+				"isFinishStage": true,
+				"res": {
+					"type": 0,
+					"reward": 200
+				},
+				"converts": []
+			}
+		}
+	},
+	"200": {
+		"eId": 200,
+		"type": 1
+	},
+	"230": {
+		"eId": 230,
+		"type": 1
+	}
+}

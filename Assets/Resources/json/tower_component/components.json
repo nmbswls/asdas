@@ -1,0 +1,41 @@
+[{
+		"cid": "0",
+		"cname": 10000,
+		"cdesp": 2000,
+		"effects": [{
+			"type": 1,
+			"bonus": 5,
+			"extra": ""
+		}]
+	},
+	{
+		"cid": "1",
+		"cname": 10000,
+		"cdesp": 2000,
+		"effects": [{
+			"type": 2,
+			"bonus": 15,
+			"extra": ""
+		}]
+	},
+	{
+		"cid": "2",
+		"cname": 10000,
+		"cdesp": 2000,
+		"effects": [{
+			"type": 3,
+			"bonus": 25,
+			"extra": ""
+		}]
+	},
+	{
+		"cid": "default",
+		"cname": 10000,
+		"cdesp": 2000,
+		"effects": [{
+			"type": 0,
+			"bonus": 25,
+			"extra": ""
+		}]
+	}
+]

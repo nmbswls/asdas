@@ -1,0 +1,37 @@
+[{
+		"toCombine": ["01","02","03","04"],
+		"resId": "11"
+	},
+	{
+		"toCombine": ["05","01","03","04"],
+		"resId": "12"
+	},
+	{
+		"toCombine": ["05","06"],
+		"resId": "13"
+	},
+	{
+		"toCombine": ["01","02"],
+		"resId": "14"
+	},
+	{
+		"toCombine": ["01","02","03"],
+		"resId": "15"
+	},
+	{
+		"toCombine": ["01","02"],
+		"resId": "16"
+	},
+	{
+		"toCombine": ["02","03"],
+		"resId": "18"
+	},
+	{
+		"toCombine": ["15"],
+		"resId": "15"
+	},
+	{
+		"toCombine": ["18"],
+		"resId": "15"
+	}
+]
