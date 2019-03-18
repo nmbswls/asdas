@@ -328,7 +328,8 @@ public class GameManager : Singleton<GameManager> {
 		shopPanel.Show ();
 	}
 
-	public void showDetailAmplifier(){
+	public void showDetailAmplifier(string content){
+		itemDetailAmplifier.setInfo (content);
 		itemDetailAmplifier.Show ();
 	}
 }

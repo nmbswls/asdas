@@ -13,7 +13,7 @@ public class ItemWithDetail : GComponent
 		base.ConstructFromXML (xml);
 		this.onTouchBegin.Add (delegate() {
 			Debug.Log("click");
-			GameManager.getInstance().showDetailAmplifier();
+			GameManager.getInstance().showDetailAmplifier("sassass");
 		});
 	}
 }

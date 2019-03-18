@@ -145,29 +145,29 @@ public class PlayerController : IUnitController {
 	}
 
 	void checkMoveInput(){
-//		float degree = BattleManager.getInstance ().mainUIManager.degree;
-//		float offset = BattleManager.getInstance ().mainUIManager.offset;
-//
-//		if (offset < offsetMin) {
-//			DTargetH = 0;
-//			DTargetV = 0;
-//			return;
-//		}
-//
-//		if (degree < 45 && degree >= -45) {
-//			DTargetH = 1;
-//			DTargetV = 0;
-//		} else if (degree < 135 && degree >= 45) {
-//			DTargetH = 0;
-//			DTargetV = -1;
-//		} else if (degree < -45 && degree >= -135) {
-//			DTargetH = 0;
-//			DTargetV = 1;
-//		} else {
-//			DTargetH = -1;
-//			DTargetV = 0;
-//		}
-//		return;
+		float degree = BattleManager.getInstance ().mainUIManager.degree;
+		float offset = BattleManager.getInstance ().mainUIManager.offset;
+
+		if (offset < offsetMin) {
+			DTargetH = 0;
+			DTargetV = 0;
+			return;
+		}
+
+		if (degree < 45 && degree >= -45) {
+			DTargetH = 1;
+			DTargetV = 0;
+		} else if (degree < 135 && degree >= 45) {
+			DTargetH = 0;
+			DTargetV = -1;
+		} else if (degree < -45 && degree >= -135) {
+			DTargetH = 0;
+			DTargetV = 1;
+		} else {
+			DTargetH = -1;
+			DTargetV = 0;
+		}
+		return;
 		bool optUpdate = false;
 		for (int i = 0; i < 4; i++) {
 			if (Input.GetKeyDown (keys [i])) {
