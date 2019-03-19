@@ -90,6 +90,19 @@ public class TowerComponentInList{
 public class Potion{
 	public string pname;
 }
+
+public class Scar{
+	public string scarName;
+	public int type;
+	public int v;
+	public Scar(){
+	}
+
+	public Scar(string scarName){
+		this.scarName = scarName;
+	}
+}
+
 public class PlayerData
 {
 
@@ -128,6 +141,8 @@ public class PlayerData
 	public int level = 15;
 
 	public List<Potion> potions = new List<Potion>();
+	public List<Scar> scars = new List<Scar>();
+
 	public List<int> heroSkills = new List<int>();
 
 	public List<TowerTemplate> ownedTowers = new List<TowerTemplate>();
@@ -149,6 +164,7 @@ public class PlayerData
 		initTowers ();
 		initBag ();
 		intPotions ();
+		initScar ();
 		initMemoState ();
 	}
 
@@ -246,6 +262,12 @@ public class PlayerData
 		}
 	}
 
+	void initScar(){
+		for (int i = 0; i < 3; i++) {
+			scars.Add(new Scar("受伤"));
+		}
+	}
+
 	public void gainComponent(string componentId){
 		TowerComponent tc = null;
 		if (GameStaticData.getInstance ().componentStaticInfo.TryGetValue (componentId, out tc)) {
@@ -271,6 +293,10 @@ public class PlayerData
 			if(kv.Key!="default"&&int.Parse(kv.Key)<10)
 				memoState [kv.Key] = 1;
 		}
+	}
+
+	public void removeScar(Scar toRemove){
+		scars.Remove (toRemove);
 	}
 }
 

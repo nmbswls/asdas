@@ -12,6 +12,10 @@ public class RolePanel : GComponent
 		l0 = this.GetChild ("n21").asList;
 		l1 = this.GetChild ("n24").asList;
 
+		foreach (Scar scar in PlayerData.getInstance().scars) {
+			ItemWithDetail item = (ItemWithDetail)l1.AddItemFromPool ();
+			item.setDesp (scar.scarName);
+		}
 
 	}
 }
