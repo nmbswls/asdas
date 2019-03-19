@@ -61,8 +61,8 @@ public class FieldClickManager : MonoBehaviour
 		if (Input.GetMouseButtonDown(0)||(Input.touchCount >0 && Input.GetTouch(0).phase == TouchPhase.Began))
 		{
 			#if IPHONE || ANDROID
-//			if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-			if (Stage.isTouchOnUI)
+			//if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+			if (Stage.isTouchOnUI){
 			#else
 			if (Stage.isTouchOnUI) {
 				//Debug.Log(Stage.inst.touchTarget.gameObject.name);	
