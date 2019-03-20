@@ -99,6 +99,7 @@ public class PhysicsComponent : MonoBehaviour
 		//2D AABB 专用碰撞算法
 		if( IsCollidingAABB( vCheckedPos ))
 		{
+			if(!canSlide)return  transform.position;
 			//m_speed = 0f;
 			vCheckedPos.y = transform.position.y;
 			if( !IsCollidingAABB( vCheckedPos ) )
