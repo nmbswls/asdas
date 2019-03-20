@@ -11,8 +11,9 @@ public class MonsterFactory
 		GameObject o = GameObject.Instantiate (prefab,target);
 
 		GameObject viewPrefab = Resources.Load ("Prefabs/enemy/"+name) as GameObject;
-
-
+		if (viewPrefab == null) {
+			viewPrefab = Resources.Load ("Prefabs/enemy/default") as GameObject;
+		}
 		o.GetComponentInChildren<SpriteRenderer> ().sprite = viewPrefab.GetComponent<SpriteRenderer>().sprite;
 		o.GetComponentInChildren<SpriteRenderer> ().color = viewPrefab.GetComponent<SpriteRenderer> ().color;
 
