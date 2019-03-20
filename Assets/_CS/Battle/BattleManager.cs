@@ -30,6 +30,8 @@ public class BattleManager : Singleton<BattleManager> {
 
 	public Potion[] potionInBattle = new Potion[3];
 
+	public int battleTime = 0;
+
 	public int killLeft = 10;
 	int hp;
 	public int maxHP;
@@ -243,6 +245,12 @@ public class BattleManager : Singleton<BattleManager> {
 
 
 	void Update(){
+
+		int timeInt = (int)(Time.deltaTime * 1000f);
+		battleTime += timeInt;
+		foreach (EnemySpawner spawner in enemySpawners) {
+			spawner.Tick (timeInt,battleTime);
+		}
 		if (Input.GetKeyDown ("z")) {
 			showBattleFinish (true);
 		}
@@ -252,7 +260,6 @@ public class BattleManager : Singleton<BattleManager> {
 		if (Input.GetKeyDown ("c")) {
 			dropManager.createDrops (new List<int>(),player.transform.position+Vector3.right*3f);
 		}
-		int timeInt = (int)(Time.deltaTime * 1000f);
 
 		playerSkillManager.Tick (timeInt);
 		dropManager.Tick (timeInt);

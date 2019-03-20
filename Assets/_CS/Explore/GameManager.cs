@@ -309,6 +309,7 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 	public void showAddMonsterEffect(Vector2 toPosInGlobal,MonsterCardComponent item){
+		GRoot.inst.touchable = false;
 		MonsterCardComponent copyView = (MonsterCardComponent)UIPackage.CreateObject ("UIMain", "MonsterCard").asCom;
 		//GTextField copyView = new GTextField();
 		copyView.setInfo(item.info);
@@ -330,6 +331,7 @@ public class GameManager : Singleton<GameManager> {
 
 				//monsterContianer.GetChildAt(monsterContianer.numChildren-1).visible = true;
 				item.visible = true;
+				GRoot.inst.touchable = true;
 				copyView.TweenFade(0,0.2f).OnComplete(delegate() {
 					//_main.RemoveChild(copyView);
 					GRoot.inst.RemoveChild (copyView);
