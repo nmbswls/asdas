@@ -39,7 +39,7 @@ public class JoystickManager : EventDispatcher
 		_InitX = _center.x + _center.width / 2;
 		_InitY = _center.y + _center.height / 2;
 		touchId = -1;
-		radius = 75;
+		radius = 100;
 
 		_touchArea.onTouchBegin.Add (this.OnTouchBegin);
 		_touchArea.onTouchMove.Add (this.OnTouchMove);
@@ -126,39 +126,74 @@ public class JoystickManager : EventDispatcher
 		if (touchId != -1 && evt.touchId == touchId)
 		{
 			Vector2 pt = GRoot.inst.GlobalToLocal(new Vector2(evt.x, evt.y));
+
 			float bx = pt.x;
 			float by = pt.y;
-			float moveX = bx - _lastStageX;
-			float moveY = by - _lastStageY;
-			_lastStageX = bx;
-			_lastStageY = by;
-			float buttonX = _button.x + moveX;
-			float buttonY = _button.y + moveY;
 
-			float offsetX = buttonX + _button.width / 2 - _startStageX;
-			float offsetY = buttonY + _button.height / 2 - _startStageY;
+			if (new Vector2 (bx - _InitX, by - _InitY).magnitude > radius) {
+				
+				float offsetX = bx - _startStageX;
+				float offsetY = by - _startStageY;
+				float rad = Mathf.Atan2(offsetY, offsetX);
+				float degree = rad * 180 / Mathf.PI;
 
-			float rad = Mathf.Atan2(offsetY, offsetX);
-			float degree = rad * 180 / Mathf.PI;
-			_thumb.rotation = degree + 90;
 
-			float maxX = radius * Mathf.Cos(rad);
-			float maxY = radius * Mathf.Sin(rad);
-			if (Mathf.Abs(offsetX) > Mathf.Abs(maxX))
-				offsetX = maxX;
-			if (Mathf.Abs(offsetY) > Mathf.Abs(maxY))
-				offsetY = maxY;
 
-			buttonX = _startStageX + offsetX;
-			buttonY = _startStageY + offsetY;
-			if (buttonX < 0)
-				buttonX = 0;
-			if (buttonY > GRoot.inst.height)
-				buttonY = GRoot.inst.height;
+				float maxX = radius * Mathf.Cos(rad);
+				float maxY = radius * Mathf.Sin(rad);
+				if (Mathf.Abs(offsetX) > Mathf.Abs(maxX))
+					offsetX = maxX;
+				if (Mathf.Abs(offsetY) > Mathf.Abs(maxY))
+					offsetY = maxY;
 
-			_button.SetXY(buttonX - _button.width / 2, buttonY - _button.height / 2);
+				float buttonX = _startStageX + offsetX;
+				float buttonY = _startStageY + offsetY;
+				if (buttonX < 0)
+					buttonX = 0;
+				if (buttonY > GRoot.inst.height)
+					buttonY = GRoot.inst.height;
 
-			this.onMove.Call(new float[]{degree,offsetX*offsetX+offsetY*offsetY});
+				_button.SetXY(buttonX - _button.width / 2, buttonY - _button.height / 2);
+
+
+				this.onMove.Call (new float[]{ degree, offsetX * offsetX + offsetY * offsetY });
+			} else {
+				float moveX = bx - _lastStageX;
+				float moveY = by - _lastStageY;
+				_lastStageX = bx;
+				_lastStageY = by;
+				float buttonX = _button.x + moveX;
+				float buttonY = _button.y + moveY;
+
+				float offsetX = buttonX + _button.width / 2 - _startStageX;
+				float offsetY = buttonY + _button.height / 2 - _startStageY;
+
+				float rad = Mathf.Atan2(offsetY, offsetX);
+				float degree = rad * 180 / Mathf.PI;
+
+
+				//_thumb.rotation = degree + 90;
+
+				float maxX = radius * Mathf.Cos(rad);
+				float maxY = radius * Mathf.Sin(rad);
+				if (Mathf.Abs(offsetX) > Mathf.Abs(maxX))
+					offsetX = maxX;
+				if (Mathf.Abs(offsetY) > Mathf.Abs(maxY))
+					offsetY = maxY;
+
+				buttonX = _startStageX + offsetX;
+				buttonY = _startStageY + offsetY;
+				if (buttonX < 0)
+					buttonX = 0;
+				if (buttonY > GRoot.inst.height)
+					buttonY = GRoot.inst.height;
+
+				_button.SetXY(buttonX - _button.width / 2, buttonY - _button.height / 2);
+
+				this.onMove.Call(new float[]{degree,offsetX*offsetX+offsetY*offsetY});
+			}
+
+
 		}
 	}
 }

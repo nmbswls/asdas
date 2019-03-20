@@ -1,41 +1,70 @@
-[{
+[
+	{
 		"cid": "0",
-		"cname": 10000,
-		"cdesp": 2000,
+		"cname": "圣者遗物",
+		"cdesp": "殉道者的武器，你可以嗅到血与污物的腥味。",
 		"effects": [{
-			"type": 1,
-			"bonus": 5,
-			"extra": ""
+			"type": 0,
+			"x": 60,
 		}]
 	},
 	{
 		"cid": "1",
-		"cname": 10000,
-		"cdesp": 2000,
+		"cname": "振奋宝石",
+		"cdesp": "你能感觉到它在手中跳动。",
 		"effects": [{
-			"type": 2,
-			"bonus": 15,
-			"extra": ""
+			"type": 3,
+			"x": 55,
 		}]
 	},
 	{
 		"cid": "2",
-		"cname": 10000,
-		"cdesp": 2000,
+		"cname": "魔龙枪",
+		"cdesp": "站得高射的远",
 		"effects": [{
-			"type": 3,
-			"bonus": 25,
-			"extra": ""
+			"type": 1,
+			"x": 1000,
+		}]
+	},
+	{
+		"cid": "3",
+		"cname": "斯嘉蒂之眼",
+		"cdesp": "它在凝视着你。",
+		"effects": [{
+			"type": 2,
+			"x": 1,
+			"y": 12000,
+		}]
+	},
+	{
+		"cid": "4",
+		"cname": "剧毒球",
+		"cdesp": "我的球有毒。",
+		"effects": [{
+			"type": 5,
+			"extra": "cuidu",
+			"x": 1,
+			"y":1
+		}]
+	},
+	{
+		"cid": "5",
+		"cname": "冰火两重天",
+		"cdesp": "双重的快感",
+		"effects": [{
+			"type": 2,
+			"x": 0,
+			"y":3000
+		},{
+			"type": 2,
+			"x": 1,
+			"y":3000
 		}]
 	},
 	{
 		"cid": "default",
-		"cname": 10000,
-		"cdesp": 2000,
-		"effects": [{
-			"type": 0,
-			"bonus": 25,
-			"extra": ""
-		}]
+		"cname": "碎片",
+		"cdesp": "无用之物",
+		"effects": []
 	}
 ]

@@ -39,6 +39,7 @@ public class ExploreMenu : Window
 
 	protected override void OnShown(){
 		memoPanel.initMemoState ();
+		rolePanel.updateView ();
 	}
 }
 

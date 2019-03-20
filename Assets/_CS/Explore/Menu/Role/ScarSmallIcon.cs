@@ -2,9 +2,8 @@
 using System.Collections;
 using FairyGUI;
 
-public class ItemWithDetail : GComponent
+public class ScarSmallIcon : GComponent
 {
-
 
 	string desp;
 
@@ -13,9 +12,7 @@ public class ItemWithDetail : GComponent
 		base.ConstructFromXML (xml);
 
 		this.onTouchBegin.Add (delegate() {
-			Debug.Log("click");
-
-			GameManager.getInstance().showDetailAmplifier(desp);
+			GameManager.getInstance().showDetailAmplifier("减少生命上限");
 		});
 	}
 

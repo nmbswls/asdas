@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
 
-	public string enemyName = "enemy01";
+	public string enemyName = "10000";
 	public int currentEnemyIdx = 0;
 	public int MAX_ENEMY = 5;
 	public int nowEnemy = 0;
 
-	public int spawnInteval = 50000;
+	public int spawnInteval = 10000;
 	int spawnCoolDown = 0;
 	public List<GameLife> localEnemies = new List<GameLife>(); 
 	// Use this for initialization

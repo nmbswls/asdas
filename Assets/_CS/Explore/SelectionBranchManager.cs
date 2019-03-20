@@ -23,6 +23,7 @@ public class EncounterStage{
 	//public bool isFinishStage = false;
 	//public bool isBattleStage = false;
 	public eStageType stageType = eStageType.NORMAL;
+	public string extra;
 	public EncounterRes res = null;
 	public int randomValue = 0;
 	public int battleRes = 0;
@@ -82,7 +83,8 @@ public enum eStageType{
 [System.Serializable]
 public enum eFinishType{
 	NORMAL = 0,
-	NEXT_LEVEK = 1,
+	ANOTHER_ENCOUNTER = 1,
+	NEXT_LEVEK = 2,
 }
 
 public class SelectionBranchManager : Window
@@ -138,9 +140,9 @@ public class SelectionBranchManager : Window
 	public void initEncounter(string eid = null,int stageIdx = 0){
 
 		if (eid == null) {
-			encounter = GameStaticData.getInstance().encounterDic["20"];
+			encounter = GameStaticData.getInstance().getEncounterInfo("empty");
 		} else {
-			encounter = GameStaticData.getInstance().encounterDic[eid];
+			encounter = GameStaticData.getInstance().getEncounterInfo(eid);
 		}
 		//通过静态信息得到文字表
 		this.stageIndex = stageIdx;
@@ -198,8 +200,12 @@ public class SelectionBranchManager : Window
 	public void getRes(EncounterRes res){
 		if (res == null)
 			return;
-		if (res.type == 0) {
-			GameManager.getInstance().getItemManager.initAndShow(new string[]{"大宝剑","藏宝图","火箭"});
+		if (res.type == eFinishType.NORMAL) {
+			if (res.rewords.Count > 0) {
+				GameManager.getInstance ().getItemManager.initAndShow (new string[]{ "大宝剑", "藏宝图", "火箭" });
+			} else {
+				GameManager.getInstance ().finishItemGet ();
+			}
 			panelHide ();
 			//GameManager.getInstance ().showConfirm (panelHide);
 
@@ -219,6 +225,10 @@ public class SelectionBranchManager : Window
 		converters.Clear ();
 		if (!encounter.stages.TryGetValue (stageIndex, out stage)) {
 			return;
+		}
+		if (stage.extra == "monster") {
+			EnemyCombo ec = GameStaticData.getInstance ().getEnemyWithValue (5);
+			GameManager.getInstance().chaseByEnemy (ec);
 		}
 
 		if (stage.stageType == eStageType.FINISH) {

@@ -1,0 +1,73 @@
+{
+	"10000": {
+		"enemyId": "10000",
+		"enemyName": "鬼",
+		"difficulty":1,
+		"hp": 10000,
+		"speed": 2000,
+		"atk": 2000,
+		"def": 5000
+	},
+	"10001": {
+		"enemyId": "10001",
+		"enemyName": "兽",
+		"difficulty":2,
+		"hp": 25000,
+		"speed": 2000,
+		"atk": 2000,
+		"def": 5000
+	},
+	"10002": {
+		"enemyId": "10002",
+		"enemyName": "龙",
+		"difficulty":3,
+		"hp": 25000,
+		"speed": 2000,
+		"atk": 2000,
+		"def": 5000
+	},
+	"10003": {
+		"enemyId": "10003",
+		"enemyName": "鬼t2",
+		"difficulty":1,
+		"hp": 10000,
+		"speed": 2000,
+		"atk": 2000,
+		"def": 5000
+	},
+	"10004": {
+		"enemyId": "10004",
+		"enemyName": "鬼t3",
+		"difficulty":1,
+		"hp": 10000,
+		"speed": 2000,
+		"atk": 2000,
+		"def": 5000
+	},
+	"10005": {
+		"enemyId": "10005",
+		"enemyName": "鬼t4",
+		"difficulty":1,
+		"hp": 10000,
+		"speed": 2000,
+		"atk": 2000,
+		"def": 5000
+	},
+	"10006": {
+		"enemyId": "10006",
+		"enemyName": "鬼t5",
+		"difficulty":1,
+		"hp": 10000,
+		"speed": 2000,
+		"atk": 2000,
+		"def": 5000
+	},
+	"default": {
+		"enemyId": "default",
+		"enemyName": "",
+		"hp": 25000,
+		"speed": 2000,
+		"atk": 2000,
+		"def": 5000
+	}
+}

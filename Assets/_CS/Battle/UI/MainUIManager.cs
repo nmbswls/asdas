@@ -24,15 +24,23 @@ public class MainUIManager : MonoBehaviour
 	public static Vector3 BuildButtonPosInScreen;
 
 	void Awake(){
-		UIPackage.AddPackage("FairyGUI/UIMain");
-		UIObjectFactory.SetPackageItemExtension("ui://UIMain/BuildItem", typeof(BuildItem));
-		UIObjectFactory.SetPackageItemExtension("ui://UIMain/SkillItem", typeof(SkillItem));
+		
+
 		//_build.onClick.Add(() => { _bagWindow.Show(); });
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
+
+		UIPackage.AddPackage("FairyGUI/UIMain");
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/BuildItem", typeof(BuildItem));
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/SkillItem", typeof(SkillItem));
+
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/DetailPanel", typeof(BuildDetail));
+
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/TowerDamageItem", typeof(TowerDamageItem));
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/TowerSkillItem", typeof(TowerSkillItem));
 		_mainView = this.GetComponent<UIPanel> ().ui;
 		_joystick = new JoystickManager(_mainView);
 		_joystick.onMove.Add(handleMove);

@@ -6,6 +6,7 @@ public class ItemDetailAmplifier : Window
 {
 	GLoader close;
 	GTextField _desp;
+	GLoader _pic;
 	protected override void OnInit()
 	{
 		this.contentPane = UIPackage.CreateObject("UIMain", "ItemDetail").asCom;
@@ -13,6 +14,8 @@ public class ItemDetailAmplifier : Window
 		this.modal = true;
 
 		_desp = this.contentPane.GetChild("desp").asTextField;
+		_pic = this.contentPane.GetChild ("pic").asLoader;
+
 		close = this.contentPane.GetChild("close").asLoader;
 		close.onClick.Add (delegate(EventContext context) {
 			this.Hide();
@@ -21,9 +24,13 @@ public class ItemDetailAmplifier : Window
 	string info;
 	public void setInfo(string info){
 		this.info = info;
+
 	}
+
+
 	protected override void OnShown(){
 		_desp.text = info;
+		//_pic.url = "";
 	}
 }
 

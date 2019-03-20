@@ -49,6 +49,7 @@ public class GetItemManager : Window
 		Vector3 posLocal = _new_item_list.GetChildAt (idx).position;
 
 		GameManager.getInstance ().showGetItemEffect (_new_item_list.LocalToGlobal (posLocal));
+		GameManager.getInstance ().finishItemGet ();
 		this.Hide ();
 	}
 

@@ -11,18 +11,35 @@ public class TowerTemplate{
 	public TowerComponent[] components = new TowerComponent[5];
 }
 
+public class AtkInfo{
+	public int damage = 1000;
+	public eProperty property = eProperty.NONE;
+
+	public AtkInfo(){
+	}
+
+	public AtkInfo(AtkInfo other){
+		this.damage = other.damage;
+		this.property = other.property;
+	}
+	public AtkInfo(int property,int damage){
+		this.damage = damage;
+		this.property = (eProperty)property;
+	}
+}
+
 [System.Serializable]
 public class TowerBase{
 	public string tid;
 	public string tname;
 	public string tdesp;
 	public eAtkType atkType = eAtkType.MELLE_POINT;
-	public int damage = 10000;
+	public AtkInfo mainAtk = new AtkInfo();
+	public List<AtkInfo> extraAtk = new List<AtkInfo>();
 	public int mingzhong;
 	public int atkInteval = 2000;
 	public int atkRange = 3000;
 	public int atkPreanimTime = 300;
-	public eProperty property = eProperty.NONE;
 	public List<TowerSkillState> skills = new List<TowerSkillState>();
 }
 
@@ -68,18 +85,20 @@ public class TowerComponent{
 [System.Serializable]
 public class TowerComponentEffect{
 	public eTowerComponentEffectType type;
-	public int bonus;
 	public string extra;
+	public int x;
+	public int y;
+	public int z;
 }
 
 [System.Serializable]
 public enum eTowerComponentEffectType{
 	ATK_CHANGE = 0,
 	ATK_RANGE_CHANGE = 1,
-	ATK_PROPERTY_CHANGE = 2,
-	ATK_INTERVAL_CHANGE = 3,
+	EXTRA_ATK = 2,
+	ATK_SPD_CHANGE = 3,
 	CRIT_CHANGE = 4,
-	EXTRA_ABILITY = 5
+	EXTRA_ABILITY = 5,
 }
 
 public class TowerComponentInList{
@@ -88,18 +107,28 @@ public class TowerComponentInList{
 }
 
 public class Potion{
+	public string pid;
 	public string pname;
+
+	public Potion(){
+	}
+
+	public Potion(string pid){
+		this.pid = pid;
+	}
 }
 
 public class Scar{
-	public string scarName;
-	public int type;
-	public int v;
+	public string scarId;
+	public int value;
+
 	public Scar(){
+		
 	}
 
-	public Scar(string scarName){
-		this.scarName = scarName;
+	public Scar(string scarId,int value){
+		this.scarId = scarId;
+		this.value = value;
 	}
 }
 
@@ -130,7 +159,7 @@ public class PlayerData
 	public string beforeEid = "";
 	public bool battleWin;
 	public bool isFixedBattle = false;
-
+	public List<EnemyCombo> fixedMonsters;
 
 	//数据
 
@@ -148,7 +177,7 @@ public class PlayerData
 	public List<TowerTemplate> ownedTowers = new List<TowerTemplate>();
 	public List<TowerComponent> bagComponents = new List<TowerComponent> ();
 
-	public List<ChasingEnemyAbstract> chasingEnemies = new List<ChasingEnemyAbstract>();
+	public List<EnemyCombo> chasingEnemies = new List<EnemyCombo>();
 
 	public List<string> ownedMemos = new List<string> ();
 
@@ -170,9 +199,11 @@ public class PlayerData
 
 	public void generateDungeon(int encounterNum){
 		List<string> toChooseFrom = new List<string> ();
-		foreach(var item in GameStaticData.getInstance().encounterDic){
-			toChooseFrom.Add (item.Key);
-		}
+		toChooseFrom.Add ("20");
+		toChooseFrom.Add ("0");
+//		foreach(var item in GameStaticData.getInstance().encounterDic){
+//			toChooseFrom.Add (item.Key);
+//		}
 
 		int totalLeft = GridManager.GRID_HEIGHT * GridManager.GRID_WIDTH;
 		int encounterLeft = encounterNum;
@@ -209,11 +240,13 @@ public class PlayerData
 		beforeEid = eid;
 		beforeStage = stageIdx;
 		isFixedBattle = true;
+		fixedMonsters = new List<EnemyCombo> ();
 	}
 
 	public void initBattle(){
 		isWaitingBattle = true;
 		isFixedBattle = false;
+		fixedMonsters = new List<EnemyCombo> ();
 	}
 
 	public void finishBattle(bool win){
@@ -221,8 +254,6 @@ public class PlayerData
 	}
 
 
-	string[] names = new string[]{"贪欲之壶","布袋熊","三年高考","针筒","仪式剪纸","Gameboy","钢笔","奥特人偶"};
-	string[] desps = new string[]{"禁忌的壶，拥有吐纳天地的无限容量","模样可爱？","我们都拥有过的东西","童年噩梦","它会动吗？","痛击你的敌人！","除了装逼还有别的用处","变身！"};
 
 	public void initTowers(){
 		for (int i = 1; i < 8; i++) {
@@ -257,14 +288,14 @@ public class PlayerData
 	}
 
 	void intPotions(){
-		for (int i = 0; i < 8; i++) {
-			potions.Add(new Potion());
+		for (int i = 0; i < 5; i++) {
+			potions.Add(new Potion("0"));
 		}
 	}
 
 	void initScar(){
 		for (int i = 0; i < 3; i++) {
-			scars.Add(new Scar("受伤"));
+			scars.Add(new Scar("0",2+i));
 		}
 	}
 
@@ -277,7 +308,7 @@ public class PlayerData
 		}
 	}
 
-	public void addMonster(ChasingEnemyAbstract enemyAbstract){
+	public void addMonster(EnemyCombo enemyAbstract){
 		chasingEnemies.Add (enemyAbstract);
 	}
 
@@ -298,5 +329,16 @@ public class PlayerData
 	public void removeScar(Scar toRemove){
 		scars.Remove (toRemove);
 	}
+
+
+	public void getPossibleEnemyCombo(){
+		foreach (var kv in GameStaticData.getInstance().enemyCombos) {
+			
+		}
+	}
+
+
+
+
 }
 

@@ -1,0 +1,46 @@
+﻿{
+	"eId": "empty",
+	"type": 0,
+	"desp": "迷雾呈现出你似曾相识的污浊颜色，能听见不知名的声音。",
+	"stages": {
+
+		"0": {
+			"sId": 0,
+			"desp": "空无一物的荒原正凝视着你。",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+				"nextStageIdx": 9,
+				"choiceDesp": "整顿",
+				"checks": []
+			}]
+		},
+
+		"9": {
+			"sId": 9,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": [{
+						"rewardName": "",
+						"rewardAmount": 0,
+						"chance": 0
+					},
+					{
+						"rewardName": "",
+						"rewardAmount": 0,
+						"chance": 0
+					}
+				]
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		}
+	}
+
+}

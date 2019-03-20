@@ -2,18 +2,41 @@
 using System.Collections;
 using FairyGUI;
 
-public class AccesoryView : GComponent
+public class AccesoryView : GButton
 {
 
-	GLoader icon;
+	GLoader _icon;
+	GTextField _name;
 	int idx;
 	public override void ConstructFromXML(FairyGUI.Utils.XML xml)
 	{
 		base.ConstructFromXML (xml);
-		icon = this.GetChild ("icon").asLoader;
-		this.draggable = true;
-		//this.onDragStart.Add(DragStart);
+		_icon = this.GetChild ("icon").asLoader;
+		_name = this.GetChild ("name").asTextField;
 	}
+
+	public void updateView(TowerComponent tc){
+
+		if (tc == null) {
+			_icon.url = "Equips/empty";
+			_name.text = "无";
+
+		} else {
+			_icon.url = "Equips/" + tc.cid;
+			_name.text = tc.cname;
+		}
+
+
+	}
+
+	public void setUneuip(TowerComponent tc){
+		_icon.url = "image/atk";
+		_name.text = "卸下";
+	}
+
+
+
+
 
 //	public void setInfo(TowerComponent tt,int idx){
 //		if (tt == null) {

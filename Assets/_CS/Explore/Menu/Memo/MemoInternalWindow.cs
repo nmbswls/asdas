@@ -58,6 +58,11 @@ public class MemoInternalWindow : GComponent
 		selected.Clear();
 	}
 
+	public void clearContent(){
+		foreach (GObject a in allShownMemo) {
+			a.Dispose ();
+		}
+	}
 
 
 }

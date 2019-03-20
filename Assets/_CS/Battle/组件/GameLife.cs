@@ -259,10 +259,13 @@ public class GameLife : MapObject
 		}
 	}
 
-	public void DoDamage(int atk,int mingzhong,eProperty type,List<Buff> attachedEffect){
+	public void DoDamage(List<AtkInfo> atk,int mingzhong,eProperty type,List<Buff> attachedEffect){
 		int chance = mingzhong - evade;
 
-		int damage = (atk - def) > 0 ? atk - def : 1000;
+		int damage = 0;
+		for (int i = 0; i < atk.Count; i++) {
+			damage += atk [i].damage - def > 0 ? atk [i].damage - def : 1000; 
+		}
 
 		if (type == property) {
 			damage /= 2;

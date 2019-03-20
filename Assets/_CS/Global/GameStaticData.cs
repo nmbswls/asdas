@@ -7,12 +7,39 @@ public class UsableHeroInfo{
 
 	public string name;
 	public string desp;
-	public string[] tianfu = new string[4];
+	public string[] tianfu = new string[3];
 	public int maxHp;
 	public int maxMp;
 }
 
+public class PotionStaticInfo{
+	public string pid;
+	public string pname;
+}
 
+public class ScarStaticInfo{
+	public string scarId;
+	public string scarName;
+}
+
+
+public class EnemyCombo{
+	public string comboId = "";
+	public List<string> enemyId = new List<string>();
+	public List<int> enemyNum = new List<int> ();
+}
+
+
+public class EnemyData
+{
+	public string enemyId;
+	public string enemyName = "不可名状之物";
+	public int difficulty = 1;
+	public int hp = 10000;
+	public int speed = 2000;
+	public int atk = 3000;
+	public int def = 300;
+}
 
 public class GameStaticData
 {
@@ -34,19 +61,33 @@ public class GameStaticData
 		loadTowerSkillInfo ();
 		loadMemoInfo ();
 		loadMemoCombinationRule ();
+
+		loadEnemyInfo ();
+
+		loadScarInfo ();
+		loadPotionInfo ();
 	}
 
 	public List<UsableHeroInfo> heroes = new List<UsableHeroInfo>();
 	public Dictionary<string, EncounterInfo> encounterDic = new Dictionary<string, EncounterInfo>();
 
 	public Dictionary<string,TowerComponent> componentStaticInfo = new Dictionary<string,TowerComponent>();
-	public Dictionary<string,string> potionStaticInfo = new Dictionary<string,string>();
+
+	public Dictionary<string,PotionStaticInfo> potionStaticInfo = new Dictionary<string,PotionStaticInfo>();
+	public Dictionary<string,ScarStaticInfo> scarStaticInfo = new Dictionary<string,ScarStaticInfo>();
+
 	public Dictionary<string,TowerBase> towerBaseInfo = new Dictionary<string,TowerBase>();
 
 	public Dictionary<string,MemoInfo> memoInfo = new Dictionary<string,MemoInfo>();
 	public Dictionary<int,TowerSkill> towerSkills = new Dictionary<int,TowerSkill>();
 
 	public List<MemoCombinationRule> memoCombineInfo = new List<MemoCombinationRule>();
+
+	public Dictionary<string,EnemyData> enemyStaticInfo = new Dictionary<string,EnemyData>();
+
+	public Dictionary<string,EnemyCombo> enemyCombos = new Dictionary<string,EnemyCombo>();
+
+	public Dictionary<int,List<string>> enemyPerLv = new Dictionary<int,List<string>>();
 
 	public void initHeroes(){
 		
@@ -56,6 +97,8 @@ public class GameStaticData
 		h1.maxHp = 100;
 		h1.maxMp = 20;
 		h1.tianfu [0] = "强力";
+		h1.tianfu [1] = "恢复力";
+		h1.tianfu [2] = "强壮";
 
 		UsableHeroInfo h2 = new UsableHeroInfo ();
 		h2.name = "智障";
@@ -79,10 +122,10 @@ public class GameStaticData
 
 	public void loadEncounters(){
 			
-		{
-			TextAsset encounterTxt = Resources.Load ("json/encounters/e00") as TextAsset;
-			encounterDic = JsonConvert.DeserializeObject<Dictionary<string, EncounterInfo>> (encounterTxt.text);
-		}
+//		{
+//			TextAsset encounterTxt = Resources.Load ("json/encounters/20") as TextAsset;
+//			encounterDic = JsonConvert.DeserializeObject<Dictionary<string, EncounterInfo>> (encounterTxt.text);
+//		}
 	}
 
 	public void loadTowerInfo(){
@@ -104,6 +147,24 @@ public class GameStaticData
 	}
 
 	public void loadPotionInfo(){
+		string[] potionNames = new string[]{"生命药剂","遗忘药剂","苦痛药剂","装甲药剂","空瓶"};
+		for (int i = 0; i < potionNames.Length; i++) {
+			PotionStaticInfo p = new PotionStaticInfo ();
+			p.pid = i+"";
+			p.pname = potionNames[i];
+			potionStaticInfo [i+""] = p;
+		}
+
+	}
+	public void loadScarInfo(){
+
+		string[] scarNames = new string[]{"生命药剂","遗忘药剂","苦痛药剂","装甲药剂","空瓶"};
+		for (int i = 0; i < scarNames.Length; i++) {
+			ScarStaticInfo p = new ScarStaticInfo ();
+			p.scarId = i+"";
+			p.scarName = scarNames[i];
+			scarStaticInfo [i+""] = p;
+		}
 
 	}
 
@@ -148,6 +209,54 @@ public class GameStaticData
 	}
 
 
+	void loadEnemyInfo(){
+		TextAsset ta = Resources.Load ("json/enemy/all") as TextAsset;
+		enemyStaticInfo = JsonConvert.DeserializeObject<Dictionary<string,EnemyData>> (ta.text);
 
+		foreach (EnemyData ed in enemyStaticInfo.Values) {
+			if (!enemyPerLv.ContainsKey (ed.difficulty)) {
+				enemyPerLv [ed.difficulty] = new List<string> ();
+			}
+			enemyPerLv [ed.difficulty].Add (ed.enemyId);
+		}
+
+		{
+			EnemyCombo combo = new EnemyCombo ();
+			enemyCombos ["0"] = combo;
+		}
+	}
+
+	public EnemyData getEnemyInfo(string eid){
+		EnemyData data = null;
+		if (!enemyStaticInfo.TryGetValue(eid,out data)) {
+			data = enemyStaticInfo ["default"];
+		}
+		return data;
+	}
+
+
+	public EncounterInfo getEncounterInfo(string eid){
+		if (encounterDic.ContainsKey (eid)) {
+			return encounterDic[eid];
+		}
+		TextAsset ta = Resources.Load ("json/encounters/"+eid) as TextAsset;
+		if (ta == null)
+			return null;
+		EncounterInfo einfo = JsonConvert.DeserializeObject<EncounterInfo> (ta.text);
+		encounterDic [einfo.eId] = einfo;
+		return einfo;
+	}
+
+	public EnemyCombo getEnemyWithValue(int v){
+		EnemyCombo ec = new EnemyCombo ();
+		if (v <= 8) {
+			int a = enemyPerLv [1].Count;
+			int randInt = Random.Range (0,a-1);
+			string eId = enemyPerLv [1] [randInt];
+			ec.enemyId.Add (eId);
+			ec.enemyNum.Add (v);
+		}
+		return ec;
+	}
 }
 

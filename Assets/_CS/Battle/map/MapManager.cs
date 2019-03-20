@@ -19,6 +19,7 @@ public class MapManager : MonoBehaviour
 	public static int TILE_HEIGHT = 50;
 
 
+
 	Tile[] arrTiles;
 	public Tile baseTile;//使用的最基本的Tile，我这里是白色块，然后根据数据设置不同颜色生成不同Tile
 
@@ -30,6 +31,8 @@ public class MapManager : MonoBehaviour
 	public bool[][] staticBlocks;
 
 	public int[][] specialBlock;
+
+	List<int[]> possibleSpawnerPos = new List<int[]>();
 
 	public List<GameObject> tiles = new List<GameObject>();
 	public GameObject tilePrefabs;
@@ -87,8 +90,10 @@ public class MapManager : MonoBehaviour
 						break;
 					case "Spawner":
 						specialBlock [i] [j] = 2;
+						possibleSpawnerPos.Add (new int[]{i,j});
 						break;
 					}
+					speTilemap.SetTile (new Vector3Int (j, -i, 0), null);
 				}
 			}
 		}
@@ -155,7 +160,7 @@ public class MapManager : MonoBehaviour
 
 
 	// Use this for initialization
-	void Start ()
+	public void Init ()
 	{
 		mapPrefab1 = Resources.Load ("map/Tilemap_obstacle1") as GameObject;
 		mapPrefab2 = Resources.Load ("map/Tilemap_obstacle2") as GameObject;
@@ -326,6 +331,12 @@ public class MapManager : MonoBehaviour
 
 	}
 
+	public Vector3 cellPosToWorldPos(int i, int j){
+		Vector3 res = obcTilemap.CellToWorld (new Vector3Int(j,-i,0));
+		return res;
+
+	}
+
 	public bool isWorldPosObc(Vector3 worldPos){
 		Vector3Int res = obcTilemap.WorldToCell (worldPos);
 		res.y = -res.y;
@@ -369,6 +380,26 @@ public class MapManager : MonoBehaviour
 //		
 //		}
 		return Vector3Int.zero;
+	}
+
+
+	public List<int[]> getRandomSpawnerPos(int amount){
+		shuffleSpawnerPos ();
+
+		if (amount > possibleSpawnerPos.Count) {
+			return new List<int[]> (possibleSpawnerPos);
+		} else {
+			return possibleSpawnerPos.GetRange (0,amount);
+		}
+	}
+
+	public void shuffleSpawnerPos(){
+		for (int i = possibleSpawnerPos.Count-1; i > 0; i--) {
+			int pos = Random.Range (0,i);
+			var x = possibleSpawnerPos[i];
+			possibleSpawnerPos[i] = possibleSpawnerPos[pos];
+			possibleSpawnerPos[pos] = x;
+		}
 	}
 		
 }

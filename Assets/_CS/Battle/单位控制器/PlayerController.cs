@@ -107,14 +107,15 @@ public class PlayerController : IUnitController {
 		DH = DTargetH;
 		DV = DTargetV;
 
-		Vector2 circleVector = SquareToCircle (new Vector2(DH,DV));
+		//Vector2 circleVector = SquareToCircle (new Vector2(DH,DV));
+		Vector2 circleVector = new Vector2(DTargetH,DTargetV);
 		float DHReal = circleVector.x;
 		float DVReal = circleVector.y;
-		if (Mathf.Abs (DHReal) < Mathf.Abs (DVReal)) {
-			DHReal = 0;
-		} else {
-			DVReal = 0;
-		}
+//		if (Mathf.Abs (DHReal) < Mathf.Abs (DVReal)) {
+//			DHReal = 0;
+//		} else {
+//			DVReal = 0;
+//		}
 
 		Dmag = Mathf.Sqrt (DHReal * DHReal + DVReal*DVReal);
 		Dvec = new Vector2 (DHReal,DVReal);
@@ -153,20 +154,21 @@ public class PlayerController : IUnitController {
 			DTargetV = 0;
 			return;
 		}
-
-		if (degree < 45 && degree >= -45) {
-			DTargetH = 1;
-			DTargetV = 0;
-		} else if (degree < 135 && degree >= 45) {
-			DTargetH = 0;
-			DTargetV = -1;
-		} else if (degree < -45 && degree >= -135) {
-			DTargetH = 0;
-			DTargetV = 1;
-		} else {
-			DTargetH = -1;
-			DTargetV = 0;
-		}
+		DTargetH = (float)Math.Cos (degree*Mathf.Deg2Rad);
+		DTargetV = -(float)Math.Sin (degree*Mathf.Deg2Rad);
+//		if (degree < 45 && degree >= -45) {
+//			DTargetH = 1;
+//			DTargetV = 0;
+//		} else if (degree < 135 && degree >= 45) {
+//			DTargetH = 0;
+//			DTargetV = -1;
+//		} else if (degree < -45 && degree >= -135) {
+//			DTargetH = 0;
+//			DTargetV = 1;
+//		} else {
+//			DTargetH = -1;
+//			DTargetV = 0;
+//		}
 		return;
 		bool optUpdate = false;
 		for (int i = 0; i < 4; i++) {

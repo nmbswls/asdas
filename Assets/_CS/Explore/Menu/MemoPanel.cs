@@ -37,7 +37,9 @@ public class MemoPanel :  GComponent
 	}
 
 	public void initMemoState(){
-		memoWindow.RemoveChildren ();
+		
+		memoWindow.clearContent ();
+
 		foreach (var kv in PlayerData.getInstance().memoState) {
 			memoWindow.addMemo(kv.Key);
 		}

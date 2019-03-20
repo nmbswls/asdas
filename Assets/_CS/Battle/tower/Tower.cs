@@ -28,7 +28,8 @@ public class Tower : MapObject
 	[SerializeField]
 	public eAtkType atkType = eAtkType.MELLE_POINT;
 	public eProperty property =eProperty.NONE; 
-	public int damage = 10000;
+	public AtkInfo mainAtk = new AtkInfo();
+	public List<AtkInfo> extraAtk = new List<AtkInfo>();
 	public int mingzhong = 2;
 	//list
 
@@ -82,7 +83,8 @@ public class Tower : MapObject
 	public void init(TowerTemplate towerTemplate, Vector3Int posInCell){
 		if (towerTemplate != null) {
 			this.atkType = towerTemplate.tbase.atkType;
-			this.damage = towerTemplate.tbase.damage;
+			this.mainAtk = towerTemplate.tbase.mainAtk;
+			this.extraAtk = towerTemplate.tbase.extraAtk;
 			this.atkInterval = towerTemplate.tbase.atkInteval;
 			this.atkRange = towerTemplate.tbase.atkRange;
 			this.atkPreanimTime = towerTemplate.tbase.atkPreanimTime;
@@ -310,8 +312,10 @@ public class Tower : MapObject
 				attackEffect.Add (new Buff (sinfo.x[skill.skillLevel], 50, 1000));
 			}
 		}
-
-		hit.DoDamage (damage,mingzhong,property,attackEffect);
+		List<AtkInfo> atk = new List<AtkInfo> ();
+		atk.Add (mainAtk);
+		atk.AddRange (extraAtk);
+		hit.DoDamage (atk,mingzhong,property,attackEffect);
 	}
 }
 

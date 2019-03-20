@@ -1,0 +1,310 @@
+﻿{
+	"eId": "20",
+	"type": 0,
+	"desp": "迷雾呈现出你似曾相识的污浊颜色，能听见不知名的声音。",
+	"stages": {
+		"2": {
+			"sId": 2,
+			"desp": "你无法移开视线。",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"extra":"monster",
+			"converts": [{
+				"nextStageIdx": 5,
+				"choiceDesp": "呆立原地(战斗)",
+				"checks": []
+			}]
+		},
+		"1": {
+			"sId": 1,
+			"desp": "她缓步朝你走来",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+					"nextStageIdx": 3,
+					"choiceDesp": "......",
+					"checks": []
+				},
+				{
+					"nextStageIdx": 4,
+					"choiceDesp": "使用【破碎的镜子】",
+					"checks": [{
+							"key": "san",
+							"fuhao": 2,
+							"value": "90"
+						},
+						{
+							"key": "",
+							"fuhao": 0,
+							"value": ""
+						}
+					]
+				}
+			]
+		},
+		"0": {
+			"sId": 0,
+			"desp": "站在你面前的，是一位有着白色眼瞳的女人。\n她的皮肤呈现出灰白色，嘴唇却闪着荧光。\n当你与她对视时，你仿佛正望进自己。",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+					"nextStageIdx": 1,
+					"choiceDesp": "靠近",
+					"checks": []
+				},
+				{
+					"nextStageIdx": 2,
+					"choiceDesp": "远离",
+					"checks": []
+				}
+			]
+		},
+		"3": {
+			"sId": 3,
+			"desp": "“你从哪里来？”\n女人这样问道。",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+					"nextStageIdx": 10,
+					"choiceDesp": "沉默",
+					"checks": []
+				},
+				{
+					"nextStageIdx": 9,
+					"choiceDesp": "你猜",
+					"checks": []
+				}
+			]
+		},
+		"4": {
+			"sId": 4,
+			"desp": "女人被光芒晃到了眼睛。在那一刹那，你看到她口中的獠牙。",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+				"nextStageIdx": 8,
+				"choiceDesp": "逃跑",
+				"checks": []
+			}]
+		},
+		"5": {
+			"sId": 5,
+			"desp": "战斗",
+			"stageType": 1,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+					"nextStageIdx": 6,
+					"choiceDesp": "描述符",
+					"checks": [{
+						"key": "win",
+						"fuhao": 1,
+						"value": "true"
+					}]
+				},
+				{
+					"nextStageIdx": 7,
+					"choiceDesp": "描述符",
+					"checks": [{
+						"key": "win",
+						"fuhao": 1,
+						"value": "false"
+					}]
+				}
+			]
+		},
+		"6": {
+			"sId": 6,
+			"desp": "你赢了游戏，输了人生",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+				"nextStageIdx": 13,
+				"choiceDesp": "(结束)",
+				"checks": []
+			}]
+		},
+		"7": {
+			"sId": 7,
+			"desp": "你被嫩死了",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+				"nextStageIdx": 14,
+				"choiceDesp": "(结束)",
+				"checks": []
+			}]
+		},
+		"8": {
+			"sId": 8,
+			"desp": "check",
+			"stageType": 4,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+					"nextStageIdx": 11,
+					"choiceDesp": "random",
+					"checks": [{
+						"key": "random",
+						"fuhao": 2,
+						"value": "70"
+					}]
+				},
+				{
+					"nextStageIdx": 12,
+					"choiceDesp": "random",
+					"checks": [{
+						"key": "random",
+						"fuhao": 3,
+						"value": "70"
+					}]
+				}
+			]
+		},
+		"9": {
+			"sId": 9,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": [{
+						"rewardName": "",
+						"rewardAmount": 0,
+						"chance": 0
+					},
+					{
+						"rewardName": "",
+						"rewardAmount": 0,
+						"chance": 0
+					}
+				]
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		},
+		"10": {
+			"sId": 10,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": [{
+					"rewardName": "",
+					"rewardAmount": 0,
+					"chance": 0
+				}]
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		},
+		"11": {
+			"sId": 11,
+			"desp": "你逃跑了",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+				"nextStageIdx": 15,
+				"choiceDesp": "(结束)",
+				"checks": []
+			}]
+		},
+		"12": {
+			"sId": 12,
+			"desp": "你没逃走，被抓住嘿嘿嘿了。",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+				"nextStageIdx": 16,
+				"choiceDesp": "(结束)",
+				"checks": []
+			}]
+		},
+		"13": {
+			"sId": 13,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": []
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		},
+		"14": {
+			"sId": 14,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": []
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		},
+		"15": {
+			"sId": 15,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": [{
+						"rewardName": "",
+						"rewardAmount": 0,
+						"chance": 0
+					},
+					{
+						"rewardName": "",
+						"rewardAmount": 0,
+						"chance": 0
+					}
+				]
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		},
+		"16": {
+			"sId": 16,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": []
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		}
+	}
+
+}

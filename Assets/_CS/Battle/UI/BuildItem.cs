@@ -5,22 +5,14 @@ using FairyGUI;
 public class BuildItem : GButton
 {
 
-	string name;
-	public string desp;
+	public TowerTemplate info;
 
 	public override void ConstructFromXML(FairyGUI.Utils.XML cxml)
 	{
 		base.ConstructFromXML(cxml);
 	}
 
-	public string Name {
-		get {
-			return this.name;
-		}
-		set {
-			name = value;
-		}
-	}
+
 
 }
 

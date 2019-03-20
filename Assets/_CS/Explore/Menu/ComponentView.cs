@@ -12,9 +12,10 @@ public class ComponentView : GComponent
 	public override void ConstructFromXML(FairyGUI.Utils.XML xml)
 	{
 		base.ConstructFromXML (xml);
-		this.onClick.Add (unequip);
+		//this.onClick.Add (unequip);
 		cIcon = this.GetChild ("icon").asLoader;
-		this.onDrop.Add (replaceComponent);
+		//this.onDrop.Add (replaceComponent);
+
 	}
 
 	public void setInfo(TowerComponent tt){
@@ -25,15 +26,15 @@ public class ComponentView : GComponent
 		}
 	}
 
-	public void replaceComponent(EventContext context){
-		context.StopPropagation ();
-		int idxInBag = (int)context.data;
-		towerPanel.changeComponent (idx, idxInBag);
-	}
+//	public void replaceComponent(EventContext context){
+//		context.StopPropagation ();
+//		int idxInBag = (int)context.data;
+//		//towerPanel.changeComponent (idx, idxInBag);
+//	}
 
-	public void unequip(EventContext context){
-		towerPanel.unequip (idx);
-	}
+//	public void unequip(EventContext context){
+//		towerPanel.unequip (idx);
+//	}
 		
 }
 

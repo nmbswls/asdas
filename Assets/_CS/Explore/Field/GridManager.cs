@@ -280,7 +280,7 @@ public class GridManager : MonoBehaviour {
 		if (es.eid == "shop") {
 			GameManager.getInstance ().enterShop ();
 		} else {
-			GameManager.getInstance ().sbManager.initEncounter();
+			GameManager.getInstance ().sbManager.initEncounter(es.eid);
 		}
 
 		PlayerData.getInstance ().grids [index / GRID_WIDTH] [index % GRID_WIDTH].isFinish = true;
@@ -295,7 +295,7 @@ public class GridManager : MonoBehaviour {
 		string eid = encounterState.eid;
 		EncounterInfo einfo = new EncounterInfo ();
 		if (eid != "") {
-			einfo = GameStaticData.getInstance ().encounterDic [eid];
+			einfo = GameStaticData.getInstance ().getEncounterInfo (eid);
 		}
 		GameManager.getInstance().showDetailPanel (einfo.desp);
 		//detailText.text = eList [index].eid + "号遭遇";

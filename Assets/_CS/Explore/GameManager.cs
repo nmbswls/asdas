@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 using FairyGUI;
 
 
-public class ChasingEnemyAbstract{
-	public List<int> enemyId = new List<int>();
-	public List<int> enemyNum = new List<int>();
-
-
-}
 
 
 public delegate void PopupCallback();
@@ -34,6 +28,9 @@ public class GameManager : Singleton<GameManager> {
 	GTextField sanTextView;
 	GTextField levelTextView;
 	GLoader detail;
+
+	GLoader _enterBattle;
+
 
 	GComponent monsterContianer;
 
@@ -71,7 +68,8 @@ public class GameManager : Singleton<GameManager> {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyUp (KeyCode.B)) {
-			chaseByEnemy (new ChasingEnemyAbstract());
+			EnemyCombo ec = GameStaticData.getInstance ().getEnemyWithValue (5);
+			chaseByEnemy (ec);
 		}
 	}
 
@@ -82,13 +80,7 @@ public class GameManager : Singleton<GameManager> {
 		levelTextView.text = "Level."+PlayerData.getInstance ().level;
 	}
 
-	public void enterBattle(){
-		if (!inBattle) {
-			StartCoroutine (LoadBattle());
-			inBattle = true;
-			mainCamera.gameObject.SetActive (false);
-		}
-	}
+
 
 	public void finishBattle(){
 		inBattle = false;
@@ -114,12 +106,20 @@ public class GameManager : Singleton<GameManager> {
 		UIObjectFactory.SetPackageItemExtension("ui://UIMain/EnterBattlePanel", typeof(EnterBattlePanel));
 
 		UIObjectFactory.SetPackageItemExtension("ui://UIMain/MemoItem", typeof(MemoItem));
-		UIObjectFactory.SetPackageItemExtension("ui://UIMain/RoleClickable", typeof(ItemWithDetail));
+
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/PotionSmall", typeof(PotionSmall));
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/ScarSmall", typeof(ScarSmallIcon));
+
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/TowerPropertyDetail", typeof(TowerPropertyAfter));
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/TowerDamageItem", typeof(TowerDamageItem));
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/TowerSkillItem", typeof(TowerSkillItem));
+
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/AccesoryView", typeof(AccesoryView));
+
 		//UIObjectFactory.SetPackageItemExtension("ui://UIMain/AccesoryView", typeof(AccesoryView));
 
 
 		_main = GameObject.Find ("UIPanel").GetComponent<UIPanel> ().ui;
-		_main.GetChild ("n3").onClick.Add (enterBattle);
 
 		Vector3 detailPanelPos = mainCamera.ScreenToWorldPoint (new Vector3 (-100f,mainCamera.pixelHeight/2, 0));
 		detailPanelPos.z = 0;
@@ -135,8 +135,16 @@ public class GameManager : Singleton<GameManager> {
 
 		detail = _main.GetChild ("detail").asLoader;
 		detail.url="detail";
-		detail.onClick.Add (delegate(EventContext context) {
+		detail.onTouchBegin.Add (delegate(EventContext context) {
 			eMenu.Show();
+		});
+
+
+		_enterBattle = _main.GetChild ("enterBattle").asLoader;
+		_enterBattle.onTouchEnd.Add (delegate() {
+			if(PlayerData.getInstance ().chasingEnemies.Count>0){
+				clickEnterBattleButton();
+			}
 		});
 
 		_mask = _main.GetChild ("mask").asGraph;
@@ -166,7 +174,7 @@ public class GameManager : Singleton<GameManager> {
 			return;
 		}
 		Debug.Log (PlayerData.getInstance ().beforeEid);
-		EncounterInfo einfo = GameStaticData.getInstance ().encounterDic [PlayerData.getInstance ().beforeEid];
+		EncounterInfo einfo = GameStaticData.getInstance ().getEncounterInfo (PlayerData.getInstance ().beforeEid);
 		EncounterStage es = einfo.stages [PlayerData.getInstance ().beforeStage];
 		int showIdx = -1;
 		if (PlayerData.getInstance ().battleWin) {
@@ -226,6 +234,10 @@ public class GameManager : Singleton<GameManager> {
 
 	}
 
+	public void finishItemGet(){
+		StartCoroutine(lateCheckIfBattle ());
+	}
+
 
 	public void showGetItemEffect(Vector2 originPosInGlobal){
 		NewItem copyView = (NewItem)UIPackage.CreateObject ("UIMain", "NewItem").asCom;
@@ -245,7 +257,7 @@ public class GameManager : Singleton<GameManager> {
 		}).OnComplete(delegate() {
 			copyView.TweenFade(0,0.2f).OnComplete(delegate() {
 				_main.RemoveChild(copyView);
-
+				copyView.Dispose();
 			});
 		});
 	}
@@ -261,10 +273,10 @@ public class GameManager : Singleton<GameManager> {
 		PlayerData.getInstance ().chasingEnemies.Clear ();
 	}
 
-	public void chaseByEnemy(ChasingEnemyAbstract enemyInfo){
+	public void chaseByEnemy(EnemyCombo enemyInfo){
 		PlayerData.getInstance ().addMonster (enemyInfo);
 		addMonsterView (enemyInfo);
-		StartCoroutine (lateCheckIfBattle());
+		//StartCoroutine (lateCheckIfBattle());
 	}
 
 	public void reArrangeEnemies(){
@@ -275,53 +287,59 @@ public class GameManager : Singleton<GameManager> {
 		}
 	}
 
-	public void addMonsterView(ChasingEnemyAbstract enemyInfo){
+	public void addMonsterView(EnemyCombo enemyInfo){
 		MonsterCardComponent item = (MonsterCardComponent)UIPackage.CreateObject ("UIMain", "MonsterCard").asCom;
 		monsterContianer.AddChild (item);
 		item.SetXY (-100,-100);
-		item.setName (enemyInfo.enemyId+"");
-		//item.visible = false;
-		showAddMonsterEffect (Vector2.zero,monsterContianer.LocalToGlobal(item.position));
+		//item.setName (enemyInfo.enemyId+"");
+		item.setInfo (enemyInfo);
+		item.visible = false;
+		showAddMonsterEffect (monsterContianer.LocalToGlobal(item.position),item);
 		reArrangeEnemies ();
 	}
 
 	IEnumerator lateCheckIfBattle(){
-		yield return new WaitForSecondsRealtime (0.5f);
-		if (PlayerData.getInstance ().chasingEnemies.Count >= 3) {
-			clearAllEnemy ();
-			//initAndShow
-			enterBattlePanel.initAndShow(delegate() {
-				PlayerData.getInstance ().initBattle ();
-				GameManager.getInstance ().enterBattle ();
-			});
+		GRoot.inst.touchable = false;
+		//yield break;
+		yield return new WaitForSecondsRealtime (1f);
+		GRoot.inst.touchable = true;
+		if (PlayerData.getInstance ().chasingEnemies.Count > 3) {
+			clickEnterBattleButton ();
 		}
 	}
 
-	public void showAddMonsterEffect(Vector2 originPosInGlobal,Vector2 toPosInGlobal){
+	public void showAddMonsterEffect(Vector2 toPosInGlobal,MonsterCardComponent item){
 		MonsterCardComponent copyView = (MonsterCardComponent)UIPackage.CreateObject ("UIMain", "MonsterCard").asCom;
 		//GTextField copyView = new GTextField();
-
+		copyView.setInfo(item.info);
 		//Vector2 f = _new_item_list.GetChildAt (idx).position;
-		copyView.position = _main.GlobalToLocal(originPosInGlobal);
+
 		copyView.sortingOrder = 100;
+		copyView.alpha = 0;
+		GRoot.inst.AddChild (copyView);
+		copyView.position = new Vector2(GRoot.inst.width/2-copyView.width/2,GRoot.inst.height/2-copyView.height/2);
+		//_main.AddChild (copyView);
+		copyView.TweenFade(1,0.4f).OnComplete(delegate() {
+			copyView.TweenMove (_main.GlobalToLocal(toPosInGlobal),0.6f).OnUpdate(delegate(GTweener tweener) {
+				copyView.InvalidateBatchingState();
+				//float r = (tweener.deltaValue.vec2-tweener.startValue.vec2).magnitude/(tweener.endValue.vec2-tweener.startValue.vec2).magnitude;
+				//r = 1-r*0.6f;
+				//r = r*0.6;
+				//copyView.scale = new Vector2(r,r);
+			}).OnComplete(delegate() {
 
-		_main.AddChild (copyView);
+				//monsterContianer.GetChildAt(monsterContianer.numChildren-1).visible = true;
+				item.visible = true;
+				copyView.TweenFade(0,0.2f).OnComplete(delegate() {
+					//_main.RemoveChild(copyView);
+					GRoot.inst.RemoveChild (copyView);
+					copyView.Dispose();
+					_enterBattle.visible = true;
 
-		copyView.TweenMove (_main.GlobalToLocal(toPosInGlobal),0.3f).OnUpdate(delegate(GTweener tweener) {
-			copyView.InvalidateBatchingState();
-			//float r = (tweener.deltaValue.vec2-tweener.startValue.vec2).magnitude/(tweener.endValue.vec2-tweener.startValue.vec2).magnitude;
-			//r = 1-r*0.6f;
-			//r = r*0.6;
-			//copyView.scale = new Vector2(r,r);
-		}).OnComplete(delegate() {
-			
-			//monsterContianer.GetChildAt(monsterContianer.numChildren-1).visible = true;
-
-			copyView.TweenFade(0,0.2f).OnComplete(delegate() {
-				_main.RemoveChild(copyView);
-				copyView.Dispose();
+				});
 			});
 		});
+
 	}
 
 	public void enterShop(){
@@ -331,5 +349,23 @@ public class GameManager : Singleton<GameManager> {
 	public void showDetailAmplifier(string content){
 		itemDetailAmplifier.setInfo (content);
 		itemDetailAmplifier.Show ();
+	}
+
+	void clickEnterBattleButton(){
+		clearAllEnemy ();
+		//initAndShow
+		enterBattlePanel.initAndShow(delegate() {
+			PlayerData.getInstance ().initBattle ();
+			GameManager.getInstance ().enterBattle ();
+		});
+		_enterBattle.visible = false;
+	}
+
+	public void enterBattle(){
+		if (!inBattle) {
+			StartCoroutine (LoadBattle());
+			inBattle = true;
+			mainCamera.gameObject.SetActive (false);
+		}
 	}
 }

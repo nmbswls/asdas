@@ -7,6 +7,9 @@ using FairyGUI;
 public class BattleManager : Singleton<BattleManager> {
 
 	public GameObject playerPrefab;
+	public GameObject spawnerPrefab;
+	public Transform spawnerLayer;
+
 	public Camera battleMainCamera;
 	public Transform enemySpawnerLayer;
 	public Transform mapObjLayer;
@@ -62,19 +65,45 @@ public class BattleManager : Singleton<BattleManager> {
 		mapItemManager = GetComponent<MapItemManager> ();
 		dropManager = GetComponent<MonsterDropManager> ();
 		spawnPlayer ();
+		MapManager.getInstance ().Init ();
 		initBattle ();
 	}
 
-
+	public void spawnEnemy(string enemyId,Vector3 pos){
+		GameLife enemy = MonsterFactory.createEnemy (enemyId,pos,mapObjLayer);
+		enemy.OnDieCallback += delegate() {
+			enemyDie(enemy);
+		};
+	}
 
 	public void initBattle(){
-		if (PlayerData.getInstance ().isFixedBattle) {
-			//刷新固定battle
-			//List<string> enemies
-		} else {
-			List<ChasingEnemyAbstract> enemies = PlayerData.getInstance ().chasingEnemies;
+		//怪物由两部分组成，背景怪物 无限刷新 固定怪物 由怪物卡召唤
+
+
+		{
+			List<EnemyCombo> enemies = PlayerData.getInstance ().chasingEnemies;
+			List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (enemies.Count);
+
+			for (int i = 0; i < spawners.Count; i++) {
+				Vector3 center = MapManager.getInstance ().cellPosToWorldPos (spawners[i][0],spawners[i][1]);
+				spawnEnemy(enemies [i].enemyId [0],center);
+			}
 			PlayerData.getInstance ().chasingEnemies.Clear ();
 		}
+
+		{
+			List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (3);
+			for (int i = 0; i < 3; i++) {
+				Vector3 center = MapManager.getInstance ().cellPosToWorldPos (spawners[i][0],spawners[i][1]);
+				GameObject o = GameObject.Instantiate(spawnerPrefab,center,Quaternion.identity,spawnerLayer);
+				EnemySpawner spanwer = o.GetComponent<EnemySpawner> ();
+				enemySpawners.Add (spanwer);
+				spanwer.enemyName="10005";
+			}
+		}
+
+			
+
 
 		for (int i = 0; i < 3; i++) {
 			if(i>=PlayerData.getInstance ().potions.Count)break;

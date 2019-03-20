@@ -9,7 +9,7 @@ namespace AssemblyCSharp
 		public int j = 0;
 		public bool isFinish;
 
-		public EncounterState(string eid = ""){
+		public EncounterState(string eid = "empty"){
 			this.eid = eid;
 		}
 	}

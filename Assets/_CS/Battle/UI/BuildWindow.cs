@@ -6,7 +6,8 @@ public class BuildWindow : Window
 {
 
 	GList _list;
-	GComponent _detail;
+
+	BuildDetail _detail;
 	GComponent _confirmButton;
 
 	public BuildWindow()
@@ -18,7 +19,8 @@ public class BuildWindow : Window
 		if (_list.numItems > 0) {
 			_list.selectedIndex = 0;
 			_detail.visible = true;
-			_detail.GetChild ("name").asTextField.text = ((BuildItem)(_list.GetChildAt(0))).Name;
+			_detail.updateView (((BuildItem)_list.GetChildAt(0)).info);
+			//_detail.GetChild ("name").asTextField.text = ((BuildItem)(_list.GetChildAt(0))).Name;
 		}
 		_list.columnGap = (int)interval;
 		Time.timeScale = Time.timeScale==0?1:0;
@@ -43,10 +45,11 @@ public class BuildWindow : Window
 		this.modal = true;
 
 		_list = this.contentPane.GetChild("list").asList;
+
 		_list.onClickItem.Add(__clickItem);
 		_list.itemRenderer = RenderListItem;
 		_list.EnsureBoundsCorrect();
-		_detail = this.contentPane.GetChild ("detail").asCom;
+		_detail = (BuildDetail)this.contentPane.GetChild ("detail").asCom;
 		_detail.visible = false;
 
 		_confirmButton = this.contentPane.GetChild ("confirm").asCom;
@@ -56,8 +59,7 @@ public class BuildWindow : Window
 		foreach (TowerTemplate tt in BattleManager.getInstance ().buildableTowers)
 		{
 			BuildItem item = (BuildItem)_list.AddItemFromPool("ui://UIMain/BuildItem");
-			item.Name = tt.tbase.tname;
-			item.desp = tt.tbase.tdesp;
+			item.info = tt;
 		}
 		float interval = 300/(_list.numChildren>8?8:_list.numChildren);
 		_list.columnGap = (int)interval;
@@ -89,8 +91,7 @@ public class BuildWindow : Window
 	{
 		BuildItem item = (BuildItem)context.data;
 		_detail.visible = true;
-		_detail.GetChild ("name").asTextField.text = item.Name;
-		_detail.GetChild ("desp").asTextField.text = item.desp;
+		_detail.updateView (item.info);
 		//this.contentPane.GetChild("n11").asLoader.url = item.icon;
 		//this.contentPane.GetChild("n13").text = item.icon;
 	}
