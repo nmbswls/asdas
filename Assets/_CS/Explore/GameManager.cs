@@ -133,11 +133,7 @@ public class GameManager : Singleton<GameManager> {
 
 		_main = GameObject.Find ("UIPanel").GetComponent<UIPanel> ().ui;
 
-		Vector3 detailPanelPos = camera3D.ScreenToWorldPoint (new Vector3 (20f,camera3D.pixelHeight/2, 10));
-		detailPanelPos.z = 0;
-		GameObject.Find ("EncounterDetailPanel").transform.position = detailPanelPos;
-		detailPanel = GameObject.Find ("EncounterDetailPanel").GetComponent<UIPanel>().ui;
-		detailPanel.visible = false;
+		initEncounterDetail ();
 
 
 
@@ -183,6 +179,19 @@ public class GameManager : Singleton<GameManager> {
 
 		checkBattleRes ();
 	}
+
+	void initEncounterDetail(){
+		Vector3 detailPanelPos = camera3D.ScreenToWorldPoint (new Vector3 (20f,camera3D.pixelHeight/2, 10));
+		//detailPanelPos.z = 0;
+		GameObject detailPanelGo = GameObject.Find ("EncounterDetailPanel");
+		detailPanelGo.transform.position = detailPanelPos;
+		detailPanel = detailPanelGo.GetComponent<UIPanel>().ui;
+		detailPanel.visible = false;
+		detailPanel.GetChild ("close").asLoader.onClick.Add (delegate() {
+			Debug.Log("close");
+		});
+	}
+
 
 	void checkBattleRes(){
 		if (!PlayerData.getInstance ().isWaitingBattle||!PlayerData.getInstance().isFixedBattle) {

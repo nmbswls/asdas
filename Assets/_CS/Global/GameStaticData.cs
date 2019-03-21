@@ -101,14 +101,14 @@ public class GameStaticData
 		h1.tianfu [2] = "强壮";
 
 		UsableHeroInfo h2 = new UsableHeroInfo ();
-		h2.name = "Magician";
-		h2.desp = "He is a powerful magician with strong will and fragile body.\nHe can use magic to play his enemy.\nHe is used to darkness.";
+		h2.name = "Wizard";
+		h2.desp = "He is a powerful wizard with strong will and fragile body.\nHe can use magic to play his enemy.\nHe is used to darkness.";
 		h2.maxHp = 100;
 		h2.maxMp = 20;
 		h2.tianfu [0] = "智商剥削";
 
 		UsableHeroInfo h3 = new UsableHeroInfo ();
-		h3.name = "scavenger";
+		h3.name = "Scavenger";
 		h3.desp = "He is searching for something.\nHe is good at protect himself.\nHe is an sb.";
 		h3.maxHp = 100;
 		h3.maxMp = 20;
