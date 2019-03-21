@@ -194,7 +194,7 @@ public class GameLife : MapObject
 		if (isPlayer) {
 			
 			if (!lockPanel) {
-				vReal = pCtrl.Dmag * pCtrl.Dvec * WalkSpeed;
+				vReal = /*pCtrl.Dmag*/1 * pCtrl.Dvec * WalkSpeed;
 			}
 		}
 

@@ -43,7 +43,7 @@ public class PhysicsComponent : MonoBehaviour
 			Vector2 validMoveDest = DoStaticCollisions (moveBy+new Vector2(transform.position.x,transform.position.y));
 			if (canSlide) {
 				if ((CollFlags & eCollFlags.DOWN) != 0 || (CollFlags & eCollFlags.UP) != 0) {
-					if (Vector2.Dot (moveBy.normalized, Vector2.up) > 0.84f || Vector2.Dot (moveBy.normalized, Vector2.down) > 0.84f) {
+					if (Vector2.Dot (moveBy.normalized, Vector2.up) > 0.8f || Vector2.Dot (moveBy.normalized, Vector2.down) > 0.8f) {
 
 					} else {
 						Vector2 newMoveBy = moveBy.magnitude * (moveBy.x>0?Vector2.right:Vector2.left)*0.4f;
@@ -51,8 +51,8 @@ public class PhysicsComponent : MonoBehaviour
 					}
 
 				}else if ((CollFlags & eCollFlags.LEFT) != 0 || (CollFlags & eCollFlags.RIGHT) != 0) {
-					if (Vector2.Dot (moveBy.normalized, Vector2.left) > 0.84f || Vector2.Dot (moveBy.normalized, Vector2.right) > 0.84f) {
-
+					if (Vector2.Dot (moveBy.normalized, Vector2.left) > 0.8f || Vector2.Dot (moveBy.normalized, Vector2.right) > 0.8f) {
+						
 					} else {
 						Vector2 newMoveBy = moveBy.magnitude * (moveBy.y>0?Vector2.up:Vector2.down)*0.4f;
 						validMoveDest = DoStaticCollisions (newMoveBy+new Vector2(transform.position.x,transform.position.y));

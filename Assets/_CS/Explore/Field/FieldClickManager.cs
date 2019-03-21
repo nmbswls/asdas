@@ -62,9 +62,9 @@ public class FieldClickManager : MonoBehaviour
 		{
 			#if IPHONE || ANDROID
 			//if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-			if (Stage.isTouchOnUI){
+			if (Stage.isTouchOnUI||!GRoot.inst.touchable){
 			#else
-			if (Stage.isTouchOnUI) {
+			if (Stage.isTouchOnUI||!GRoot.inst.touchable) {
 				//Debug.Log(Stage.inst.touchTarget.gameObject.name);	
 				//if (EventSystem.current.IsPointerOverGameObject ())
 			#endif

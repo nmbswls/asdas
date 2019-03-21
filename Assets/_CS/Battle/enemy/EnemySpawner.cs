@@ -20,7 +20,6 @@ public class EnemySpawner : MonoBehaviour {
 		if (difficultyLevel <= 5) {
 			if (timeTotal > 2000 * difficultyLevel) {
 				difficultyLevel += 1;
-				Debug.Log ("diffi 升级");
 			}
 		}
 
