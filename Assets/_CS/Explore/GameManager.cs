@@ -13,6 +13,7 @@ public class GameManager : Singleton<GameManager> {
 
 	bool inBattle = false;
 	public Camera mainCamera;
+	public Camera camera3D;
 	public GridManager gridManager;
 
 	public GetItemManager getItemManager;
@@ -27,7 +28,7 @@ public class GameManager : Singleton<GameManager> {
 	GTextField moneyTextView;
 	GTextField sanTextView;
 	GTextField levelTextView;
-	GLoader detail;
+	GLoader showdetailButton;
 
 	GLoader _enterBattle;
 
@@ -132,11 +133,14 @@ public class GameManager : Singleton<GameManager> {
 
 		_main = GameObject.Find ("UIPanel").GetComponent<UIPanel> ().ui;
 
-		Vector3 detailPanelPos = mainCamera.ScreenToWorldPoint (new Vector3 (-100f,mainCamera.pixelHeight/2, 0));
+		Vector3 detailPanelPos = camera3D.ScreenToWorldPoint (new Vector3 (20f,camera3D.pixelHeight/2, 10));
 		detailPanelPos.z = 0;
 		GameObject.Find ("EncounterDetailPanel").transform.position = detailPanelPos;
 		detailPanel = GameObject.Find ("EncounterDetailPanel").GetComponent<UIPanel>().ui;
 		detailPanel.visible = false;
+
+
+
 		monsterContianer = _main.GetChild ("monsters").asCom;
 
 		hpTextView = _main.GetChild ("hp").asTextField;
@@ -144,9 +148,9 @@ public class GameManager : Singleton<GameManager> {
 		sanTextView = _main.GetChild ("san").asTextField;
 		levelTextView = _main.GetChild ("level").asTextField;
 
-		detail = _main.GetChild ("detail").asLoader;
-		detail.url="detail";
-		detail.onTouchBegin.Add (delegate(EventContext context) {
+		showdetailButton = _main.GetChild ("detail").asLoader;
+		showdetailButton.url="detail";
+		showdetailButton.onTouchBegin.Add (delegate(EventContext context) {
 			eMenu.Show();
 		});
 
