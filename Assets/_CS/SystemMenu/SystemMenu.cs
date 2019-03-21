@@ -37,7 +37,7 @@ public class SystemMenu : Singleton<SystemMenu> {
 		_main_menu.GetChild ("quit").onClick.Add (quit);
 
 		//_main_menu.onClick.Add (OnClick);
-		_main_menu.onTouchBegin.Add (OnClick);
+		_main_menu.onTouchBegin.Add (OnClickShow);
 		effect = _main_menu.GetChild("effect").asMovieClip;
 //		ShowClickMask _maskLayer = (ShowClickMask)UIPackage.CreateObject ("UIMain", "ClickShower").asCom;
 //		_maskLayer.SetSize(GRoot.inst.width, GRoot.inst.height);
@@ -49,7 +49,6 @@ public class SystemMenu : Singleton<SystemMenu> {
 //		_main_menu.AddChild (mask);
 //		Debug.Log (_main_menu.numChildren);
 //		Debug.Log (mask.position);
-		Debug.Log(_main_menu.numChildren);
 
 		_newHeroPanel = _main_menu.GetChild ("newHeroPanel").asCom;
 		_info = _newHeroPanel.GetChild ("info").asTextField;
@@ -79,16 +78,20 @@ public class SystemMenu : Singleton<SystemMenu> {
 	void RenderHeroes(int index, GObject obj)
 	{
 		GButton item = (GButton)obj;
+		item.touchable = false;
 		item.SetPivot(0.5f, 0.5f);
-		item.icon = "image/atk";
+		item.icon = "image/hero"+index;
 	}
 
 
 	void changeHeroDetail(){
 		choosedHeroIdx = (_hero_list.GetFirstChildInView () + 1) % _hero_list.numItems;
-		Debug.Log (choosedHeroIdx);
 		_info.text = GameStaticData.getInstance ().heroes [choosedHeroIdx].name;
 		_desp.text = GameStaticData.getInstance ().heroes [choosedHeroIdx].desp;
+
+		_hero_list.ClearSelection ();
+		_hero_list.GetChildAt (1).asButton.selected = true;;
+
 	}
 
 
@@ -101,8 +104,9 @@ public class SystemMenu : Singleton<SystemMenu> {
 		{
 			GObject obj = _hero_list.GetChildAt(i);
 			float dist = Mathf.Abs(midX - obj.x - obj.width / 2);
-			if (dist > obj.width) //no intersection
-				obj.SetScale(1, 1);
+			if (dist > obj.width) { //no intersection
+				obj.SetScale (1, 1);
+			}
 			else
 			{
 				float ss = 1 + (1 - dist / obj.width) * 0.36f;
@@ -118,8 +122,7 @@ public class SystemMenu : Singleton<SystemMenu> {
 		
 	}
 
-	void OnClick(EventContext context){
-		Debug.Log ("heihei");
+	void OnClickShow(EventContext context){
 		InputEvent evt = (InputEvent)context.data;
 		effect.visible = true;
 		Vector2 pt = GRoot.inst.GlobalToLocal(new Vector2(evt.x, evt.y));

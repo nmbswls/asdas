@@ -92,8 +92,8 @@ public class GameStaticData
 	public void initHeroes(){
 		
 		UsableHeroInfo h1 = new UsableHeroInfo ();
-		h1.name = "傻逼";
-		h1.desp = "超级大傻逼";
+		h1.name = "Soldier";
+		h1.desp = "He is a soldier.\nHe is pretty strong and fearless.\nHe is good at battle.";
 		h1.maxHp = 100;
 		h1.maxMp = 20;
 		h1.tianfu [0] = "强力";
@@ -101,15 +101,15 @@ public class GameStaticData
 		h1.tianfu [2] = "强壮";
 
 		UsableHeroInfo h2 = new UsableHeroInfo ();
-		h2.name = "智障";
-		h2.desp = "超级大智障";
+		h2.name = "Magician";
+		h2.desp = "He is a powerful magician with strong will and fragile body.\nHe can use magic to play his enemy.\nHe is used to darkness.";
 		h2.maxHp = 100;
 		h2.maxMp = 20;
 		h2.tianfu [0] = "智商剥削";
 
 		UsableHeroInfo h3 = new UsableHeroInfo ();
-		h3.name = "白痴";
-		h3.desp = "超级大白痴";
+		h3.name = "scavenger";
+		h3.desp = "He is searching for something.\nHe is good at protect himself.\nHe is an sb.";
 		h3.maxHp = 100;
 		h3.maxMp = 20;
 		h3.tianfu [0] = "智力归零";
