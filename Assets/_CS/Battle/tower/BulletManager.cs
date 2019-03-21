@@ -9,6 +9,7 @@ public class BulletManager
 	static BulletManager _instance;
 
 	public GameObject bulletPrefab;
+	public List<Sprite> bulletSprites = new List<Sprite>();
 	public static BulletManager inst
 	{
 		get
@@ -26,9 +27,17 @@ public class BulletManager
 	public BulletManager()
 	{
 		bulletPrefab = Resources.Load ("Prefabs/bullet01") as GameObject;
+		{
+			GameObject a = Resources.Load ("Prefabs/bullet/bullet01") as GameObject;
+			bulletSprites.Add (a.GetComponent<SpriteRenderer> ().sprite);
+		}
+		{
+			GameObject a = Resources.Load ("Prefabs/bullet/bullet02") as GameObject;
+			bulletSprites.Add (a.GetComponent<SpriteRenderer> ().sprite);
+		}
 	}
 
-	public void Emit(GameObject owner, GameObject target, bool isHoming, int vHight = 0, int height = 0)
+	public void Emit(int style, GameObject owner, GameObject target, bool isHoming, int vHight = 0, int height = 0)
 	{
 		GameObject b;
 		if (_componentPool.Count > 0)
@@ -36,6 +45,7 @@ public class BulletManager
 		else
 			b = GameObject.Instantiate (bulletPrefab,owner.transform.parent);
 		BallisticBullet bullet = b.GetComponent<BallisticBullet> ();
+		bullet.GetComponentInChildren<SpriteRenderer> ().sprite = bulletSprites [style];
 		bullet.init(owner.GetComponent<Tower>(), target, isHoming, vHight, height);
 	}
 

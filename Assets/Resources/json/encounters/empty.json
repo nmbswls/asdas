@@ -25,16 +25,7 @@
 			"res": {
 				"type": 0,
 				"finishEffect": "none",
-				"rewords": [{
-						"rewardName": "",
-						"rewardAmount": 0,
-						"chance": 0
-					},
-					{
-						"rewardName": "",
-						"rewardAmount": 0,
-						"chance": 0
-					}
+				"rewords": [
 				]
 			},
 			"randomValue": 0,

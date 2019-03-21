@@ -202,7 +202,8 @@ public class SelectionBranchManager : Window
 			return;
 		if (res.type == eFinishType.NORMAL) {
 			if (res.rewords.Count > 0) {
-				GameManager.getInstance ().getItemManager.initAndShow (new string[]{ "大宝剑", "藏宝图", "火箭" });
+				List<string> l = GameStaticData.getInstance().getRandomComponents (3);
+				GameManager.getInstance ().getItemManager.initAndShow (l);
 			} else {
 				GameManager.getInstance ().finishItemGet ();
 			}

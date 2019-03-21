@@ -114,10 +114,10 @@ public class BattleManager : Singleton<BattleManager> {
 
 		buildableTowers = PlayerData.getInstance ().ownedTowers;
 		money = new int[4];
-		money[0] = 20;
-		money[1] = 20;
-		money[2] = 20;
-		money[3] = 20;
+		money[0] = 2000;
+		money[1] = 2000;
+		money[2] = 2000;
+		money[3] = 2000;
 
 		killLeft = 10;
 		hp = PlayerData.getInstance().hp;

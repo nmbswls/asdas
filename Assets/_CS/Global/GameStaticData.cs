@@ -234,6 +234,22 @@ public class GameStaticData
 		return data;
 	}
 
+	public TowerBase getTowerBase(string tid){
+		TowerBase data = null;
+		if (!towerBaseInfo.TryGetValue(tid,out data)) {
+			data = towerBaseInfo ["default"];
+		}
+		return data;
+	}
+
+	public TowerComponent getComponentInfo(string cid){
+		TowerComponent data = null;
+		if (!componentStaticInfo.TryGetValue(cid,out data)) {
+			data = componentStaticInfo ["default"];
+		}
+		return data;
+	}
+
 
 	public EncounterInfo getEncounterInfo(string eid){
 		if (encounterDic.ContainsKey (eid)) {
@@ -247,6 +263,9 @@ public class GameStaticData
 		return einfo;
 	}
 
+
+
+
 	public EnemyCombo getEnemyWithValue(int v){
 		EnemyCombo ec = new EnemyCombo ();
 		if (v <= 8) {
@@ -257,6 +276,18 @@ public class GameStaticData
 			ec.enemyNum.Add (v);
 		}
 		return ec;
+	}
+
+	public List<string> getRandomComponents(int num){
+		List<string> tt = new List<string> ();
+		foreach (var k in componentStaticInfo.Keys) {
+			tt.Add (k);
+		}
+		List<string> res = new List<string> ();
+		for (int i = 0; i < num; i++) {
+			res.Add (tt [(int)Random.Range (0, tt.Count)]);
+		}
+		return res;
 	}
 }
 

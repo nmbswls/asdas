@@ -36,6 +36,7 @@ public class TowerBase{
 	public eAtkType atkType = eAtkType.MELLE_POINT;
 	public AtkInfo mainAtk = new AtkInfo();
 	public List<AtkInfo> extraAtk = new List<AtkInfo>();
+	public int cost;
 	public int mingzhong;
 	public int atkInteval = 2000;
 	public int atkRange = 3000;
@@ -48,6 +49,8 @@ public class TowerSkill{
 	public int skillId;
 	public int maxLv;
 	public int cooldown = 20000;
+	public bool isSelfTarget = false;
+	public eAtkType atkType = eAtkType.MELLE_POINT;
 	public bool isPassive = false;
 	public bool isPermanent = false;
 	public ePassiveCheckPoint checkPoint = ePassiveCheckPoint.ATK;
@@ -269,7 +272,7 @@ public class PlayerData
 		for (int i = 0; i < 20; i++) {
 			
 			TowerComponent tc = null;
-			GameStaticData.getInstance().componentStaticInfo.TryGetValue(i%3+"",out tc);
+			GameStaticData.getInstance().componentStaticInfo.TryGetValue("c0"+(i%6),out tc);
 			if (tc == null) {
 				tc = GameStaticData.getInstance().componentStaticInfo["default"];
 			}

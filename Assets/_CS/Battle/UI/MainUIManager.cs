@@ -51,7 +51,7 @@ public class MainUIManager : MonoBehaviour
 		_buildBtn = _mainView.GetChild ("build").asCom;
 		_buildWin = new BuildWindow();
 		_hp_bar = _mainView.GetChild ("hpBar").asCom;
-		_buildBtn.onClick.Add(() => { _buildWin.Show(); Debug.Log("?");});
+		_buildBtn.onClick.Add(() => { _buildWin.Show();});
 
 		_potions [0] = _mainView.GetChild ("potion_0").asCom;
 		_potions [1] = _mainView.GetChild ("potion_1").asCom;

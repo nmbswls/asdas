@@ -69,8 +69,17 @@ public class GameManager : Singleton<GameManager> {
 	void Update () {
 		if (Input.GetKeyUp (KeyCode.B)) {
 			EnemyCombo ec = GameStaticData.getInstance ().getEnemyWithValue (5);
-			chaseByEnemy (ec);
+			List<EnemyCombo> sss = new List<EnemyCombo> ();
+			sss.Add (ec);
+			sss.Add (ec);
+			sss.Add (ec);
+			chaseByEnemy (sss);
 		}
+
+		if (Input.GetKeyUp (KeyCode.C)) {
+			getNewScar (new List<Scar>());
+		}
+
 	}
 
 	void resetStats(){
@@ -115,6 +124,8 @@ public class GameManager : Singleton<GameManager> {
 		UIObjectFactory.SetPackageItemExtension("ui://UIMain/TowerSkillItem", typeof(TowerSkillItem));
 
 		UIObjectFactory.SetPackageItemExtension("ui://UIMain/AccesoryView", typeof(AccesoryView));
+
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/Hint", typeof(HintComponent));
 
 		//UIObjectFactory.SetPackageItemExtension("ui://UIMain/AccesoryView", typeof(AccesoryView));
 
@@ -239,27 +250,48 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 
-	public void showGetItemEffect(Vector2 originPosInGlobal){
+	public void initGetItemEffect(Vector2 originPosInGlobal,string itemId){
 		NewItem copyView = (NewItem)UIPackage.CreateObject ("UIMain", "NewItem").asCom;
-		//GTextField copyView = new GTextField();
-		copyView.text = "assasasaaas";
-		//Vector2 f = _new_item_list.GetChildAt (idx).position;
-		copyView.position = _main.GlobalToLocal(originPosInGlobal);
-		copyView.sortingOrder = 100;
+		copyView.init(itemId);
+		showGetItemEffect (originPosInGlobal,copyView);
+	}
+	public void initGetItemEffect(List<string> itemIds){
+
+
+		Vector2 center = new Vector2 (GRoot.inst.width/2,GRoot.inst.height/2);
+		center.x -= (int)(itemIds.Count * 0.5f * 160);
+
+		for(int i=0;i<itemIds.Count;i++){
+			NewItem copyView = (NewItem)UIPackage.CreateObject ("UIMain", "NewItem").asCom;
+			copyView.init(itemIds[i]);
+			showGetItemEffect (center + new Vector2(160*i,i%2 * 10),copyView);
+		}
+
+	}
+
+	void showGetItemEffect(Vector2 originPosInGlobal,NewItem itemCopy){
+		itemCopy.position = GRoot.inst.GlobalToLocal(new Vector2(originPosInGlobal.x - itemCopy.width/2, originPosInGlobal.y - itemCopy.height/2));
+		itemCopy.sortingOrder = 100;
+		itemCopy.touchable = false;
+		itemCopy.alpha = 0.4f;
 		//GRoot.inst.AddChild (copyView);
-		_main.AddChild (copyView);
-		copyView.TweenMove (new Vector2(0,GRoot.inst.height-copyView.height*0.4f),0.3f).OnUpdate(delegate(GTweener tweener) {
-			copyView.InvalidateBatchingState();
-			float r = (tweener.deltaValue.vec2-tweener.startValue.vec2).magnitude/(tweener.endValue.vec2-tweener.startValue.vec2).magnitude;
-			r = 1-r*0.6f;
-			//r = r*0.6;
-			copyView.scale = new Vector2(r,r);
-		}).OnComplete(delegate() {
-			copyView.TweenFade(0,0.2f).OnComplete(delegate() {
-				_main.RemoveChild(copyView);
-				copyView.Dispose();
+		GRoot.inst.AddChild (itemCopy);
+
+		itemCopy.TweenFade (1, 0.8f).OnComplete (delegate() {
+			itemCopy.TweenMove (new Vector2 (0, GRoot.inst.height - itemCopy.height * 0.4f), 0.3f).OnUpdate (delegate(GTweener tweener) {
+				itemCopy.InvalidateBatchingState ();
+				float r = (tweener.deltaValue.vec2 - tweener.startValue.vec2).magnitude / (tweener.endValue.vec2 - tweener.startValue.vec2).magnitude;
+				r = 1 - r * 0.6f;
+				//r = r*0.6;
+				itemCopy.scale = new Vector2 (r, r);
+			}).OnComplete (delegate() {
+				itemCopy.TweenFade (0, 0.2f).OnComplete (delegate() {
+					GRoot.inst.RemoveChild (itemCopy);
+					itemCopy.Dispose ();
+				});
 			});
 		});
+
 	}
 
 
@@ -273,9 +305,22 @@ public class GameManager : Singleton<GameManager> {
 		PlayerData.getInstance ().chasingEnemies.Clear ();
 	}
 
-	public void chaseByEnemy(EnemyCombo enemyInfo){
+	public void chaseByEnemy(List<EnemyCombo> enemies){
+		Vector2 center = new Vector2 (GRoot.inst.width/2,GRoot.inst.height/2);
+		center.x -= (int)(enemies.Count * 0.5f * 140);
+		for (int i = 0; i < enemies.Count; i++) {
+			chaseByEnemy (enemies [i], center + new Vector2 (140 * i, i%2 * 20));
+		}
+	}
+
+	public void chaseByEnemy(EnemyCombo enemy){
+		Vector2 center = new Vector2 (GRoot.inst.width/2,GRoot.inst.height/2);
+		chaseByEnemy (enemy, center);
+	}
+
+	public void chaseByEnemy(EnemyCombo enemyInfo,Vector2 originPos){
 		PlayerData.getInstance ().addMonster (enemyInfo);
-		addMonsterView (enemyInfo);
+		addMonsterView (enemyInfo,originPos);
 		//StartCoroutine (lateCheckIfBattle());
 	}
 
@@ -287,14 +332,14 @@ public class GameManager : Singleton<GameManager> {
 		}
 	}
 
-	public void addMonsterView(EnemyCombo enemyInfo){
+	public void addMonsterView(EnemyCombo enemyInfo, Vector2 originPos){
 		MonsterCardComponent item = (MonsterCardComponent)UIPackage.CreateObject ("UIMain", "MonsterCard").asCom;
 		monsterContianer.AddChild (item);
 		item.SetXY (-100,-100);
 		//item.setName (enemyInfo.enemyId+"");
 		item.setInfo (enemyInfo);
 		item.visible = false;
-		showAddMonsterEffect (monsterContianer.LocalToGlobal(item.position),item);
+		showAddMonsterEffect (originPos,monsterContianer.LocalToGlobal(item.position),item);
 		reArrangeEnemies ();
 	}
 
@@ -308,7 +353,7 @@ public class GameManager : Singleton<GameManager> {
 		}
 	}
 
-	public void showAddMonsterEffect(Vector2 toPosInGlobal,MonsterCardComponent item){
+	public void showAddMonsterEffect(Vector2 originPos,Vector2 toPosInGlobal,MonsterCardComponent item){
 		GRoot.inst.touchable = false;
 		MonsterCardComponent copyView = (MonsterCardComponent)UIPackage.CreateObject ("UIMain", "MonsterCard").asCom;
 		//GTextField copyView = new GTextField();
@@ -318,7 +363,7 @@ public class GameManager : Singleton<GameManager> {
 		copyView.sortingOrder = 100;
 		copyView.alpha = 0;
 		GRoot.inst.AddChild (copyView);
-		copyView.position = new Vector2(GRoot.inst.width/2-copyView.width/2,GRoot.inst.height/2-copyView.height/2);
+		copyView.position = new Vector2(originPos.x - copyView.width/2,originPos.y - copyView.height/2);
 		//_main.AddChild (copyView);
 		copyView.TweenFade(1,0.4f).OnComplete(delegate() {
 			copyView.TweenMove (_main.GlobalToLocal(toPosInGlobal),0.6f).OnUpdate(delegate(GTweener tweener) {
@@ -369,5 +414,22 @@ public class GameManager : Singleton<GameManager> {
 			inBattle = true;
 			mainCamera.gameObject.SetActive (false);
 		}
+	}
+
+	public void showHint(string txt="提示"){
+		
+		HintComponent hint = (HintComponent)UIPackage.CreateObject ("UIMain", "Hint").asCom;
+		GRoot.inst.AddChild (hint);
+		hint.Center ();
+		hint.init (txt);
+	}
+
+	public void getNewScar(List<Scar> scars){
+		PlayerData.getInstance ().scars.AddRange (scars);
+		List<string> ss = new List<string> ();
+		ss.Add ("s01");
+		ss.Add ("s02");
+		ss.Add ("s03");
+		initGetItemEffect (ss);
 	}
 }

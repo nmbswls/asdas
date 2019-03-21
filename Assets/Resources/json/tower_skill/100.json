@@ -3,6 +3,7 @@
 		"skillId": 1001,
 		"maxLv": 3,
 		"cooldown": 20000,
+		"isSelfTarget":true,
 		"isPassive": false,
 		"isPermanent": false,
 		"checkPoint": 0,
@@ -31,5 +32,44 @@
 		"x": [10, 0, 0],
 		"y": [10, 0, 0],
 		"z": [10, 0, 0]
+	},
+	"1004": {
+		"skillId": 1004,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isSelfTarget":false,
+		"atkType":0,
+		"isPassive": false,
+		"isPermanent": true,
+		"checkPoint": 0,
+		"x": [3000, 3000, 3000],
+		"y": [3000, 0, 0],
+		"z": [3000, 0, 0]
+	},
+	"1005": {
+		"skillId": 1005,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isSelfTarget":false,
+		"atkType":2,
+		"isPassive": false,
+		"isPermanent": true,
+		"checkPoint": 0,
+		"x": [2000, 2000, 2000],
+		"y": [2000, 0, 0],
+		"z": [2000, 0, 0]
+	},
+	"1006": {
+		"skillId": 1006,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isSelfTarget":false,
+		"atkType":2,
+		"isPassive": false,
+		"isPermanent": true,
+		"checkPoint": 0,
+		"x": [2000, 2000, 2000],
+		"y": [2000, 0, 0],
+		"z": [2000, 0, 0]
 	}
 }

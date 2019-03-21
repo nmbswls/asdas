@@ -89,7 +89,18 @@ public class PlayerModule : MonoBehaviour
 		return true;
 	}
 
-	public void SpawnTower(int towerIdx){
+	public bool tryBuildTower(int towerIdx){
+		if (BattleManager.getInstance ().money [0] < BattleManager.getInstance ().buildableTowers [towerIdx].tbase.cost) {
+			return false;	
+		}
+		if (!SpawnTower (towerIdx)) {
+			return false;
+		}
+		BattleManager.getInstance ().money [0] -= BattleManager.getInstance ().buildableTowers [towerIdx].tbase.cost;
+		return true;
+	}
+
+	public bool SpawnTower(int towerIdx){
 		Vector3Int closestPos = Vector3Int.zero;
 		if (getClosestEmptyGrid (transform.position, out closestPos)) {
 			//StartCoroutine (spawnTowerDelay(name,0.3f,closestPos));
@@ -100,8 +111,10 @@ public class PlayerModule : MonoBehaviour
 			MapManager.getInstance ().updateOneBlock (closestPos);
 			//dynamicBlocks [checkI] [checkJ] = true;
 			EffectManager.inst.EmitSpawnTowerEffect (towerIdx,closestPos,transform,0.3f);
+			return true;
 		} else {
 			Debug.Log ("no pos");
+			return false;
 		}
 	}
 //	IEnumerator spawnTowerDelay(string name, float delay,Vector3Int closestPos){

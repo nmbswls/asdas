@@ -39,7 +39,7 @@ public class Tower : MapObject
 
 	public int castPreTime = 800;
 	public int castTimeDuration = 1500;
-	public bool skillEffect = false;
+	public bool skillHasTriggered = false;
 
 	public Vector3Int posInCell = Vector3Int.zero;
 
@@ -55,6 +55,8 @@ public class Tower : MapObject
 	[SerializeField]
 	private GameLife hateTarget = null;
 	private GameLife atkTarget = null;
+
+	private GameLife castTarget = null;
 
 	public GameObject bulletPrefab;
 	[SerializeField]
@@ -110,9 +112,9 @@ public class Tower : MapObject
 		initialized = true;
 	}
 
-	void genBullet(bool isHoming){
+	void genBullet(int style, bool isHoming, GameObject target){
 
-		BulletManager.inst.Emit (gameObject,atkTarget.gameObject,isHoming,5000);
+		BulletManager.inst.Emit (style,gameObject,target,isHoming,5000);
 
 //		GameObject o = GameObject.Instantiate (bulletPrefab,transform.parent);
 //		o.transform.position = transform.position;
@@ -128,33 +130,70 @@ public class Tower : MapObject
 		}
 		if (castIdx != -1) {
 			castTime += dTime;
-			if (castTime > castPreTime&&!skillEffect) {
+			if (castTime > castPreTime&&!skillHasTriggered) {
 				Debug.Log ("use skill "+castIdx);
-				gainBuff ();
-				skillEffect = true;
+
+				TowerSkillState skill = skillComponent.skills [castIdx];
+				TowerSkill s = GameStaticData.getInstance ().towerSkills [skill.skillId];
+				if (s.isSelfTarget) {
+					gainBuff ();
+				} else {
+					genBullet (0, true,castTarget.gameObject);
+					castTarget = null;
+				}
+					
+				skillHasTriggered = true;
 			}
 			if (castTime > castTimeDuration) {
 				castIdx = -1;
 				castTime = 0;
-				skillEffect = false;
+				skillHasTriggered = false;
 			}
 			return;
 		}
 
 
-		int readySkill = skillComponent.getReadySkill();
+		List<int> readySkills = skillComponent.getReadySkill();
 
 
-		if (readySkill != -1) {
-			if (skillComponent.skills [readySkill].skillId == 0) {
-				
+		GameLife closestOne = MapManager.getInstance().getClosestEnemy (gameObject);
 
+		List<int> readyUsableSkill = new List<int> ();
+
+		if (readySkills.Count > 0) {
+			for (int i = 0; i < readySkills.Count; i++) {
+				TowerSkillState skill = skillComponent.skills [readySkills [i]];
+				Vector2 diff = closestOne.transform.position - transform.position;
+				TowerSkill s = GameStaticData.getInstance ().towerSkills [skill.skillId];
+
+				if (s.isSelfTarget) {
+					readyUsableSkill.Add (readySkills[i]);
+				} else {
+					if (diff.magnitude * 1000f <= s.x[skill.skillLevel]) {
+						readyUsableSkill.Insert (0,readySkills[i]);
+					}
+				}
 			}
-			skillComponent.setSkillCD(readySkill);
-			anim.SetTrigger ("buff");
+		}
+
+		if (readyUsableSkill.Count > 0) {
+			TowerSkillState toUse = skillComponent.skills[readyUsableSkill [0]];
+
+
+			TowerSkill ss = GameStaticData.getInstance ().towerSkills [toUse.skillId];
+			if (ss.isSelfTarget) {
+				Debug.Log ("自家buff");
+				anim.SetTrigger ("buff");
+			} else {
+				
+				Debug.Log ("攻击");
+				castTarget = closestOne;
+			}
+
+			skillComponent.setSkillCD(readyUsableSkill [0]);
 			castTime = 0;
-			castIdx = readySkill;
-			skillEffect = false;
+			castIdx = readyUsableSkill [0];
+			skillHasTriggered = false;
 		}
 	}
 
@@ -196,7 +235,7 @@ public class Tower : MapObject
 			}
 		} else if (atkType == eAtkType.RANGED_HOMING) {
 			if (atkTarget != null && atkTimer > atkPreanimTime) {
-				genBullet (true);
+				genBullet (1,true,atkTarget.gameObject);
 				atkTarget = null;
 			}
 		} else if (atkType == eAtkType.MELLE_AOE) {
@@ -239,7 +278,7 @@ public class Tower : MapObject
 //			}
 		} else if (atkType == eAtkType.RANGED_UNHOMING) {
 			if (atkTarget != null && atkTimer > atkPreanimTime) {
-				genBullet (false);
+				genBullet (1,false,atkTarget.gameObject);
 				atkTarget = null;
 			}
 		}

@@ -9,14 +9,15 @@
 		"atkInteval": 2000,
 		"atkRange": 3000,
 		"atkPreanimTime": 500,
+		"cost":10,
 		"skills": [{
-			"skillId": 1001,
+			"skillId": 1004,
 			"skillLevel": 1
 		},{
-			"skillId": 1002,
+			"skillId": 1005,
 			"skillLevel": 1
 		},{
-			"skillId": 1003,
+			"skillId": 1006,
 			"skillLevel": 1
 		}]
 	},
@@ -29,6 +30,7 @@
 		"mingzhong":5,
 		"atkInteval": 2000,
 		"atkRange": 3000,
+		"cost":30,
 		"atkPreanimTime": 500,
 		"skills": [{
 			"skillId": 1002,
@@ -45,6 +47,7 @@
 		"atkInteval": 2000,
 		"atkRange": 3000,
 		"atkPreanimTime": 500,
+		"cost":50,
 		"skills": [{
 			"skillId": 1003,
 			"skillLevel": 1
@@ -59,6 +62,7 @@
 		"mingzhong":10,
 		"atkInteval": 2000,
 		"atkRange": 3000,
+		"cost":10,
 		"atkPreanimTime": 500,
 		"skills": []
 	}

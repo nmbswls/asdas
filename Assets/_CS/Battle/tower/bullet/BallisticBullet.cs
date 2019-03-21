@@ -35,10 +35,14 @@ public class BallisticBullet : BasicBullet
 		this.isHoming = isHoming;
 		this.fixedTargetPos = target.transform.position;
 		this.loseTar = false;
+		if (vHeight == 0)
+			arriveGround = true;
+		else 
+			arriveGround = false;
 		vOriginHeight = vHeight;
 		transform.position = owner.transform.position;
 		gameObject.SetActive (true);
-		arriveGround = false;
+
 	}
 
 	protected override void doMovement(int deltaTime){

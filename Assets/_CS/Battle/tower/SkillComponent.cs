@@ -57,7 +57,6 @@ public class SkillComponent : MonoBehaviour
 					Vector2 a = transform.position;
 					Vector2 b = e.transform.position;
 					if ((a - b).magnitude * 1000 < range) {
-						Debug.Log (e+"damaged");
 						e.showFollowingEffect (1);
 					}
 				}
@@ -65,16 +64,24 @@ public class SkillComponent : MonoBehaviour
 		}
 	}
 
-	public int getReadySkill(){
+	public List<int> getReadySkill(){
+		List<int> possibleSkills = new List<int> ();
 		for (int i = 0; i < MAX_SKILL; i++) {
 			if (skills [i] == null)
 				continue;
 			TowerSkill ts = staticSkillInfo[skills [i].skillId];
 			if (!ts.isPassive&&skillCoolDown[i] <= 0) {
-				return i;
+				possibleSkills.Add (i);
 			}
 		}
-		return -1;
+		return possibleSkills;
+//		if (possibleSkills.Count == 0) {
+//
+//			return -1;
+//		}
+//		for (int i = 0; i < possibleSkills.Count; i++) {
+//			
+//		}
 	}
 
 	public void setSkillCD(int readySkill){

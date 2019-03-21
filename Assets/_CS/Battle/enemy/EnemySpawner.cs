@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	public string enemyName = "10000";
 	public int currentEnemyIdx = 0;
-	public int MAX_ENEMY = 5;
+	public int MAX_ENEMY = 3;
 	public int nowEnemy = 0;
 
 	public int spawnInteval = 10000;

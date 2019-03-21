@@ -91,9 +91,10 @@ public class MapManager : MonoBehaviour
 					case "Spawner":
 						specialBlock [i] [j] = 2;
 						possibleSpawnerPos.Add (new int[]{i,j});
+						speTilemap.SetTile (new Vector3Int (j, -i, 0), null);
+
 						break;
 					}
-					speTilemap.SetTile (new Vector3Int (j, -i, 0), null);
 				}
 			}
 		}

@@ -32,10 +32,11 @@ public class BuildWindow : Window
 
 	public void buildConfirm(){
 		int nowSelect = _list.selectedIndex;
+
 		if (nowSelect >= 0) {
-			BattleManager.getInstance ().player.SpawnTower (nowSelect);
+			bool res = BattleManager.getInstance ().player.tryBuildTower (nowSelect);
+			if(res)this.Hide ();
 		}
-		this.Hide ();
 	}
 
 	protected override void OnInit()

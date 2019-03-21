@@ -70,8 +70,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4974325897405590}
   - {fileID: 4639077101799398}
+  - {fileID: 4974325897405590}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -86,7 +86,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4048318203790034}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4974325897405590
 Transform:
@@ -99,7 +99,7 @@ Transform:
   m_LocalScale: {x: 0.6048489, y: 0.22945583, z: 1}
   m_Children: []
   m_Father: {fileID: 4048318203790034}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &58034620694279802
 CircleCollider2D:
@@ -130,6 +130,8 @@ MonoBehaviour:
   speed: 5
   vOriginHeight: 0
   actualImage: {fileID: 0}
+  isHoming: 0
+  fixedTargetPos: {x: 0, y: 0, z: 0}
   arriveGround: 0
   OFFSET: 0.15
 --- !u!212 &212130938085485732
@@ -211,7 +213,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f147d2d61d0a74b7b91301ed928dc4f0, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
