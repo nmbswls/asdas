@@ -7,12 +7,14 @@ public class AccesoryView : GButton
 
 	GLoader _icon;
 	GTextField _name;
+	public GGraph _bg;
 	int idx;
 	public override void ConstructFromXML(FairyGUI.Utils.XML xml)
 	{
 		base.ConstructFromXML (xml);
 		_icon = this.GetChild ("icon").asLoader;
 		_name = this.GetChild ("name").asTextField;
+		_bg = this.GetChild ("bg").asGraph;
 	}
 
 	public void updateView(TowerComponent tc){
@@ -53,5 +55,10 @@ public class AccesoryView : GButton
 //		//icon是这个对象的替身图片，userData可以是任意数据，底层不作解析。context.data是手指的id。
 //		DragDropManager.inst.StartDrag(null, "Equips/staff", (object)"", (int)context.data);
 //	}
+	public void resetClick(EventCallback0 callback){
+		this.onClick.Clear ();
+		this.onClick.Add (__click);
+		this.onClick.Add (callback);
+	}
 }
 

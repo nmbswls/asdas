@@ -1104,7 +1104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.990826, y: -5}
+  m_AnchoredPosition: {x: 8.550956, y: -5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1317471151
@@ -1346,7 +1346,7 @@ Transform:
   m_GameObject: {fileID: 1511053514}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.015625, y: 0.015625, z: 0.015625}
+  m_LocalScale: {x: 0.015054499, y: 0.015054499, z: 0.015054499}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1879,7 +1879,7 @@ MonoBehaviour:
   sortingOrder: 0
   packagePath: FairyGUI/UIMain
   renderMode: 2
-  renderCamera: {fileID: 0}
+  renderCamera: {fileID: 1760440435}
   position: {x: 0, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}
   rotation: {x: 0, y: 0, z: 0}

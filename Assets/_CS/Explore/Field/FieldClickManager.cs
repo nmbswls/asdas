@@ -65,6 +65,7 @@ public class FieldClickManager : MonoBehaviour
 			if (Stage.isTouchOnUI||!GRoot.inst.touchable){
 			#else
 			if (Stage.isTouchOnUI||!GRoot.inst.touchable) {
+				
 				//Debug.Log(Stage.inst.touchTarget.gameObject.name);	
 				//if (EventSystem.current.IsPointerOverGameObject ())
 			#endif

@@ -169,7 +169,6 @@ public class SystemMenu : Singleton<SystemMenu> {
 	}
 
 	void enterGame(){
-		Debug.Log ("eee");
 		_main_menu.GetController ("c0").SetSelectedPage ("empty");
 		StartCoroutine (LoadGameAsync());
 	}

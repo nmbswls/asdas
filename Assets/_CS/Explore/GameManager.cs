@@ -38,7 +38,7 @@ public class GameManager : Singleton<GameManager> {
 	public SelectionBranchManager sbManager;
 	public ExploreMenu eMenu;
 
-	GComponent detailPanel;
+	public GComponent detailPanel;
 
 
 	GComponent popupWindow;
@@ -184,8 +184,10 @@ public class GameManager : Singleton<GameManager> {
 		Vector3 detailPanelPos = camera3D.ScreenToWorldPoint (new Vector3 (20f,camera3D.pixelHeight/2, 10));
 		//detailPanelPos.z = 0;
 		GameObject detailPanelGo = GameObject.Find ("EncounterDetailPanel");
+
 		detailPanelGo.transform.position = detailPanelPos;
 		detailPanel = detailPanelGo.GetComponent<UIPanel>().ui;
+		Debug.Log (detailPanel.position);
 		detailPanel.visible = false;
 		detailPanel.GetChild ("close").asLoader.onClick.Add (delegate() {
 			Debug.Log("close");

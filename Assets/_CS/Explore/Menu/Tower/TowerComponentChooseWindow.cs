@@ -59,9 +59,9 @@ public class TowerComponentChooseWindow : Window
 	protected override void OnShown ()
 	{
 		
-		_components.RemoveChildrenToPool ();
+		_components.RemoveChildren ();
 		{
-			AccesoryView obj = (AccesoryView)_components.AddItemFromPool ();
+			AccesoryView obj = (AccesoryView)_components.AddChild (UIPackage.CreateObject("UIMain", "AccesoryView"));
 
 			obj.setUneuip (nowComponent);
 
@@ -72,7 +72,7 @@ public class TowerComponentChooseWindow : Window
 		}
 		int idx = 0;
 		foreach (TowerComponent tc in PlayerData.getInstance ().bagComponents) {
-			AccesoryView obj = (AccesoryView)_components.AddItemFromPool ();
+			AccesoryView obj = (AccesoryView)_components.AddChild (UIPackage.CreateObject("UIMain", "AccesoryView"));
 			obj.updateView (tc);
 			int ii = idx;
 			obj.onClick.Add (delegate() {
@@ -86,6 +86,7 @@ public class TowerComponentChooseWindow : Window
 	}
 
 	void changeDetailView(){
+		Debug.Log ("change view");
 		string p = "";
 		p += "";
 		Dictionary<string,string[]> diff = new Dictionary<string,string[]> ();
