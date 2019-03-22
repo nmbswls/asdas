@@ -159,7 +159,7 @@ public class SystemMenu : Singleton<SystemMenu> {
 	private AsyncOperation async = null;
 	IEnumerator LoadGameAsync()
 	{
-		async = SceneManager.LoadSceneAsync("Explore");
+		async = SceneManager.LoadSceneAsync("Explore",LoadSceneMode.Single);
 		yield return async;
 	}
 

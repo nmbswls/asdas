@@ -206,7 +206,7 @@ public class MapManager : MonoBehaviour
 		for(int i=0;i<MAP_HEIGHT;i++){
 			for(int j=0;j<MAP_WIDTH;j++){
 				if (tilemap.GetTile (new Vector3Int (j, -i, 0)) == null) {
-					tilemap.SetTile (new Vector3Int (j, -i, 0), arrTiles [Random.Range (0, arrTiles.Length)]);
+					tilemap.SetTile (new Vector3Int (j, -i, 0), baseTile/*arrTiles [Random.Range (0, arrTiles.Length)]*/);
 				}
 //				if (obcTilemap.GetTile (new Vector3Int (j, -i, 0)) != null) {
 //					staticBlocks [i] [j] = true;
