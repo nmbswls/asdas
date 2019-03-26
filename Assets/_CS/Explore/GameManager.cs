@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager> {
 	GTextField moneyTextView;
 	GTextField sanTextView;
 	GTextField levelTextView;
-	GLoader showdetailButton;
+	GGraph showdetailButton;
 
 	GLoader _enterBattle;
 
@@ -126,6 +126,9 @@ public class GameManager : Singleton<GameManager> {
 
 		UIObjectFactory.SetPackageItemExtension("ui://UIMain/AccesoryView", typeof(AccesoryView));
 
+
+
+
 		UIObjectFactory.SetPackageItemExtension("ui://UIMain/Hint", typeof(HintComponent));
 
 		//UIObjectFactory.SetPackageItemExtension("ui://UIMain/AccesoryView", typeof(AccesoryView));
@@ -144,9 +147,9 @@ public class GameManager : Singleton<GameManager> {
 		sanTextView = _main.GetChild ("san").asTextField;
 		levelTextView = _main.GetChild ("level").asTextField;
 
-		showdetailButton = _main.GetChild ("detail").asLoader;
-		showdetailButton.url="detail";
-		showdetailButton.onTouchBegin.Add (delegate(EventContext context) {
+		showdetailButton = _main.GetChild ("detail_button").asGraph;
+		//showdetailButton.url="detail";
+		showdetailButton.onClick.Add (delegate(EventContext context) {
 			eMenu.Show();
 		});
 
@@ -190,7 +193,7 @@ public class GameManager : Singleton<GameManager> {
 		Debug.Log (detailPanel.position);
 		detailPanel.visible = false;
 		detailPanel.GetChild ("close").asLoader.onClick.Add (delegate() {
-			Debug.Log("close");
+			detailPanel.visible = false;
 		});
 	}
 
@@ -408,8 +411,9 @@ public class GameManager : Singleton<GameManager> {
 		shopPanel.Show ();
 	}
 
-	public void showDetailAmplifier(string content){
-		itemDetailAmplifier.setInfo (content);
+
+	public void showDetailAmplifier(string type,object content){
+		itemDetailAmplifier.setInfo (type,content);
 		itemDetailAmplifier.Show ();
 	}
 

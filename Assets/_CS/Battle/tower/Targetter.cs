@@ -5,84 +5,71 @@ using System;
 
 public class Targetter : MonoBehaviour {
 
+//	public MapObject owner;
 //	float searchRate = 0.25f;
-//
 //	float m_SearchTimer = 0;
-//
-//	private Targetable m_CurrrentTargetable;
-//	private List<Targetable> m_TargetsInRange;
+////
+//	private GameLife m_CurrrentTargetable;
 //	private bool m_HadTarget;
-//
-//	public event Action<Targetable> acquiredTarget;
+////
+//	public event Action<GameLife> onTargetChosen;
 //	public event Action lostTarget;
-//
-//
-//	// Use this for initialization
+////
+////
+////	// Use this for initialization
 //	void Start () {
 //		m_SearchTimer = searchRate;
+//		owner = GetComponent<MapObject> ();
 //	}
+//
 //	public void ResetTargetter()
 //	{
-//		m_TargetsInRange.Clear();
 //		m_CurrrentTargetable = null;
-//
-//
-//		acquiredTarget = null;
-//		lostTarget = null;
 //	}
-//	// Update is called once per frame
-//	void Update () {
+//
+//	public void Tick (int timeInt) {
 //
 //		m_SearchTimer -= Time.deltaTime;
 //
-//		if (m_SearchTimer <= 0.0f && m_CurrrentTargetable == null && m_TargetsInRange.Count > 0)
+//		if (m_CurrrentTargetable != null) {
+//			if (!m_CurrrentTargetable.IsAlive) {
+//				m_CurrrentTargetable = null;
+//			}
+//		}
+//
+//		if (m_SearchTimer <= 0.0f && m_CurrrentTargetable == null )
 //		{
-//			m_CurrrentTargetable = GetNearestTargetable();
+//			m_CurrrentTargetable = MapManager.getInstance().getClosestEnemy (owner);
 //			if (m_CurrrentTargetable != null)
 //			{
-//				if (acquiredTarget != null)
+//				if (onTargetChosen != null)
 //				{
-//					acquiredTarget(m_CurrrentTargetable);
+//					onTargetChosen(m_CurrrentTargetable);
 //				}
 //				m_SearchTimer = searchRate;
 //			}
 //		}
 //
-//		//AimTurret();
-//
 //		m_HadTarget = m_CurrrentTargetable != null;
 //	}
 //
-//	void GetNearestTargetable(){
-//		int length = m_TargetsInRange.Count;
 //
-//		if (length == 0)
-//		{
-//			return null;
-//		}
-//
-//		Targetable nearest = null;
-//		float distance = float.MaxValue;
-//		for (int i = length - 1; i >= 0; i--)
-//		{
-//			Targetable targetable = m_TargetsInRange[i];
-//			if (targetable == null || !targetable.owner.IsAlive)
-//			{
-//				m_TargetsInRange.RemoveAt(i);
-//				continue;
-//			}
-//			float currentDistance = Vector3.Distance(transform.position, targetable.position);
-//			if (currentDistance < distance)
-//			{
-//				distance = currentDistance;
-//				nearest = targetable;
+//	GameLife getNearestValidTarget(int rangeInt){
+//		GameLife possibleTarget = MapManager.getInstance().getClosestEnemy (owner);
+//		if (possibleTarget != null ) {
+//			Vector3 Diff2d = (transform.position - possibleTarget.transform.position);
+//			Diff2d.z = 0;
+//			int dis = (int)(Diff2d.magnitude * 1000);
+//			if (dis > rangeInt) {
+//				possibleTarget = null;
 //			}
 //		}
-//
-//		return nearest;
+//		return possibleTarget;
 //	}
 //
-//
+
+
+
 //	void OnTargetRemoved(Targetable target)
 //	{
 //		//target.removed -= OnTargetRemoved;

@@ -42,7 +42,7 @@ public class PlayerController : IUnitController {
 	public string keyLeftStrig = "a";
 	public string keyRightStrig = "d";
 
-	public static float offsetMin = 500f;
+	public static float offsetMin = 200f;
 //	public string keyRunStrign = "left shift";
 //	public string keyJumpString = "space";
 //	public string keyRollString = "v";

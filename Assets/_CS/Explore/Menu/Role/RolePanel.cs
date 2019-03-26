@@ -35,14 +35,13 @@ public class RolePanel : GComponent
 		_money.text = PlayerData.getInstance ().money+"";
 
 		UsableHeroInfo heroinfo = GameStaticData.getInstance ().heroes [PlayerData.getInstance ().heroIdx];
-		for (int i = 0; i < heroinfo.tianfu.Length; i++) {
+		for (int i = 0; i < heroinfo.talent.Length; i++) {
 			int ii = i;
 			_talents [i].onClick.Add (delegate() {
-				if (heroinfo.tianfu [ii] == null) {
-					GameManager.getInstance ().showDetailAmplifier ("无天赋");
+				if (heroinfo.talent [ii] == null) {
+					GameManager.getInstance ().showDetailAmplifier ("无天赋",null);
 				} else {
-					string s = heroinfo.tianfu [ii];
-					GameManager.getInstance ().showDetailAmplifier (s);
+					GameManager.getInstance ().showDetailAmplifier ("talent",heroinfo.talent [ii]);
 				}
 			});
 
@@ -58,11 +57,11 @@ public class RolePanel : GComponent
 
 		foreach (Potion p in PlayerData.getInstance().potions) {
 			PotionSmall item = (PotionSmall)l0.AddItemFromPool ();
-			item.setDesp (GameStaticData.getInstance().potionStaticInfo[p.pid].pname);
+			item.setInfo (p);
 		}
 		foreach (Scar scar in PlayerData.getInstance().scars) {
 			ScarSmallIcon item = (ScarSmallIcon)l1.AddItemFromPool ();
-			item.setDesp (GameStaticData.getInstance().scarStaticInfo[scar.scarId].scarName);
+			item.setInfo (scar);
 		}
 	}
 }

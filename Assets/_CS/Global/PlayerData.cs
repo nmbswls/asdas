@@ -33,6 +33,9 @@ public class TowerBase{
 	public string tid;
 	public string tname;
 	public string tdesp;
+
+	public string bulletStyle = "default";
+
 	public eAtkType atkType = eAtkType.MELLE_POINT;
 	public AtkInfo mainAtk = new AtkInfo();
 	public List<AtkInfo> extraAtk = new List<AtkInfo>();
@@ -46,7 +49,12 @@ public class TowerBase{
 
 [System.Serializable]
 public class TowerSkill{
-	public int skillId;
+	public string skillId;
+	public string skillName;
+	public string skillDesp;
+
+	public string bulletStyle; 
+
 	public int maxLv;
 	public int cooldown = 20000;
 	public bool isSelfTarget = false;
@@ -59,18 +67,18 @@ public class TowerSkill{
 	public List<int> z;
 	public TowerSkill(){
 	}
-	public TowerSkill(int skillId){
+	public TowerSkill(string skillId){
 		this.skillId = skillId;
 	}
 }
 
 [System.Serializable]
 public class TowerSkillState{
-	public int skillId;
+	public string skillId;
 	public int skillLevel;
 	public TowerSkillState(){
 	}
-	public TowerSkillState(int skillId,int skillLevel){
+	public TowerSkillState(string skillId,int skillLevel){
 		this.skillId = skillId;
 		this.skillLevel = skillLevel;
 	}
@@ -83,6 +91,25 @@ public class TowerComponent{
 	public string cname = "default";
 	public string cdesp = "default";
 	public List<TowerComponentEffect> effects = new List<TowerComponentEffect>();
+
+	public string getEffects(){
+		string s = "";
+		foreach(TowerComponentEffect effect in effects){
+			if (effect.type == eTowerComponentEffectType.ATK_CHANGE) {
+				s += "atk " + effect.x;
+			} else if (effect.type == eTowerComponentEffectType.ATK_RANGE_CHANGE) {
+				s += "range " + effect.x;
+			} else if (effect.type == eTowerComponentEffectType.ATK_SPD_CHANGE) {
+				s += "atk spd " + effect.x;
+			} else if (effect.type == eTowerComponentEffectType.EXTRA_ATK) {
+				s += effect.extra + " atk " + effect.x;
+			} else if (effect.type == eTowerComponentEffectType.EXTRA_ABILITY) {
+				s += effect.extra;
+			}
+			s += "\n";
+		}
+		return s;
+	}
 }
 
 [System.Serializable]
@@ -292,13 +319,13 @@ public class PlayerData
 
 	void intPotions(){
 		for (int i = 0; i < 5; i++) {
-			potions.Add(new Potion("0"));
+			potions.Add(new Potion("00"));
 		}
 	}
 
 	void initScar(){
 		for (int i = 0; i < 3; i++) {
-			scars.Add(new Scar("0",2+i));
+			scars.Add(new Scar("00",2+i));
 		}
 	}
 

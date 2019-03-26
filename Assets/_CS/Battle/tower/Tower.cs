@@ -41,6 +41,12 @@ public class Tower : MapObject
 	public int castTimeDuration = 1500;
 	public bool skillHasTriggered = false;
 
+	public static int findTargetInteval = 250;
+	public int findTargetTimer;
+
+	public static int checkSkillInteval = 250;
+	public int checkSkillTimer;
+
 	public Vector3Int posInCell = Vector3Int.zero;
 
 
@@ -77,13 +83,14 @@ public class Tower : MapObject
 
 
 	// Use this for initialization
-	void Start ()
+	protected override void Start ()
 	{
 		base.Start ();
 	}
 
 	public void init(TowerTemplate towerTemplate, Vector3Int posInCell){
 		if (towerTemplate != null) {
+			this.tt = towerTemplate;
 			this.atkType = towerTemplate.tbase.atkType;
 			this.mainAtk = towerTemplate.tbase.mainAtk;
 			this.extraAtk = towerTemplate.tbase.extraAtk;
@@ -112,9 +119,9 @@ public class Tower : MapObject
 		initialized = true;
 	}
 
-	void genBullet(int style, bool isHoming, GameObject target){
+	void genBullet(string style, bool isHoming, GameObject target,int height = 5000){
 
-		BulletManager.inst.Emit (style,gameObject,target,isHoming,5000);
+		BulletManager.inst.Emit (style,gameObject,target,isHoming,height);
 
 //		GameObject o = GameObject.Instantiate (bulletPrefab,transform.parent);
 //		o.transform.position = transform.position;
@@ -125,6 +132,7 @@ public class Tower : MapObject
 	int castIdx = -1;
 
 	void checkSkill(int dTime){
+		
 		if (atkTarget != null && atkTimer < atkPreanimTime) {
 			return;
 		}
@@ -138,7 +146,7 @@ public class Tower : MapObject
 				if (s.isSelfTarget) {
 					gainBuff ();
 				} else {
-					genBullet (0, true,castTarget.gameObject);
+					genBullet (s.bulletStyle, true,castTarget.gameObject,0);
 					castTarget = null;
 				}
 					
@@ -152,11 +160,13 @@ public class Tower : MapObject
 			return;
 		}
 
-
+		if (checkSkillTimer > 0)
+			return;
+		
 		List<int> readySkills = skillComponent.getReadySkill();
 
 
-		GameLife closestOne = MapManager.getInstance().getClosestEnemy (gameObject);
+		GameLife closestOne = MapManager.getInstance().getClosestEnemy (this);
 
 		List<int> readyUsableSkill = new List<int> ();
 
@@ -188,6 +198,9 @@ public class Tower : MapObject
 				
 				Debug.Log ("攻击");
 				castTarget = closestOne;
+				anim.SetTrigger ("skill");
+				Random.Range (0,2);
+				anim.SetFloat ("skill_style",Random.Range (0,2)*1.0f);
 			}
 
 			skillComponent.setSkillCD(readyUsableSkill [0]);
@@ -195,10 +208,11 @@ public class Tower : MapObject
 			castIdx = readyUsableSkill [0];
 			skillHasTriggered = false;
 		}
+		checkSkillTimer = checkSkillInteval;
 	}
 
 
-	void Update ()
+	protected override void Update ()
 	{
 		base.Update ();
 
@@ -216,8 +230,8 @@ public class Tower : MapObject
 			}
 
 		}
-
-
+		if(findTargetTimer>0)findTargetTimer -= dTime;
+		if(checkSkillTimer>0)checkSkillTimer -= dTime;
 		atkTimer += dTime;
 		if(skillComponent!=null){
 			skillComponent.Tick(dTime);
@@ -235,7 +249,7 @@ public class Tower : MapObject
 			}
 		} else if (atkType == eAtkType.RANGED_HOMING) {
 			if (atkTarget != null && atkTimer > atkPreanimTime) {
-				genBullet (1,true,atkTarget.gameObject);
+				genBullet (tt.tbase.bulletStyle,true,atkTarget.gameObject);
 				atkTarget = null;
 			}
 		} else if (atkType == eAtkType.MELLE_AOE) {
@@ -278,7 +292,7 @@ public class Tower : MapObject
 //			}
 		} else if (atkType == eAtkType.RANGED_UNHOMING) {
 			if (atkTarget != null && atkTimer > atkPreanimTime) {
-				genBullet (1,false,atkTarget.gameObject);
+				genBullet (tt.tbase.bulletStyle,false,atkTarget.gameObject);
 				atkTarget = null;
 			}
 		}
@@ -288,9 +302,19 @@ public class Tower : MapObject
 		}
 		if (castIdx != -1)
 			return;
+		updateTarget ();
 
 		if (hateTarget != null) {
-			
+			coolDown = atkInterval;
+			anim.SetTrigger ("atk");
+			atkTimer = 0;
+			atkTarget = hateTarget;
+		}
+	}
+
+
+	public void updateTarget(){
+		if (hateTarget != null) {
 			if (!hateTarget.IsAlive) {
 				hateTarget = null;
 			} else {
@@ -300,8 +324,8 @@ public class Tower : MapObject
 				}
 			}
 		}
-		if (hateTarget == null) {
-			hateTarget = MapManager.getInstance().getClosestEnemy (gameObject);
+		if (hateTarget == null&&findTargetTimer<=0) {
+			hateTarget = MapManager.getInstance().getClosestEnemy (this);
 			if (hateTarget!=null&&!hateTarget.IsAlive) {
 				hateTarget = null;
 			}
@@ -313,17 +337,10 @@ public class Tower : MapObject
 					hateTarget = null;
 				}
 			}
+			findTargetTimer = findTargetInteval;
 		}
-		if (hateTarget == null) {
-			
-		} else {
-			coolDown = atkInterval;
-			anim.SetTrigger ("atk");
-			atkTimer = 0;
-			atkTarget = hateTarget;
-		}
-	}
 
+	}
 
 	public void gainBuff(){
 		//buffManager.addBuff (new Buff(1,50,5000));

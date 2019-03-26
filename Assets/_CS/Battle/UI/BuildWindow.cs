@@ -9,6 +9,7 @@ public class BuildWindow : Window
 
 	BuildDetail _detail;
 	GComponent _confirmButton;
+	GLoader _close;
 
 	public BuildWindow()
 	{
@@ -46,7 +47,10 @@ public class BuildWindow : Window
 		this.modal = true;
 
 		_list = this.contentPane.GetChild("list").asList;
-
+		_close = this.contentPane.GetChild("close").asLoader;
+		_close.onClick.Add (delegate(EventContext context) {
+			this.Hide();
+		});
 		_list.onClickItem.Add(__clickItem);
 		_list.itemRenderer = RenderListItem;
 		_list.EnsureBoundsCorrect();

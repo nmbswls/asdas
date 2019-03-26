@@ -88,7 +88,13 @@ public class BallisticBullet : BasicBullet
 				dir.Normalize ();
 				transform.position += dir * speed * deltaTime * 0.001f; 
 			}
+
+			Vector2 bulletFace = new Vector2 (dir.x / 1000f, dir.y / 1000f).normalized;
+			actualImage.transform.right = new Vector3 (bulletFace.x, bulletFace.y, 0);
+
+
 		}
+		transform.position = new Vector3 (transform.position.x,transform.position.y,0);
 		if (loseTar) {
 			Vector3 dir = (fixedTargetPos - this.transform.position);
 			dir.z = 0;

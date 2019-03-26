@@ -598,7 +598,7 @@ namespace FairyGUI
 				__rollout();
 		}
 
-		protected void __click()
+		private void __click()
 		{
 			if (sound != null && sound.nativeClip != null)
 				Stage.inst.PlayOneShotSound(sound.nativeClip, soundVolumeScale);

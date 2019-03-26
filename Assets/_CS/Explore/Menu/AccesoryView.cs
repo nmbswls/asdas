@@ -7,33 +7,40 @@ public class AccesoryView : GButton
 
 	GLoader _icon;
 	GTextField _name;
-	public GGraph _bg;
+
+	GGraph _detail_bg;
+	GTextField _detail;
+
+	TowerComponent tc;
 	int idx;
 	public override void ConstructFromXML(FairyGUI.Utils.XML xml)
 	{
 		base.ConstructFromXML (xml);
 		_icon = this.GetChild ("icon").asLoader;
 		_name = this.GetChild ("name").asTextField;
-		_bg = this.GetChild ("bg").asGraph;
+
+		_detail = this.GetChild("detail").asTextField;
+		_detail_bg = this.GetChild ("detail_bg").asGraph;
 	}
 
 	public void updateView(TowerComponent tc){
-
+		this.tc = tc;
 		if (tc == null) {
 			_icon.url = "Equips/empty";
-			_name.text = "无";
-
+			_name.text = "";
+			_detail.text = "";
 		} else {
 			_icon.url = "Equips/" + tc.cid;
 			_name.text = tc.cname;
+			_detail.text = tc.getEffects();
 		}
-
-
 	}
 
 	public void setUneuip(TowerComponent tc){
+		this.tc = tc;
 		_icon.url = "image/atk";
 		_name.text = "卸下";
+		_detail.text = tc.getEffects();
 	}
 
 
@@ -57,8 +64,18 @@ public class AccesoryView : GButton
 //	}
 	public void resetClick(EventCallback0 callback){
 		this.onClick.Clear ();
-		this.onClick.Add (__click);
 		this.onClick.Add (callback);
+	}
+
+	public void showDetail(){
+		if (tc != null) {
+			_detail.visible = true;
+			_detail_bg.visible = true;
+		}
+	}
+	public void hideDetail(){
+		_detail.visible = false;
+		_detail_bg.visible = false;
 	}
 }
 

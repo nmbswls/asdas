@@ -277,7 +277,7 @@ public class MapManager : MonoBehaviour
 		return res;
 	}
 
-	public GameLife getClosestEnemy(GameObject center){
+	public GameLife getClosestEnemy(MapObject center){
 		int closest = int.MaxValue;
 		GameLife closestEnemy = null;
 		int idx = 0;

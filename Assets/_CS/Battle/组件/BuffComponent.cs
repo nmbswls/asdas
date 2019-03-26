@@ -124,7 +124,7 @@ public class BuffComponent : MonoBehaviour
 	void removeBuff(int idx){
 		buffs.RemoveAt (idx);
 		if (withUI) {
-			_buffs_view.RemoveChildAt (idx);
+			_buffs_view.RemoveChildToPoolAt (idx);
 		}
 	}
 

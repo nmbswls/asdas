@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1782413323151436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.37, y: 0.29, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 4625472684363760}
@@ -95,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1570186818908548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3933494, y: -1.7240956, z: 0}
+  m_LocalPosition: {x: -15.957213, y: -4.3376956, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109114019417104}
@@ -178,13 +178,13 @@ MonoBehaviour:
   initialized: 0
   atkType: 2
   property: -1
-  damage: 0
+  mingzhong: 2
   atkInterval: 800
   atkRange: 1500
   atkPreanimTime: 300
   castPreTime: 800
   castTimeDuration: 1500
-  skillEffect: 0
+  skillHasTriggered: 0
   posInCell: {x: 0, y: 0, z: 0}
   buffManager: {fileID: 0}
   buffShow: {fileID: 1039429150496456}

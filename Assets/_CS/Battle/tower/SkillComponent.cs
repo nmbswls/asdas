@@ -15,7 +15,7 @@ public class SkillComponent : MonoBehaviour
 	public static int MAX_SKILL = 4;
 	public int[] skillCoolDown = new int[MAX_SKILL];
 	public TowerSkillState[] skills= new TowerSkillState[MAX_SKILL];
-	public Dictionary<int,TowerSkill> staticSkillInfo;
+	public Dictionary<string,TowerSkill> staticSkillInfo;
 	// Use this for initialization
 	void Start ()
 	{

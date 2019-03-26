@@ -16,6 +16,9 @@ public class TowerPanel : GComponent
 	//GLoader movingIcon;
 	TowerPropertyAfter _property;
 
+	GButton _switch_detail;
+	bool isDetailShown = false;
+
 	int towerIdx = -1;
 
 	int nowDragIdx = -1;
@@ -43,6 +46,21 @@ public class TowerPanel : GComponent
 		}
 
 		towers = this.GetChild ("towers").asList;
+
+		_switch_detail = this.GetChild ("switch").asButton;
+		_switch_detail.selected = true;
+		_switch_detail.onClick.Add (delegate() {
+			isDetailShown = !isDetailShown;
+			if (isDetailShown) {
+				for(int i=0;i<4;i++){
+					components[i].showDetail();
+				}
+			} else {
+				for(int i=0;i<4;i++){
+					components[i].hideDetail();
+				}
+			}
+		});
 		//tComponents = this.GetChild ("components").asList;
 
 		//movingIcon = this.GetChild ("moving_icon").asLoader;
@@ -296,7 +314,7 @@ public class TowerPanel : GComponent
 				}else if(effect.type == eTowerComponentEffectType.EXTRA_ABILITY){
 					//extras.Add (effect.extra);
 					TowerSkillState skill = new TowerSkillState();
-					skill.skillId = int.Parse(effect.extra);
+					skill.skillId = effect.extra;
 					skill.skillLevel = effect.x;
 					extraSkills.Add (skill);
 

@@ -64,7 +64,7 @@ public class BuildDetail : GComponent
 				}else if(effect.type == eTowerComponentEffectType.EXTRA_ABILITY){
 					//extras.Add (effect.extra);
 					TowerSkillState skill = new TowerSkillState();
-					skill.skillId = int.Parse(effect.extra);
+					skill.skillId = effect.extra;
 					skill.skillLevel = effect.x;
 					extraSkills.Add (skill);
 

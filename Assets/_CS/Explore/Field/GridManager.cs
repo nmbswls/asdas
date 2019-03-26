@@ -81,8 +81,8 @@ public class GridManager : MonoBehaviour {
 	}
 	void LateUpdate(){
 
-		cameraHalfHeight = mainCamera.pixelHeight / 100f;
-		cameraHalfWidth = mainCamera.pixelWidth / 100f;
+		cameraHalfHeight = mainCamera.pixelHeight * 0.5f / 100f;
+		cameraHalfWidth = mainCamera.pixelWidth * 0.5f / 100f;
 		MoveMap ();
 	}
 

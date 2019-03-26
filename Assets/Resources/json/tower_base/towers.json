@@ -3,6 +3,7 @@
 		"tid": "t01",
 		"tname": "雷峰塔",
 		"tdesp": "一组雷峰塔",
+
 		"atkType": 0,
 		"damage": 10000,
 		"mingzhong":2,
@@ -41,7 +42,9 @@
 		"tid": "t03",
 		"tname": "虎丘塔",
 		"tdesp": "一组虎丘塔",
+
 		"atkType": 2,
+		"bulletStyle":"01",
 		"damage": 10000,
 		"mingzhong":3,
 		"atkInteval": 2000,
@@ -57,7 +60,9 @@
 		"tid": "default",
 		"tname": "默认塔",
 		"tdesp": "一组默认塔",
+
 		"atkType": 2,
+		"bulletStyle":"00",
 		"damage": 10000,
 		"mingzhong":10,
 		"atkInteval": 2000,

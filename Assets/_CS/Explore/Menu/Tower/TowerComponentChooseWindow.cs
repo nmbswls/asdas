@@ -13,6 +13,9 @@ public class TowerComponentChooseWindow : Window
 	GTextField _txt_now;
 	GTextField _txt_after;
 
+	GButton _switch;
+	bool isShownDetail = false;
+
 	int idx;
 
 	protected override void OnInit()
@@ -24,6 +27,27 @@ public class TowerComponentChooseWindow : Window
 		_components = this.contentPane.GetChild ("components").asList;
 		_confirm = this.contentPane.GetChild ("n2").asButton;
 		_close = this.contentPane.GetChild ("close").asLoader;
+
+		_switch = this.contentPane.GetChild ("switch").asButton;
+		_switch.onClick.Add (delegate() {
+
+
+			isShownDetail = !isShownDetail;
+			if (isShownDetail) {
+				for (int i = 0; i < _components.numChildren; i++) {
+					AccesoryView v = (AccesoryView)_components.GetChildAt (i);
+					v.showDetail ();
+				}
+			}else {
+				for (int i = 0; i < _components.numChildren; i++) {
+					AccesoryView v = (AccesoryView)_components.GetChildAt (i);
+					v.hideDetail ();
+				}
+
+			}
+
+		});
+		_switch.selected = true;
 
 		_txt_now = this.contentPane.GetChild ("txt_now").asTextField;
 		_txt_after = this.contentPane.GetChild ("txt_after").asTextField;
@@ -59,23 +83,30 @@ public class TowerComponentChooseWindow : Window
 	protected override void OnShown ()
 	{
 		
-		_components.RemoveChildren ();
+		_components.RemoveChildrenToPool ();
 		{
-			AccesoryView obj = (AccesoryView)_components.AddChild (UIPackage.CreateObject("UIMain", "AccesoryView"));
+			AccesoryView obj = (AccesoryView)_components.AddItemFromPool ();
 
 			obj.setUneuip (nowComponent);
 
-			obj.onClick.Add (delegate() {
+			obj.onClick.Set (delegate() {
+				_components.ClearSelection();
+				obj.selected = true;
 				choose = -1;
 				changeDetailView();
 			});
 		}
 		int idx = 0;
 		foreach (TowerComponent tc in PlayerData.getInstance ().bagComponents) {
-			AccesoryView obj = (AccesoryView)_components.AddChild (UIPackage.CreateObject("UIMain", "AccesoryView"));
+			AccesoryView obj = (AccesoryView)_components.AddItemFromPool ();
 			obj.updateView (tc);
 			int ii = idx;
-			obj.onClick.Add (delegate() {
+
+
+
+			obj.onClick.Set (delegate() {
+				_components.ClearSelection();
+				obj.selected = true;
 				choose = ii;
 				changeDetailView();
 			});
@@ -83,6 +114,12 @@ public class TowerComponentChooseWindow : Window
 		}
 
 
+	}
+
+	void clickAccesoryView(int choose){
+		
+		this.choose = choose;
+		changeDetailView();
 	}
 
 	void changeDetailView(){

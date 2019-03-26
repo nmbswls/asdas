@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class TowerPropertyAfter : GComponent
 {
-
+	GTextField _tname;
 	GTextField _hit;
 	GTextField _range;
 	GTextField _spd;
@@ -21,6 +21,8 @@ public class TowerPropertyAfter : GComponent
 		_hit = this.GetChild ("hit").asTextField;
 		_range = this.GetChild ("range").asTextField;
 		_spd = this.GetChild ("spd").asTextField;
+
+		_tname = this.GetChild ("tname").asTextField;
 
 		_damage_list = this.GetChild ("damage").asList;
 		_skill_list = this.GetChild ("skills").asList;
@@ -43,7 +45,8 @@ public class TowerPropertyAfter : GComponent
 
 		for (int i = 0; i < skills.Count; i++) {
 			TowerSkillItem skill = (TowerSkillItem)_skill_list.AddItemFromPool ();
-			skill.onTouchEnd.Set (delegate() {
+			skill.setInfo (skills[i]);
+			skill.onClick.Set (delegate() {
 				Debug.Log("ss");
 			});
 		}
