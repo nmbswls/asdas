@@ -58,11 +58,11 @@ public class EffectManager
 	}
 
 
-	public void EmitSpawnTowerEffect(int towerIdx,Vector3Int toSpawnPosInCell, Transform player,float time){
+	public void EmitSpawnTowerEffect(int towerIdx,Vector2Int toSpawnPosInCell, GameLife player,float time){
 		
-		GameObject effect = GameObject.Instantiate (spawnTowerEffectPrefab,player.parent);
+		GameObject effect = GameObject.Instantiate (spawnTowerEffectPrefab,player.transform.parent);
 		SpawnTowerEffect e = effect.GetComponent<SpawnTowerEffect> ();
-		e.init (towerIdx,toSpawnPosInCell,player.position,time);
+		e.init (towerIdx,toSpawnPosInCell,new Vector2Int(player.posXInt,player.posYInt),time);
 	}
 
 	public void EmitAtkSectorEffect(Transform pos, Vector3 dir,int time = 300){

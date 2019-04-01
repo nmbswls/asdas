@@ -71,7 +71,7 @@ public class BattleManager : Singleton<BattleManager> {
 		initBattle ();
 	}
 
-	public void spawnEnemy(string enemyId,Vector3 pos){
+	public void spawnEnemy(string enemyId,Vector2Int pos){
 		GameLife enemy = MonsterFactory.createEnemy (enemyId,pos,mapObjLayer);
 		enemy.OnDieCallback += delegate() {
 			enemyDie(enemy);
@@ -87,7 +87,7 @@ public class BattleManager : Singleton<BattleManager> {
 			List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (enemies.Count);
 
 			for (int i = 0; i < spawners.Count; i++) {
-				Vector3 center = MapManager.getInstance ().cellPosToWorldPos (spawners[i][0],spawners[i][1]);
+				Vector2Int center = MapManager.getInstance ().CellToWorld (spawners[i][0],spawners[i][1]);
 				spawnEnemy(enemies [i].enemyId [0],center);
 			}
 			PlayerData.getInstance ().chasingEnemies.Clear ();
@@ -96,9 +96,11 @@ public class BattleManager : Singleton<BattleManager> {
 		{
 			List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (3);
 			for (int i = 0; i < 3; i++) {
-				Vector3 center = MapManager.getInstance ().cellPosToWorldPos (spawners[i][0],spawners[i][1]);
-				GameObject o = GameObject.Instantiate(spawnerPrefab,center,Quaternion.identity,spawnerLayer);
+				Vector2Int center = MapManager.getInstance ().CellToWorld (spawners[i][0],spawners[i][1]);
+				GameObject o = GameObject.Instantiate(spawnerPrefab,spawnerLayer);
 				EnemySpawner spanwer = o.GetComponent<EnemySpawner> ();
+				spanwer.posXInt = center.x;
+				spanwer.posYInt = center.y;
 				enemySpawners.Add (spanwer);
 				spanwer.enemyName="10005";
 			}
@@ -114,15 +116,17 @@ public class BattleManager : Singleton<BattleManager> {
 
 		buildableTowers = PlayerData.getInstance ().ownedTowers;
 		money = new int[4];
-		money[0] = 2000;
-		money[1] = 2000;
-		money[2] = 2000;
-		money[3] = 2000;
+		money[0] = 200;
+		money[1] = 10;
+		money[2] = 10;
+		money[3] = 10;
 
 		killLeft = 10;
 		hp = PlayerData.getInstance().hp;
 		maxHP = PlayerData.getInstance ().maxHP;
 		san = 40;
+
+
 	}
 
 	GameLife highlightEnemy = null;
@@ -151,16 +155,16 @@ public class BattleManager : Singleton<BattleManager> {
 //		return instance;
 //	}
 //
-//	void Awake(){
-//		checkGameObject ();
-//		checkSingle ();
-//	}
+
 
 
 	public void spawnPlayer(){
 		GameObject o = GameObject.Instantiate (playerPrefab,mapObjLayer);
-		o.transform.position = new Vector3 (1f, -1f, 0);
 		player = o.GetComponent<PlayerModule> ();
+		Vector2Int center = MapManager.getInstance ().CellToWorld (2,2);
+
+		player.gl.posXInt = center.x;
+		player.gl.posYInt = center.y;
 		battleMainCamera.GetComponent<TargetFollower> ().Target = o.transform;
 	}
 
@@ -227,7 +231,7 @@ public class BattleManager : Singleton<BattleManager> {
 
 	public void gainCoin(int num){
 		money[0] += num;
-		mainUIManager._coins.text = money[0]+"";
+		mainUIManager.updateCoin ();
 	}
 
 	public void unlockAllEnemies(){

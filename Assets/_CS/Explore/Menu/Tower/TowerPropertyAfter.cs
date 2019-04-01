@@ -40,7 +40,7 @@ public class TowerPropertyAfter : GComponent
 			TowerDamageItem damage = (TowerDamageItem)_damage_list.AddItemFromPool ();
 		}
 	}
-	public void setSkill(List<TowerSkillState> skills){
+	public void setSkill(List<SkillState> skills){
 		_skill_list.RemoveChildrenToPool ();
 
 		for (int i = 0; i < skills.Count; i++) {

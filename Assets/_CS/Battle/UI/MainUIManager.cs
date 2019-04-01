@@ -10,7 +10,10 @@ public class MainUIManager : MonoBehaviour
 	GComponent _buildBtn;
 
 	public GTextField _enemy_left;
-	public GTextField _coins;
+
+	GTextField _coins0;
+	GTextField _coins1;
+	GTextField _coins2;
 
 	BuildWindow _buildWin;
 	BattleFinishWindow _battleFinishWindow;
@@ -69,11 +72,16 @@ public class MainUIManager : MonoBehaviour
 		BuildButtonPosInScreen = GRoot.inst.LocalToGlobal (_buildBtn.position);
 
 		_enemy_left = _mainView.GetChild ("enemy_left").asTextField;
-		_coins = _mainView.GetChild ("coins").asTextField;
+
+		_coins0 = _mainView.GetChild ("coins0").asTextField;
+		_coins1 = _mainView.GetChild ("coins1").asTextField;
+		_coins2 = _mainView.GetChild ("coins2").asTextField;
 
 
-		updatePotions ();
 		updateHp ();
+		updatePotions ();
+		updateCoin ();
+
 	}
 
 	void handleMove(EventContext context){
@@ -125,6 +133,12 @@ public class MainUIManager : MonoBehaviour
 	public void updateHp(){
 		_hp_bar.GetChild ("process").asImage.fillAmount = BattleManager.getInstance().Hp * 1.0f / BattleManager.getInstance().maxHP;
 		_hp_bar.GetChild ("v").asTextField.text = BattleManager.getInstance ().Hp + "/" + BattleManager.getInstance ().maxHP;
+	}
+
+	public void updateCoin(){
+		_coins0.text = BattleManager.getInstance ().money [0]+"";
+		_coins1.text = BattleManager.getInstance ().money [1]+"";
+		_coins2.text = BattleManager.getInstance ().money [2]+"";
 	}
 }
 

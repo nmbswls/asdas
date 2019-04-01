@@ -15,8 +15,8 @@ public class MapManager : MonoBehaviour
 	public static int MAP_WIDTH = 50;
 	public static int MAP_HEIGHT = 30;
 
-	public static int TILE_WIDTH = 50;
-	public static int TILE_HEIGHT = 50;
+	public static int TILE_WIDTH = 100;
+	public static int TILE_HEIGHT = 100;
 
 
 
@@ -53,6 +53,9 @@ public class MapManager : MonoBehaviour
 	public Transform obstacleLayer;
 	public Transform activeLayer;
 
+	void Start(){
+		transform.position = Vector3.zero;
+	}
 
 	public void LoadMap(int idx){
 		if (obcTilemap != null) {
@@ -113,8 +116,8 @@ public class MapManager : MonoBehaviour
 
 	}
 
-	public void updateOneBlock(Vector3Int posInCell){
-		dynamicBlocks [-posInCell.y] [posInCell.x] = true;
+	public void updateOneBlock(Vector2Int posInCell){
+		dynamicBlocks [posInCell.y] [posInCell.x] = true;
 	}
 
 	public void updateBlock(){
@@ -194,19 +197,19 @@ public class MapManager : MonoBehaviour
 		//GenerateMap ();
 
 
-		int colorCount = 6;
-		arrTiles = new Tile[colorCount];
-		for(int i=0;i<colorCount;i++){
-			arrTiles[i] = ScriptableObject.CreateInstance<Tile>();
-			arrTiles[i].sprite = baseTile.sprite;
-			arrTiles[i].color = new Color(Random.Range(0f, 1f), Random.Range(0f,1f), Random.Range(0f, 1f), 1);
-		}
+//		int colorCount = 6;
+//		arrTiles = new Tile[colorCount];
+//		for(int i=0;i<colorCount;i++){
+//			arrTiles[i] = ScriptableObject.CreateInstance<Tile>();
+//			arrTiles[i].sprite = baseTile.sprite;
+//			arrTiles[i].color = new Color(Random.Range(0f, 1f), Random.Range(0f,1f), Random.Range(0f, 1f), 1);
+//		}
 
 
 		for(int i=0;i<MAP_HEIGHT;i++){
 			for(int j=0;j<MAP_WIDTH;j++){
 				if (tilemap.GetTile (new Vector3Int (j, -i, 0)) != null) {
-					tilemap.SetTile (new Vector3Int (j, -i, 0), arrTiles [Random.Range (0, arrTiles.Length)]);
+					//tilemap.SetTile (new Vector3Int (j, -i, 0), arrTiles [Random.Range (0, arrTiles.Length)]);
 				}
 //				if (obcTilemap.GetTile (new Vector3Int (j, -i, 0)) != null) {
 //					staticBlocks [i] [j] = true;
@@ -301,7 +304,7 @@ public class MapManager : MonoBehaviour
 
 
 
-	public Vector3 getRandomPosToGo(int i,int j){
+	public Vector2Int getRandomPosToGo(int i,int j){
 		int time = 0;
 		while (time<10) {
 			int rIdx = Random.Range (0, 25);
@@ -311,43 +314,106 @@ public class MapManager : MonoBehaviour
 			int nextJ = j -2 + col;
 
 			if (nextI >= 0 && nextI < staticBlocks.Length && nextJ >= 0 && nextJ < staticBlocks [0].Length && !staticBlocks [nextI] [nextJ]) {
-				Vector3 world = MapManager.getInstance ().obcTilemap.CellToWorld (new Vector3Int(nextJ,-nextI,0));
+				Vector2Int world = MapManager.getInstance ().CellToWorld (nextI,nextJ);
 				return world;
 			}
 			time++;
 		}
-		return Vector3.zero;
+		return MapManager.getInstance ().CellToWorld (i,j);;
 	}
 
-	public Vector3 getRandomPosToGo(Vector3 center){
-		Vector3Int posXY = MapManager.getInstance ().obcTilemap.WorldToCell (center);
-		return getRandomPosToGo (-posXY.y,posXY.x);
+	public Vector2Int getRandomPosToGo(Vector2Int center){
+		Vector2Int posXY = MapManager.getInstance ().WorldToCell (center);
+		return getRandomPosToGo (posXY.y,posXY.x);
 	}
 
 
-	public Vector3Int worldPosToCellPos(Vector3 worldPos){
-		Vector3Int res = obcTilemap.WorldToCell (worldPos);
-		res.y = -res.y;
+//	public Vector3Int worldPosToCellPos(Vector3 worldPos){
+//		Vector3Int res = obcTilemap.WorldToCell (worldPos);
+//		res.y = -res.y;
+//		return res;
+//
+//	}
+//
+//	public Vector3 cellPosToWorldPos(int i, int j){
+//		Vector3 res = obcTilemap.CellToWorld (new Vector3Int(j,-i,0));
+//		return res;
+//
+//	}
+
+	public Vector2Int CellToWorld(int i, int j){
+		Vector2Int res = new Vector2Int (j*TILE_WIDTH*10,-i*TILE_HEIGHT*10);
+		res += new Vector2Int (TILE_WIDTH * 5, -TILE_HEIGHT * 5);
 		return res;
-
 	}
 
-	public Vector3 cellPosToWorldPos(int i, int j){
-		Vector3 res = obcTilemap.CellToWorld (new Vector3Int(j,-i,0));
-		return res;
-
+	public Vector2Int CellToWorld(Vector2Int pos){
+		return CellToWorld (pos.y, pos.x);
 	}
 
-	public bool isWorldPosObc(Vector3 worldPos){
-		Vector3Int res = obcTilemap.WorldToCell (worldPos);
-		res.y = -res.y;
+	public Vector2Int WorldToCell(Vector3 worldPos){
+		int x = (int)(worldPos.x * 1000 / (TILE_WIDTH * 0.01f));
+		int y = (int)(-worldPos.y * 1000 / (TILE_HEIGHT * 0.01f));
+
+		if (x >= 0)
+			x = x / 1000;
+		else
+			x = -(-x / 1000) - 1;
+
+		if (y >= 0)
+			y = y / 1000;
+		else
+			y = -(-y / 1000) - 1;
+		
+		return new Vector2Int (x,y);
+	}
+
+	public Vector2Int WorldToCell(Vector2Int worldPosInt){
+		int x = (int)(worldPosInt.x / (TILE_WIDTH * 0.01f));
+		int y = (int)(-worldPosInt.y / (TILE_HEIGHT * 0.01f));
+		if (x >= 0)
+			x = x / 1000;
+		else
+			x = -(-x / 1000) - 1;
+
+		if (y >= 0)
+			y = y / 1000;
+		else
+			y = -(-y / 1000) - 1;
+		
+		return new Vector2Int (x,y);
+	}
+
+	public Vector2 WorldToCellWithTail(Vector2Int worldPosInt){
+		
+
+		int x = (int)(worldPosInt.x / (TILE_WIDTH * 0.01f));
+		int y = (int)(-worldPosInt.y / (TILE_HEIGHT * 0.01f));
+		return new Vector2 (x*0.001f,y*0.001f);
+	}
+
+//	public bool isWorldPosObc(Vector3 worldPos){
+//		Vector3Int res = obcTilemap.WorldToCell (worldPos);
+//		res.y = -res.y;
+//		if (res.y < 0 || res.y >= staticBlocks.Length || res.x < 0 || res.x >= staticBlocks [0].Length)
+//			return true;
+//		if (staticBlocks [res.y] [res.x])
+//			return true;
+//		return false;
+//	}
+
+	public bool isWorldPosObc(Vector2Int worldPosInt){
+		
+		Vector3 res = WorldToCellWithTail (worldPosInt);
 		if (res.y < 0 || res.y >= staticBlocks.Length || res.x < 0 || res.x >= staticBlocks [0].Length)
 			return true;
-		if (staticBlocks [res.y] [res.x])
+		if (staticBlocks [(int)res.y] [(int)res.x])
 			return true;
 		return false;
-
 	}
+
+
+
 	public bool isCellObc(Vector3Int cellPos){
 		
 		if (cellPos.y < 0 || cellPos.y >= staticBlocks.Length || cellPos.x < 0 || cellPos.x >= staticBlocks [0].Length)

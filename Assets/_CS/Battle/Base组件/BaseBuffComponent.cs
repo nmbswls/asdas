@@ -18,7 +18,7 @@ public class Buff{
 	}
 }
 
-public class BuffComponent : MonoBehaviour
+public class BaseBuffComponent : MonoBehaviour
 {
 
 	public GameLife bindTarget;

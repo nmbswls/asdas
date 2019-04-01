@@ -1,0 +1,72 @@
+{
+	"1001": {
+		"skillId": 1001,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isSelfTarget":true,
+		"isPassive": false,
+		"isPermanent": false,
+		"x": [1, 0, 0],
+		"y": [1, 0, 0],
+		"z": [1, 0, 0]
+	},
+	"1002": {
+		"skillId": 1002,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isPassive": true,
+		"isPermanent": false,
+		"x": [1, 0, 0],
+		"y": [1, 0, 0],
+		"z": [1, 0, 0]
+	},
+	"1003": {
+		"skillId": 1003,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isPassive": true,
+		"isPermanent": true,
+		"x": [10, 0, 0],
+		"y": [10, 0, 0],
+		"z": [10, 0, 0]
+	},
+	"1004": {
+		"skillId": 1004,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isSelfTarget":false,
+		"bulletStyle":"02",
+		"atkType":0,
+		"isPassive": false,
+		"isPermanent": false,
+		"x": [3000, 3000, 3000],
+		"y": [3000, 0, 0],
+		"z": [3000, 0, 0]
+	},
+	"1005": {
+		"skillId": 1005,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isSelfTarget":false,
+		"bulletStyle":"03",
+		"atkType":2,
+		"isPassive": false,
+		"isPermanent": true,
+		"x": [2000, 2000, 2000],
+		"y": [2000, 0, 0],
+		"z": [2000, 0, 0]
+	},
+	"1006": {
+		"skillId": 1006,
+		"maxLv": 3,
+		"cooldown": 20000,
+		"isSelfTarget":false,
+		"bulletStyle":"00",
+		"atkType":2,
+		"isPassive": false,
+		"isPermanent": true,
+		"x": [2000, 2000, 2000],
+		"y": [2000, 0, 0],
+		"z": [2000, 0, 0]
+	}
+}

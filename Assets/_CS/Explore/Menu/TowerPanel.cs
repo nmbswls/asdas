@@ -299,10 +299,10 @@ public class TowerPanel : GComponent
 			atks.Add (new AtkInfo(tb.extraAtk[i]));
 		}
 
-		List<TowerSkillState> skills = new List<TowerSkillState> ();
+		List<SkillState> skills = new List<SkillState> ();
 		skills.AddRange (tb.skills);
 
-		List<TowerSkillState> extraSkills = new List<TowerSkillState> ();
+		List<SkillState> extraSkills = new List<SkillState> ();
 
 
 		foreach (TowerComponent tc in tt.components) {
@@ -313,7 +313,7 @@ public class TowerPanel : GComponent
 					mainAtk.damage += effect.x;
 				}else if(effect.type == eTowerComponentEffectType.EXTRA_ABILITY){
 					//extras.Add (effect.extra);
-					TowerSkillState skill = new TowerSkillState();
+					SkillState skill = new SkillState();
 					skill.skillId = effect.extra;
 					skill.skillLevel = effect.x;
 					extraSkills.Add (skill);

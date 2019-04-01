@@ -15,10 +15,12 @@ using System.Collections;
 [SerializeField]
 public enum eAtkType
 {
+	NONE = -1,
 	MELLE_POINT = 0,
 	MELLE_AOE = 1,
 	RANGED_HOMING = 2,
 	RANGED_INSTANT = 3,
 	RANGED_UNHOMING = 4,
 	RANGED_MULTI = 5,
+
 }

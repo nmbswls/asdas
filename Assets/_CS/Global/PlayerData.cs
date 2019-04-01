@@ -35,16 +35,16 @@ public class TowerBase{
 	public string tdesp;
 
 	public string bulletStyle = "default";
+	public int[] cost = new int[3];
 
 	public eAtkType atkType = eAtkType.MELLE_POINT;
 	public AtkInfo mainAtk = new AtkInfo();
 	public List<AtkInfo> extraAtk = new List<AtkInfo>();
-	public int cost;
 	public int mingzhong;
 	public int atkInteval = 2000;
 	public int atkRange = 3000;
 	public int atkPreanimTime = 300;
-	public List<TowerSkillState> skills = new List<TowerSkillState>();
+	public List<SkillState> skills = new List<SkillState>();
 }
 
 [System.Serializable]
@@ -73,12 +73,12 @@ public class TowerSkill{
 }
 
 [System.Serializable]
-public class TowerSkillState{
+public class SkillState{
 	public string skillId;
 	public int skillLevel;
-	public TowerSkillState(){
+	public SkillState(){
 	}
-	public TowerSkillState(string skillId,int skillLevel){
+	public SkillState(string skillId,int skillLevel){
 		this.skillId = skillId;
 		this.skillLevel = skillLevel;
 	}

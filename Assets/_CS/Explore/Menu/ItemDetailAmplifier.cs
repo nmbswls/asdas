@@ -56,7 +56,7 @@ public class ItemDetailAmplifier : Window
 			_name.text = GameStaticData.getInstance ().talents[int.Parse(talent.talentId)].talentName;
 			_desp.text = GameStaticData.getInstance ().talents[int.Parse(talent.talentId)].talentDesp;
 		}else if (contentType == "tower_skill") {
-			TowerSkillState skill = (TowerSkillState)content;
+			SkillState skill = (SkillState)content;
 			_pic.url = "image/TowerSkill/" + skill.skillId;
 			_name.text = GameStaticData.getInstance ().getTowerSkillInfo(skill.skillId).skillName;
 			_desp.text = GameStaticData.getInstance ().getTowerSkillInfo(skill.skillId).skillDesp;

@@ -10,6 +10,8 @@ public enum eBehavePattern{
 	AVOID = 3,
 }
 
+
+
 public class EnemyController : IUnitController
 {
 	public List<Vector3> path = new List<Vector3>();
@@ -34,6 +36,7 @@ public class EnemyController : IUnitController
 	public int wanderTimeInt = 0;
 	public Vector2 wanderTarget;
 
+	public List<EnemySkill> skills = new List<EnemySkill>();
 	// Use this for initialization
 	void Awake ()
 	{
@@ -62,7 +65,11 @@ public class EnemyController : IUnitController
 		offsetV = offset;
 	}
 
-
+	void logicUpdate(){
+		for (int i = 0; i < skills.Count; i++) {
+			
+		}
+	}
 
 	void Update ()
 	{
@@ -107,7 +114,7 @@ public class EnemyController : IUnitController
 					behavePatter = eBehavePattern.WANDER;
 					pathSeeker.stopFollow();
 					wanderTimeInt = 0;
-					Vector3 togo = MapManager.getInstance ().getRandomPosToGo (transform.position);
+					Vector2Int togo = MapManager.getInstance ().getRandomPosToGo (new Vector2Int(gl.posXInt,gl.posYInt));
 					pathSeeker.searchFixedPath (togo);
 					pathIdx = 0;
 					physicsComponent.canSlide = false;

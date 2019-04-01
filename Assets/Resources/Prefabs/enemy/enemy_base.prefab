@@ -122,8 +122,8 @@ GameObject:
   - component: {fileID: 61795200928550404}
   - component: {fileID: 114270797719094120}
   - component: {fileID: 114870678536352350}
-  - component: {fileID: 114271113258092876}
   - component: {fileID: 114559265025235298}
+  - component: {fileID: 114968558421344246}
   m_Layer: 11
   m_Name: enemy_base
   m_TagString: enemy
@@ -354,7 +354,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posXInt: 0
   posYInt: 0
-  height: 0
   isHighLight: 0
   shadow: {fileID: 0}
   actualObj: {fileID: 0}
@@ -407,19 +406,6 @@ MonoBehaviour:
   moveBy: {x: 0, y: 0}
   velocity: {x: 0, y: 0}
   canSlide: 1
---- !u!114 &114271113258092876
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1921214829137270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9652919eafb7246a4a61ba2c3af98bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bindTarget: {fileID: 0}
-  withUI: 1
 --- !u!114 &114559265025235298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -468,6 +454,7 @@ MonoBehaviour:
   idleTimeInt: 0
   wanderTimeInt: 0
   wanderTarget: {x: 0, y: 0}
+  skills: []
 --- !u!114 &114870678536352350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -481,8 +468,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCtrl: {fileID: 0}
   target: {fileID: 0}
+  owner: {fileID: 0}
   pathPos: []
   leader: {fileID: 0}
+--- !u!114 &114968558421344246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1921214829137270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47d28a44a3e84193befad35ded993bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bindTarget: {fileID: 114099213384791534}
+  withUI: 1
 --- !u!212 &212331752353754214
 SpriteRenderer:
   m_ObjectHideFlags: 1

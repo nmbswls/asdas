@@ -23,9 +23,9 @@ GameObject:
   - component: {fileID: 114120970437987314}
   - component: {fileID: 61217310028687810}
   - component: {fileID: 114584029664664172}
-  - component: {fileID: 114289761403346418}
   - component: {fileID: 114610533308560824}
   - component: {fileID: 50619022682483578}
+  - component: {fileID: 114794598053948370}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -277,19 +277,6 @@ MonoBehaviour:
   keyLeftStrig: a
   keyRightStrig: d
   characterSizeY: 0
---- !u!114 &114289761403346418
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1174937515963176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9652919eafb7246a4a61ba2c3af98bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bindTarget: {fileID: 0}
-  withUI: 0
 --- !u!114 &114541941201181582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,7 +334,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posXInt: 0
   posYInt: 0
-  height: 0
   isHighLight: 0
   shadow: {fileID: 0}
   actualObj: {fileID: 0}
@@ -383,6 +369,19 @@ MonoBehaviour:
   - {x: -0.1, y: 0, z: 0}
   - {x: 0, y: -0.2, z: 0}
   - {x: 0.1, y: 0, z: 0}
+--- !u!114 &114794598053948370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1174937515963176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47d28a44a3e84193befad35ded993bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bindTarget: {fileID: 114696275743278318}
+  withUI: 0
 --- !u!212 &212245023716190386
 SpriteRenderer:
   m_ObjectHideFlags: 1

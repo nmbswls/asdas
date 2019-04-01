@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseEffect : MonoBehaviour
+public class BaseEffect : MapObject
 {
 
 	protected bool initialized=false;
@@ -16,8 +16,9 @@ public class BaseEffect : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update ()
+	protected override void Update ()
 	{
+		base.Update ();
 		if (initialized == false) {
 			return;
 		}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BasicBullet : MonoBehaviour,ILogicUpdate
+public class BasicBullet : MonoBehaviour
 {
 	public int speed = 5;
 

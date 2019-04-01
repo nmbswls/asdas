@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour {
+public class EnemySpawner : MapObject {
 
 	public int difficultyLevel = 1;
 
@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour {
 
 		if (spawnCoolDown <= 0) {
 			if (nowEnemy < MAX_ENEMY) {
-				GameLife enemy = MonsterFactory.createEnemy (enemyName,transform.position,transform);
+				GameLife enemy = MonsterFactory.createEnemy (enemyName,new Vector2Int(posXInt,posYInt),transform);
 				nowEnemy++;
 				localEnemies.Add (enemy);
 				enemy.OnDieCallback += delegate() {

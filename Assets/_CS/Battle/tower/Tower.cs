@@ -47,15 +47,15 @@ public class Tower : MapObject
 	public static int checkSkillInteval = 250;
 	public int checkSkillTimer;
 
-	public Vector3Int posInCell = Vector3Int.zero;
+	public Vector2Int posInCell = Vector2Int.zero;
 
 
 	private Animator anim;
 
 	private TowerTemplate tt;
 
-	SkillComponent skillComponent;
-	public BuffComponent buffManager;
+	TowerSkillComponent skillComponent;
+	public BaseBuffComponent buffManager;
 	public GameObject buffShow;
 
 	[SerializeField]
@@ -73,12 +73,12 @@ public class Tower : MapObject
 
 	void Awake(){
 		anim = GetComponentInChildren<Animator> ();
-		skillComponent = GetComponent<SkillComponent> ();
+		skillComponent = GetComponent<TowerSkillComponent> ();
 		if (skillComponent == null) {
-			skillComponent = gameObject.AddComponent<SkillComponent> ();
+			skillComponent = gameObject.AddComponent<TowerSkillComponent> ();
 		}
 
-		buffManager = GetComponent<BuffComponent> ();
+		buffManager = GetComponent<BaseBuffComponent> ();
 	}
 
 
@@ -88,7 +88,7 @@ public class Tower : MapObject
 		base.Start ();
 	}
 
-	public void init(TowerTemplate towerTemplate, Vector3Int posInCell){
+	public void init(TowerTemplate towerTemplate, Vector2Int posInCell){
 		if (towerTemplate != null) {
 			this.tt = towerTemplate;
 			this.atkType = towerTemplate.tbase.atkType;
@@ -101,18 +101,16 @@ public class Tower : MapObject
 			//this.tt = towerTemplate;
 
 			for (int i = 0; i < towerTemplate.tbase.skills.Count; i++) {
-				skillComponent.skills [i] = new TowerSkillState (towerTemplate.tbase.skills[i].skillId,towerTemplate.tbase.skills[i].skillLevel);
+				skillComponent.skills [i] = new SkillState (towerTemplate.tbase.skills[i].skillId,towerTemplate.tbase.skills[i].skillLevel);
 				skillComponent.skillCoolDown [i] = 3000;
 			}
 
 		}
 		this.posInCell = posInCell;
-		Vector3 pos = MapManager.getInstance ().obcTilemap.CellToWorld (posInCell);
-		pos.x += MapManager.TILE_WIDTH * 0.5f * 0.01f;
-		pos.y += MapManager.TILE_HEIGHT * 0.5f * 0.01f;
-		pos.z = 0;
-		transform.position = pos;
-
+		Vector2Int posLt = MapManager.getInstance ().CellToWorld (posInCell.y,posInCell.x);
+		//posLt += new Vector2Int (MapManager.TILE_WIDTH * 5,-MapManager.TILE_HEIGHT * 5);
+		posXInt = posLt.x;
+		posYInt = posLt.y;
 		coolDown = 1000;
 		atkTimer = 0;
 
@@ -139,9 +137,7 @@ public class Tower : MapObject
 		if (castIdx != -1) {
 			castTime += dTime;
 			if (castTime > castPreTime&&!skillHasTriggered) {
-				Debug.Log ("use skill "+castIdx);
-
-				TowerSkillState skill = skillComponent.skills [castIdx];
+				SkillState skill = skillComponent.skills [castIdx];
 				TowerSkill s = GameStaticData.getInstance ().towerSkills [skill.skillId];
 				if (s.isSelfTarget) {
 					gainBuff ();
@@ -172,7 +168,7 @@ public class Tower : MapObject
 
 		if (readySkills.Count > 0) {
 			for (int i = 0; i < readySkills.Count; i++) {
-				TowerSkillState skill = skillComponent.skills [readySkills [i]];
+				SkillState skill = skillComponent.skills [readySkills [i]];
 				Vector2 diff = closestOne.transform.position - transform.position;
 				TowerSkill s = GameStaticData.getInstance ().towerSkills [skill.skillId];
 
@@ -187,7 +183,7 @@ public class Tower : MapObject
 		}
 
 		if (readyUsableSkill.Count > 0) {
-			TowerSkillState toUse = skillComponent.skills[readyUsableSkill [0]];
+			SkillState toUse = skillComponent.skills[readyUsableSkill [0]];
 
 
 			TowerSkill ss = GameStaticData.getInstance ().towerSkills [toUse.skillId];
@@ -239,6 +235,9 @@ public class Tower : MapObject
 		}
 		if (coolDown > 0) {
 			coolDown -= dTime;
+		}
+		if (atkType == eAtkType.NONE) {
+			return;
 		}
 		if (atkType == eAtkType.MELLE_POINT) {
 			if (atkTarget != null && atkTimer > atkPreanimTime) {
@@ -360,7 +359,7 @@ public class Tower : MapObject
 		//hit.knock (atkTarget.transform.position - this.transform.position, 0.2f, 6f);
 
 		List<Buff> attackEffect = new List<Buff> ();
-		foreach (TowerSkillState skill in skillComponent.skills) {
+		foreach (SkillState skill in skillComponent.skills) {
 			if (skill == null)
 				continue;
 			TowerSkill sinfo = GameStaticData.getInstance().towerSkills[skill.skillId];

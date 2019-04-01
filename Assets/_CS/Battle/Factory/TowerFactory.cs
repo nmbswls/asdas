@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TowerFactory
 {
 
-	public static Tower createTower(int idx, Vector3Int posInCell,Transform target){
+	public static Tower createTower(int idx, Vector2Int posInCell,Transform target){
 		TowerTemplate tt = PlayerData.getInstance ().getTowerTemplate (idx);
 		GameObject prefab = Resources.Load ("Prefabs/towers/tower") as GameObject;
 		GameObject viewPrefab = Resources.Load ("Prefabs/towers/"+tt.tbase.tid) as GameObject;
@@ -18,6 +18,7 @@ public class TowerFactory
 		//GameObject view = GameObject.Instantiate (viewPrefab,o.transform);
 		Tower t = o.GetComponent<Tower> ();
 		t.GetComponentInChildren<Animator>().runtimeAnimatorController = animCtrl;
+
 		t.init (tt,posInCell);
 		BattleManager.getInstance ().addTower(t);
 		return t;

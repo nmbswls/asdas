@@ -3,6 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+
+[System.Serializable]
+public class EnemySkill{
+	public string skillId;
+	public string skillName;
+	public string skillDesp;
+
+	public string bulletStyle; 
+
+	public int maxLv;
+	public int cooldown = 20000;
+	public bool isSelfTarget = false;
+	public eAtkType atkType = eAtkType.MELLE_POINT;
+	public bool isPassive = false;
+	public bool isPermanent = false;
+	public List<int> x;
+	public List<int> y;
+	public List<int> z;
+	public EnemySkill(){
+	}
+	public EnemySkill(string skillId){
+		this.skillId = skillId;
+	}
+}
+
 public class UsableHeroInfo{
 
 	public string name;
@@ -67,6 +92,7 @@ public class GameStaticData
 		loadTowerInfo ();
 		loadComponentInfo ();
 		loadTowerSkillInfo ();
+		loadEnemySkillInfo ();
 		loadMemoInfo ();
 		loadMemoCombinationRule ();
 
@@ -88,6 +114,7 @@ public class GameStaticData
 
 	public Dictionary<string,MemoInfo> memoInfo = new Dictionary<string,MemoInfo>();
 	public Dictionary<string,TowerSkill> towerSkills = new Dictionary<string,TowerSkill>();
+	public Dictionary<string,EnemySkill> enemySkills = new Dictionary<string,EnemySkill>();
 
 	public List<MemoCombinationRule> memoCombineInfo = new List<MemoCombinationRule>();
 
@@ -266,7 +293,10 @@ public class GameStaticData
 		TextAsset ta = Resources.Load ("json/tower_skill/100") as TextAsset;
 		towerSkills = JsonConvert.DeserializeObject<Dictionary<string,TowerSkill>> (ta.text);
 	}
-
+	void loadEnemySkillInfo(){
+		TextAsset ta = Resources.Load ("json/enemy_skill/100") as TextAsset;
+		enemySkills = JsonConvert.DeserializeObject<Dictionary<string,EnemySkill>> (ta.text);
+	}
 
 	void loadEnemyInfo(){
 		TextAsset ta = Resources.Load ("json/enemy/all") as TextAsset;

@@ -7,8 +7,8 @@ public class MapObject : MonoBehaviour
 	public int posXInt;
 	[HideInInspector]
 	public int posYInt;
-	[HideInInspector]
-	public int height;
+//	[HideInInspector]
+//	public int height;
 
 	[HideInInspector]
 	public bool isHighLight = false;
@@ -34,7 +34,8 @@ public class MapObject : MonoBehaviour
 	// Update is called once per frame
 	protected virtual void Update ()
 	{
-		transform.position = new Vector3 (transform.position.x, transform.position.y, (float)(mapHeight+(transform.position.y)) * rate + minZ - (isHighLight?5f:0f));
+		//transform.position = new Vector3 (transform.position.x, transform.position.y, (float)(mapHeight+(transform.position.y)) * rate + minZ - (isHighLight?5f:0f));
+		transform.position = new Vector3 (posXInt*0.001f, posYInt*0.001f, (float)(mapHeight+(transform.position.y)) * rate + minZ - (isHighLight?5f:0f));
 	}
 
 

@@ -14,7 +14,7 @@ public class PathSeekBehaviour : MonoBehaviour
 	public EnemyController enemyCtrl;
 	public GameLife target;
 
-
+	public GameLife owner;
 
 	public List<Vector3> pathPos = new List<Vector3>();
 
@@ -33,31 +33,10 @@ public class PathSeekBehaviour : MonoBehaviour
 
 	public void reSearchPath(){
 
-		searchFixedPath (target.transform.position);
-//		if (!findObcOnPath ()) {
-//			enemyCtrl.path = new List<Vector3>();
-//			enemyCtrl.path.Add(target.transform.position);
-//			enemyCtrl.hasPath = true;
-//			enemyCtrl.pathIdx = 0;
-//			return;
-//		}
-//
-//		Vector3Int startPos = MapManager.getInstance ().tilemap.WorldToCell (transform.position);
-//		Vector3Int endPos = MapManager.getInstance ().tilemap.WorldToCell (target.transform.position);
-//		SearchMapNode startNode = map [-startPos.y] [startPos.x];
-//		SearchMapNode endNode = map [-endPos.y] [endPos.x];
-//		if (search (startNode, endNode)) {
-//			enemyCtrl.path = pathPos;
-//			enemyCtrl.hasPath = true;
-//			enemyCtrl.pathIdx = 0;
-//		} else {
-//			enemyCtrl.path = new List<Vector3>();
-//			enemyCtrl.hasPath = false;
-//			enemyCtrl.pathIdx = 0;
-//		}
+		searchFixedPath (new Vector2Int(target.posXInt,target.posYInt));
 	}
 
-	public void searchFixedPath(Vector3 targetPos){
+	public void searchFixedPath(Vector2Int targetPos){
 		if (!findObcOnPath (targetPos)) {
 			//Debug.Log ("无障碍");
 			enemyCtrl.path = new List<Vector3>();
@@ -67,10 +46,20 @@ public class PathSeekBehaviour : MonoBehaviour
 			return;
 		}
 
-		Vector3Int startPos = MapManager.getInstance ().tilemap.WorldToCell (transform.position);
-		Vector3Int endPos = MapManager.getInstance ().tilemap.WorldToCell (targetPos);
-		SearchMapNode startNode = map [-startPos.y] [startPos.x];
-		SearchMapNode endNode = map [-endPos.y] [endPos.x];
+		//Vector3Int startPos = MapManager.getInstance ().tilemap.WorldToCell (transform.position);
+		//Vector3Int endPos = MapManager.getInstance ().tilemap.WorldToCell (targetPos);
+		Vector2Int startPos = MapManager.getInstance ().WorldToCell (new Vector2Int(owner.posXInt,owner.posYInt));
+		Vector2Int endPos = MapManager.getInstance ().WorldToCell (targetPos);
+
+		if (startPos.y >= 0 && startPos.y < map.Length && startPos.x >= 0 && startPos.x < map [0].Length && endPos.y >= 0 && endPos.y < map.Length && endPos.x >= 0 && endPos.x < map [0].Length) {
+		
+		} else {
+			return;
+		}
+
+		SearchMapNode startNode = map [startPos.y] [startPos.x];
+		SearchMapNode endNode = map [endPos.y] [endPos.x];
+
 		if (search (startNode, endNode)) {
 			enemyCtrl.path = pathPos;
 			enemyCtrl.hasPath = true;
@@ -88,6 +77,7 @@ public class PathSeekBehaviour : MonoBehaviour
 
 	void Awake(){
 		enemyCtrl = GetComponent<EnemyController> ();
+		owner = GetComponent<GameLife> ();
 	}
 
 	public void changeIsLeader(bool isLeader){
@@ -218,23 +208,31 @@ public class PathSeekBehaviour : MonoBehaviour
 		return true;
 	}
 
-	public bool findObcOnPath(Vector3 fixedTarget){
-		Vector3 startInWorld = transform.position;
-		Vector3 endInWorld = fixedTarget;
+	public bool findObcOnPath(Vector2Int fixedTarget){
+		
+		Vector2Int startInWorld = new Vector2Int(owner.posXInt,owner.posYInt);
+		Vector2Int endInWorld = fixedTarget;
 
 
 
-		Vector3 start = MapManager.getInstance ().tilemap.WorldToCell (startInWorld);
-		start.y = -start.y;
-		Vector3 end = MapManager.getInstance ().tilemap.WorldToCell (endInWorld);
-		end.y = -end.y;
+		Vector2 start = MapManager.getInstance ().WorldToCellWithTail (startInWorld);
+		Vector2 end = MapManager.getInstance ().WorldToCellWithTail (endInWorld);
 
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				if (i == j)
+					continue;
+				if (j * (end.x - start.x) < 0)
+					continue;
+				if (i * (end.y - start.y) < 0)
+					continue;
+				if (MapManager.getInstance ().isCellObc (new Vector3Int ((int)start.x + j, (int)start.y + i, 0))) {
+					return true;
+				}
+			}
+		}
 
-
-
-		start += new Vector3 (0.5f,0.5f);
-		end += new Vector3 (0.5f,0.5f);
-		if (start.x == end.x) {
+		if ((int)start.x == (int)end.x) {
 			if (checkY ((int)start.y, (int)end.y, (int)start.x)) {
 				return true;
 			}
@@ -245,8 +243,10 @@ public class PathSeekBehaviour : MonoBehaviour
 			start = end;
 			end = tmp;
 		}
+
 		int startIntX = (int)Mathf.Ceil (start.x);
-		float k = (start.y - end.y) / (start.x - end.x);
+
+		float k = (start.y - end.y) * 1.0f / (start.x - end.x);
 		float nowY = (startIntX - start.x) * k + start.y;
 		float lastY = nowY;
 
@@ -254,7 +254,7 @@ public class PathSeekBehaviour : MonoBehaviour
 
 
 		for (int i = (int)start.y; i <= (int)nowY; i++) {
-			if (checkY (start.y, nowY, xInt - 1)) {
+			if (checkY ((int)start.y, nowY, xInt - 1)) {
 				return true;
 			}
 		}
@@ -269,14 +269,14 @@ public class PathSeekBehaviour : MonoBehaviour
 			}
 		}
 		for (int i = (int)lastY; i <= (int)end.y; i++) {
-			if (checkY (lastY, end.y, xInt - 1)) {
+			if (checkY (lastY, (int)end.y, xInt - 1)) {
 				return true;
 			}
 		}
 		return false;
 	}
 	public bool findObcOnPath(){
-		return findObcOnPath (target.transform.position);
+		return findObcOnPath (new Vector2Int(owner.posXInt,owner.posYInt));
 
 	}
 

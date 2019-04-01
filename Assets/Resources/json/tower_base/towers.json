@@ -10,7 +10,7 @@
 		"atkInteval": 2000,
 		"atkRange": 3000,
 		"atkPreanimTime": 500,
-		"cost":10,
+		"cost":[10,0,0],
 		"skills": [{
 			"skillId": 1004,
 			"skillLevel": 1
@@ -31,7 +31,7 @@
 		"mingzhong":5,
 		"atkInteval": 2000,
 		"atkRange": 3000,
-		"cost":30,
+		"cost":[30,0,0],
 		"atkPreanimTime": 500,
 		"skills": [{
 			"skillId": 1002,
@@ -43,14 +43,14 @@
 		"tname": "虎丘塔",
 		"tdesp": "一组虎丘塔",
 
-		"atkType": 2,
+		"atkType": -1,
 		"bulletStyle":"01",
 		"damage": 10000,
 		"mingzhong":3,
 		"atkInteval": 2000,
 		"atkRange": 3000,
 		"atkPreanimTime": 500,
-		"cost":50,
+		"cost":[50,1,0],
 		"skills": [{
 			"skillId": 1003,
 			"skillLevel": 1
@@ -67,7 +67,7 @@
 		"mingzhong":10,
 		"atkInteval": 2000,
 		"atkRange": 3000,
-		"cost":10,
+		"cost":[0,0,0],
 		"atkPreanimTime": 500,
 		"skills": []
 	}

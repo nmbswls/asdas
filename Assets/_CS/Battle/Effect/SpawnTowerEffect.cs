@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SpawnTowerEffect : BaseEffect
 {
-	Vector3Int toSpawnPosInCell;
+	Vector2Int toSpawnPosInCell;
 	GameObject sprite;
 
 	public static float Gg = 50f;
@@ -12,7 +12,7 @@ public class SpawnTowerEffect : BaseEffect
 	private int vHeight = 0;
 
 	int spawingTimeLeft = 300;
-	Vector3 v = Vector3.zero;
+	Vector3Int v = Vector3Int.zero;
 
 	int towerIdx;
 
@@ -33,37 +33,36 @@ public class SpawnTowerEffect : BaseEffect
 		if (spawingTimeLeft <= 0) {
 			Release ();
 		} else {
-			transform.position += v * timeInt * 0.001f;
+			posXInt += v.x * timeInt / 1000;
+			posYInt += v.y * timeInt / 1000;
 		}
 	}
 
 
 
-	public void init(int towerIdx,Vector3Int toSpawnPosInCell,Vector3 playerPosInWorld, float toSpawnTime = 0.3f){
+	public void init(int towerIdx,Vector2Int toSpawnPosInCell,Vector2Int playerPosInWorld, float toSpawnTime = 0.3f){
 		initialized = true;
 		gameObject.SetActive (true);
 		this.toSpawnPosInCell = toSpawnPosInCell;
 		spawingTimeLeft = (int)(toSpawnTime * 1000);
-		transform.position = playerPosInWorld;
+		posXInt = playerPosInWorld.x;
+		posYInt = playerPosInWorld.y;
 
 		vHeight = (int)(toSpawnTime * 1000 / 2 * Gg);
 
 		this.towerIdx = towerIdx;
 
 
-		Vector3 toSpawnPosInWorld = MapManager.getInstance ().obcTilemap.CellToWorld (toSpawnPosInCell);
-		toSpawnPosInWorld.x += MapManager.TILE_WIDTH * 0.5f * 0.01f;
-		toSpawnPosInWorld.y += MapManager.TILE_HEIGHT * 0.5f * 0.01f;
-		toSpawnPosInWorld.z = 0;
-
-		v = (toSpawnPosInWorld - playerPosInWorld) / toSpawnTime;
+		Vector2Int toSpawnPosInWorld = MapManager.getInstance ().CellToWorld (toSpawnPosInCell);
+		Vector2Int diff = (toSpawnPosInWorld - playerPosInWorld);
+		v = new Vector3Int( (int)(diff.x/toSpawnTime),(int)(diff.y/toSpawnTime),0);
 	}
 
 	protected override void OnRelease(){
 		TowerFactory.createTower (towerIdx, toSpawnPosInCell, GameObject.Find ("MapLayer").transform);
 		sprite = null;
-		v = Vector3.zero;
-		toSpawnPosInCell = Vector3Int.zero;
+		v = Vector3Int.zero;
+		toSpawnPosInCell = Vector2Int.zero;
 		Destroy (gameObject);
 	}
 }

@@ -6,8 +6,8 @@ public class GameLife : MapObject
 {
 	public IUnitController pCtrl;
 
-	public BuffComponent buffManager;
-	public SkillComponent skillComponent;
+	public BaseBuffComponent buffManager;
+	public TowerSkillComponent skillComponent;
 
 	public FollowingEffectManager effectManager;
 
@@ -19,10 +19,8 @@ public class GameLife : MapObject
 	public int id;
 	public Animator anim;
 	public SpriteRenderer image;
-//	public AttackEffect attackEffect;
 	public PhysicsComponent pc;
-	//public Rigidbody2D rBody;
-//	public GameLifeStats stats;
+
 
 	public float characterSizeX;
 	public float characterSizeY;
@@ -93,9 +91,9 @@ public class GameLife : MapObject
 		pc = GetComponent<PhysicsComponent> ();
 		image = GetComponentInChildren<SpriteRenderer> ();
 
-		buffManager = GetComponent<BuffComponent> ();
+		buffManager = GetComponent<BaseBuffComponent> ();
 		effectManager = GetComponent<FollowingEffectManager> ();
-		Application.targetFrameRate = 60;
+
 	}
 
 
@@ -257,6 +255,16 @@ public class GameLife : MapObject
 		if (OnDieCallback != null) {
 			OnDieCallback ();
 		}
+	}
+
+	public void DoDamage(int damage){
+		hp -= damage;
+		EmitManager.inst.Emit(transform, 0, (int)(damage*0.001f), UnityEngine.Random.Range(0, 10) == 5);
+		if (hp <= 0) {
+			OnDie ();
+		}
+		BattleManager.getInstance().placeHPOnTopLayer (this);
+		EffectManager.inst.EmitDamageEffect (transform);
 	}
 
 	public void DoDamage(List<AtkInfo> atk,int mingzhong,eProperty type,List<Buff> attachedEffect){

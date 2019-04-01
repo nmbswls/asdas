@@ -6,10 +6,11 @@ public class TowerSkillItem : GComponent
 {
 
 
-	TowerSkillState skill;
+	SkillState skill;
 
 	GLoader _icon;
 	GTextField _desp;
+	GTextField _lv_num;
 
 
 	public override void ConstructFromXML(FairyGUI.Utils.XML xml)
@@ -18,15 +19,18 @@ public class TowerSkillItem : GComponent
 
 		_icon = this.GetChild ("icon").asLoader;
 		_desp = this.GetChild ("txt").asTextField;
+		_lv_num = this.GetChild ("lv").asTextField;
 		this.onTouchBegin.Add (delegate() {
 			Debug.Log("click");
 			GameManager.getInstance().showDetailAmplifier("tower_skill",skill);
 		});
 	}
 
-	public void setInfo(TowerSkillState skill){
+	public void setInfo(SkillState skill){
 		this.skill = skill;
-		_desp.text = "ssss";
+		TowerSkill sinfo = GameStaticData.getInstance ().getTowerSkillInfo (skill.skillId);
+		_desp.text = sinfo.skillDesp;
+		_lv_num.text = skill.skillLevel + "";
 		_icon.url = "image/TowerSkill/"+skill.skillId;
 	}
 }

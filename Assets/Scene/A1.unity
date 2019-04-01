@@ -236,7 +236,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 31229327}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 120}
+  m_LocalPosition: {x: 0, y: -1, z: 120}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 695785188}
@@ -361,7 +361,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 115521248}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalPosition: {x: 0, y: -1, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1475689745}
@@ -585,32 +585,32 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 695785193}
     m_ColliderPaths:
-    - - X: 250000000
-        Y: 5000000
+    - - X: 500000000
+        Y: 10000000
       - X: 0
-        Y: 5000000
+        Y: 10000000
       - X: 0
-        Y: -145000000
-      - X: 250000000
-        Y: -145000000
-    - - X: 105000000
-        Y: -255000000
-      - X: 100000000
-        Y: -255000000
-      - X: 100000000
-        Y: -260000000
-      - X: 105000000
-        Y: -260000000
+        Y: -290000000
+      - X: 500000000
+        Y: -290000000
+    - - X: 210000000
+        Y: -510000000
+      - X: 200000000
+        Y: -510000000
+      - X: 200000000
+        Y: -520000000
+      - X: 210000000
+        Y: -520000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 25, y: 0.5}
-      - {x: 0, y: 0.5}
-      - {x: 0, y: -14.5}
-      - {x: 25, y: -14.5}
-    - - {x: 10.5, y: -25.5}
-      - {x: 10, y: -25.5}
-      - {x: 10, y: -26}
-      - {x: 10.5, y: -26}
+    - - {x: 50, y: 1}
+      - {x: 0, y: 1}
+      - {x: 0, y: -29}
+      - {x: 50, y: -29}
+    - - {x: 21, y: -51}
+      - {x: 20, y: -51}
+      - {x: 20, y: -52}
+      - {x: 21, y: -52}
   m_VertexDistance: 0.0005
 --- !u!50 &695785192
 Rigidbody2D:
@@ -40542,7 +40542,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1443042524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.020067, y: -5, z: 0}
+  m_LocalPosition: {x: 12.040133, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -40612,7 +40612,7 @@ Transform:
   m_GameObject: {fileID: 1475689744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 31229329}
   - {fileID: 115521250}
@@ -40639,7 +40639,7 @@ MonoBehaviour:
   tilePrefabs: {fileID: 1524005728968154, guid: f3a9f63499bcb4e1092a8b01281775c2,
     type: 2}
   images:
-  - {fileID: 21300000, guid: f260fabfbd8a2463282ef318e8352d22, type: 3}
+  - {fileID: 0}
   - {fileID: 21300000, guid: 1c83a1b20249b46ffb6954a41a034e49, type: 3}
   - {fileID: 21300000, guid: 66c0bf7d43a594f4f90c42a2cd2aa97b, type: 3}
   - {fileID: 21300000, guid: 0b6ea7c40f8e24289af1270608180754, type: 3}
@@ -40970,7 +40970,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1887724788}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 99}
+  m_LocalPosition: {x: 0, y: -1, z: 99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1475689745}

@@ -37,37 +37,37 @@ public class PlayerModule : MonoBehaviour
 			shieidTime -= timeInd;
 		if(shieidTime<=0)shield.SetActive (false);
 	}
-	public bool getClosestEmptyGrid(Vector3 posInWorld, out Vector3Int closestPos, int range = 3){
-		closestPos = Vector3Int.zero;
-		Vector3Int posXY = MapManager.getInstance ().obcTilemap.WorldToCell (posInWorld);
-		List<Vector3Int> possible;
+	public bool getClosestEmptyGrid(Vector2Int posInWorld, out Vector2Int closestPos, int range = 3){
+		closestPos = Vector2Int.zero;
+		Vector2Int posXY = MapManager.getInstance ().WorldToCell (posInWorld);
+		List<Vector2Int> possible;
 		for (int r = 1; r <= range; r++) {
-			possible = new List<Vector3Int> ();
+			possible = new List<Vector2Int> ();
 			for (int offset = -r; offset < r; offset++) {
 				{
-					Vector3Int newPos = new Vector3Int (posXY.x + offset,posXY.y + r,0);
+					Vector2Int newPos = new Vector2Int (posXY.x + offset,posXY.y + r);
 //					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().obcTilemap.GetTile(newPos)==null && MapManager.getInstance().dynamicBlocks[-newPos.y][newPos.x] == false){
 //						possible.Add (newPos);
 //					}
-					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().specialBlock[-newPos.y][newPos.x]==1&&MapManager.getInstance().dynamicBlocks[-newPos.y][newPos.x] == false){
+					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().specialBlock[newPos.y][newPos.x]==1&&MapManager.getInstance().dynamicBlocks[newPos.y][newPos.x] == false){
 						possible.Add (newPos);
 					}
 				}
 				{
-					Vector3Int newPos = new Vector3Int (posXY.x - offset,posXY.y - r,0);
-					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().specialBlock[-newPos.y][newPos.x]==1&&MapManager.getInstance().dynamicBlocks[-newPos.y][newPos.x] == false){
+					Vector2Int newPos = new Vector2Int (posXY.x - offset,posXY.y - r);
+					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().specialBlock[newPos.y][newPos.x]==1&&MapManager.getInstance().dynamicBlocks[newPos.y][newPos.x] == false){
 						possible.Add (newPos);
 					}
 				}
 				{
-					Vector3Int newPos = new Vector3Int (posXY.x + r,posXY.y - offset,0);
-					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().specialBlock[-newPos.y][newPos.x]==1&&MapManager.getInstance().dynamicBlocks[-newPos.y][newPos.x] == false){
+					Vector2Int newPos = new Vector2Int (posXY.x + r,posXY.y - offset);
+					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().specialBlock[newPos.y][newPos.x]==1&&MapManager.getInstance().dynamicBlocks[newPos.y][newPos.x] == false){
 						possible.Add (newPos);
 					}
 				}
 				{
-					Vector3Int newPos = new Vector3Int (posXY.x - r,posXY.y + offset,0);
-					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().specialBlock[-newPos.y][newPos.x]==1&&MapManager.getInstance().dynamicBlocks[-newPos.y][newPos.x] == false){
+					Vector2Int newPos = new Vector2Int (posXY.x - r,posXY.y + offset);
+					if(checkPos(newPos.x,newPos.y)&&MapManager.getInstance ().specialBlock[newPos.y][newPos.x]==1&&MapManager.getInstance().dynamicBlocks[newPos.y][newPos.x] == false){
 						possible.Add (newPos);
 					}
 				}
@@ -82,7 +82,7 @@ public class PlayerModule : MonoBehaviour
 
 	bool checkPos(int x, int y){
 
-		y = -y;
+		//y = -y;
 		if (x < 0 || x >= MapManager.MAP_WIDTH || y < 0 || y >= MapManager.MAP_HEIGHT) {
 			return false;
 		}
@@ -90,19 +90,19 @@ public class PlayerModule : MonoBehaviour
 	}
 
 	public bool tryBuildTower(int towerIdx){
-		if (BattleManager.getInstance ().money [0] < BattleManager.getInstance ().buildableTowers [towerIdx].tbase.cost) {
+		if (BattleManager.getInstance ().money [0] < BattleManager.getInstance ().buildableTowers [towerIdx].tbase.cost[0]) {
 			return false;	
 		}
 		if (!SpawnTower (towerIdx)) {
 			return false;
 		}
-		BattleManager.getInstance ().money [0] -= BattleManager.getInstance ().buildableTowers [towerIdx].tbase.cost;
+		BattleManager.getInstance ().money [0] -= BattleManager.getInstance ().buildableTowers [towerIdx].tbase.cost[0];
 		return true;
 	}
 
 	public bool SpawnTower(int towerIdx){
-		Vector3Int closestPos = Vector3Int.zero;
-		if (getClosestEmptyGrid (transform.position, out closestPos)) {
+		Vector2Int closestPos = Vector2Int.zero;
+		if (getClosestEmptyGrid (new Vector2Int(gl.posXInt,gl.posYInt),out closestPos)) {
 			//StartCoroutine (spawnTowerDelay(name,0.3f,closestPos));
 			//TowerFactory.createTower (name, closestPos, transform.parent);
 			int checkI = -closestPos.y;
@@ -110,7 +110,7 @@ public class PlayerModule : MonoBehaviour
 
 			MapManager.getInstance ().updateOneBlock (closestPos);
 			//dynamicBlocks [checkI] [checkJ] = true;
-			EffectManager.inst.EmitSpawnTowerEffect (towerIdx,closestPos,transform,0.3f);
+			EffectManager.inst.EmitSpawnTowerEffect (towerIdx,closestPos,gl,0.3f);
 			return true;
 		} else {
 			Debug.Log ("no pos");
@@ -139,10 +139,11 @@ public class PlayerModule : MonoBehaviour
 	}
 		
 	public void useBlink(){
-		Vector2 d = gl.faceDirVector;
-		Vector3 target = new Vector2(gl.transform.position.x,gl.transform.position.y) + d * 1f;
+		Vector2Int d = new Vector2Int((int)(gl.faceDirVector.x*1000f),(int)(gl.faceDirVector.y*1000f));
+		Vector2Int target = new Vector2Int(gl.posXInt,gl.posYInt) + d * 1;
 		if (!MapManager.getInstance ().isWorldPosObc (target)) {
-			transform.position = target;
+			gl.posXInt = target.x;
+			gl.posYInt = target.y;
 		} else {
 			
 		}
