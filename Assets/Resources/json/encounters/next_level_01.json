@@ -1,0 +1,37 @@
+﻿{
+	"eId": "next_level_01",
+	"type": 0,
+	"desp": "迷雾呈现出你似曾相识的污浊颜色，能听见不知名的声音。",
+	"stages": {
+
+		"0": {
+			"sId": 0,
+			"desp": "迷雾更浓了。",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+				"nextStageIdx": 9,
+				"choiceDesp": "前进",
+				"checks": []
+			}]
+		},
+
+		"9": {
+			"sId": 9,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 2,
+				"finishEffect": "none",
+				"rewords": [
+				]
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		}
+	}
+
+}

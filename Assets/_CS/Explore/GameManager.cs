@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager> {
 	GTextField moneyTextView;
 	GTextField sanTextView;
 	GTextField levelTextView;
-	GGraph showdetailButton;
+	public GGraph showdetailButton;
 
 	GLoader _enterBattle;
 
@@ -53,9 +53,24 @@ public class GameManager : Singleton<GameManager> {
 	void Start () {
 		//DontDestroyOnLoad (this);
 		//DontDestroyOnLoad (mainCamera.gameObject);
-		initUI ();
-		Time.timeScale = 1;
+
 		GameStaticData.getInstance ();
+
+		initUI ();
+		gridManager.initGrid ();
+
+		_mask.visible = true;
+		_mask.alpha = 1;
+
+		//PlayerData.getInstance().enterNextLevel();
+		_mask.TweenFade(0,1.5f).OnComplete(delegate() {
+			_mask.visible = false;
+			if (PlayerData.getInstance ().guideStage == 0) {
+				GuideManager.getInstance ().showGuideMoveMark (gridManager.getToturialGridPos ());
+			}
+		});
+
+		Time.timeScale = 1;
 	}
 
 	private AsyncOperation async = null;
@@ -68,18 +83,18 @@ public class GameManager : Singleton<GameManager> {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyUp (KeyCode.B)) {
-			EnemyCombo ec = GameStaticData.getInstance ().getEnemyWithValue (5);
-			List<EnemyCombo> sss = new List<EnemyCombo> ();
-			sss.Add (ec);
-			sss.Add (ec);
-			sss.Add (ec);
-			chaseByEnemy (sss);
-		}
-
-		if (Input.GetKeyUp (KeyCode.C)) {
-			getNewScar (new List<Scar>());
-		}
+//		if (Input.GetKeyUp (KeyCode.B)) {
+//			EnemyCombo ec = GameStaticData.getInstance ().getEnemyWithValue (5);
+//			List<EnemyCombo> sss = new List<EnemyCombo> ();
+//			sss.Add (ec);
+//			sss.Add (ec);
+//			sss.Add (ec);
+//			chaseByEnemy (sss);
+//		}
+//
+//		if (Input.GetKeyUp (KeyCode.C)) {
+//			getNewScar (new List<Scar>());
+//		}
 
 	}
 
@@ -150,7 +165,12 @@ public class GameManager : Singleton<GameManager> {
 		showdetailButton = _main.GetChild ("detail_button").asGraph;
 		//showdetailButton.url="detail";
 		showdetailButton.onClick.Add (delegate(EventContext context) {
+			
 			eMenu.Show();
+			if (PlayerData.getInstance ().guideStage == 12) {
+				GuideManager.getInstance ().showGuideTowerTab ();
+				PlayerData.getInstance ().guideStage = 13;
+			}
 		});
 
 
@@ -190,7 +210,6 @@ public class GameManager : Singleton<GameManager> {
 
 		detailPanelGo.transform.position = detailPanelPos;
 		detailPanel = detailPanelGo.GetComponent<UIPanel>().ui;
-		Debug.Log (detailPanel.position);
 		detailPanel.visible = false;
 		detailPanel.GetChild ("close").asLoader.onClick.Add (delegate() {
 			detailPanel.visible = false;
@@ -253,14 +272,14 @@ public class GameManager : Singleton<GameManager> {
 		sbManager.Hide();
 		_mask.visible = true;
 		_mask.alpha = 0;
-		PlayerData.getInstance().generateDungeon(10);
+
+		PlayerData.getInstance().enterNextLevel();
 		_mask.TweenFade (1, 0.5f).OnComplete (delegate() {
 			gridManager.initGrid();
 			_mask.TweenFade(0,0.5f).OnComplete(delegate() {
 				_mask.visible = false;
 			});
 		});
-
 	}
 
 	public void finishItemGet(){
@@ -362,17 +381,17 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 	IEnumerator lateCheckIfBattle(){
-		GRoot.inst.touchable = false;
+		lockUI ();
 		//yield break;
 		yield return new WaitForSecondsRealtime (1f);
-		GRoot.inst.touchable = true;
+		unlockUI ();
 		if (PlayerData.getInstance ().chasingEnemies.Count > 3) {
 			clickEnterBattleButton ();
 		}
 	}
 
 	public void showAddMonsterEffect(Vector2 originPos,Vector2 toPosInGlobal,MonsterCardComponent item){
-		GRoot.inst.touchable = false;
+		lockUI ();
 		MonsterCardComponent copyView = (MonsterCardComponent)UIPackage.CreateObject ("UIMain", "MonsterCard").asCom;
 		//GTextField copyView = new GTextField();
 		copyView.setInfo(item.info);
@@ -394,7 +413,7 @@ public class GameManager : Singleton<GameManager> {
 
 				//monsterContianer.GetChildAt(monsterContianer.numChildren-1).visible = true;
 				item.visible = true;
-				GRoot.inst.touchable = true;
+				unlockUI();
 				copyView.TweenFade(0,0.2f).OnComplete(delegate() {
 					//_main.RemoveChild(copyView);
 					GRoot.inst.RemoveChild (copyView);
@@ -408,6 +427,7 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 	public void enterShop(){
+		shopPanel.initShop ();
 		shopPanel.Show ();
 	}
 
@@ -451,4 +471,23 @@ public class GameManager : Singleton<GameManager> {
 		ss.Add ("s03");
 		initGetItemEffect (ss);
 	}
+
+
+	int uiLockNum = 0;
+	public void lockUI(){
+		uiLockNum++;
+		if (uiLockNum > 0) {
+			GRoot.inst.touchable = false;
+		}
+	}
+
+	public void unlockUI(){
+		uiLockNum--;
+		if (uiLockNum == 0) {
+			GRoot.inst.touchable = true;
+		}
+	}
+
+
+
 }

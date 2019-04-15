@@ -83,7 +83,7 @@ public class PlayerModule : MonoBehaviour
 	bool checkPos(int x, int y){
 
 		//y = -y;
-		if (x < 0 || x >= MapManager.MAP_WIDTH || y < 0 || y >= MapManager.MAP_HEIGHT) {
+		if (x < 0 || x >= MapManager.getInstance().MAP_WIDTH || y < 0 || y >= MapManager.getInstance().MAP_HEIGHT) {
 			return false;
 		}
 		return true;

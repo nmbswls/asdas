@@ -73,6 +73,7 @@ public class EnemyData
 	public int atk = 3000;
 	public int def = 300;
 }
+	
 
 public class GameStaticData
 {
@@ -100,6 +101,9 @@ public class GameStaticData
 
 		loadScarInfo ();
 		loadPotionInfo ();
+
+
+		initLevelShapes ();
 	}
 
 	public List<UsableHeroInfo> heroes = new List<UsableHeroInfo>();
@@ -123,6 +127,9 @@ public class GameStaticData
 	public Dictionary<string,EnemyCombo> enemyCombos = new Dictionary<string,EnemyCombo>();
 
 	public Dictionary<int,List<string>> enemyPerLv = new Dictionary<int,List<string>>();
+
+	public Dictionary<string,LevelEntry> levelSInfo = new Dictionary<string,LevelEntry> ();
+
 
 	public List<HeroTalent> talents = new List<HeroTalent>();
 
@@ -390,6 +397,14 @@ public class GameStaticData
 		return ec;
 	}
 
+	public EnemyCombo getSpecifiedEnemy(string ename){
+		EnemyCombo ec = new EnemyCombo ();
+		//EnemyData ed = enemyStaticInfo [ename];
+		ec.enemyId = new List<string>(){ename};
+		ec.enemyNum = new List<int>(){1};
+		return ec;
+	}
+
 	public List<string> getRandomComponents(int num){
 		List<string> tt = new List<string> ();
 		foreach (var k in componentStaticInfo.Keys) {
@@ -400,6 +415,71 @@ public class GameStaticData
 			res.Add (tt [(int)Random.Range (0, tt.Count)]);
 		}
 		return res;
+	}
+
+	Dictionary<int,List<LevelShape>> randomLevelShapeDic = new Dictionary<int,List<LevelShape>>();
+
+	public void initLevelShapes(){
+
+		Object[] content = Resources.LoadAll ("ScriptableObj/LevelShape");
+		foreach (Object o in content) {
+			LevelShape ls = (LevelShape)o;
+			int num = ls.activePos.Count;
+			if (!randomLevelShapeDic.ContainsKey (num)) {
+				randomLevelShapeDic[num] = new List<LevelShape>();
+			}
+			randomLevelShapeDic [num].Add (ls);
+		}
+//		randomLevelShapeDic[4] = new List<LevelShape>();
+//		{
+//			LevelShape ls = new LevelShape ();
+//			ls.activePos.Add (new int[]{2,0});
+//			ls.activePos.Add (new int[]{2,1});
+//			ls.activePos.Add (new int[]{2,2});
+//			ls.activePos.Add (new int[]{2,3});
+//			ls.spawnPos = new int[]{2,0};
+//			randomLevelShapeDic [4].Add (ls);
+//		}
+//
+//		{
+//			LevelShape ls = new LevelShape ();
+//			ls.activePos.Add (new int[]{1,1});
+//			ls.activePos.Add (new int[]{2,1});
+//			ls.activePos.Add (new int[]{1,2});
+//			ls.activePos.Add (new int[]{2,2});
+//			ls.spawnPos = new int[]{1,2};
+//			randomLevelShapeDic [4].Add (ls);
+//		}
+	}
+
+//	public void loadLevelInfo(){
+//		levelSInfo ["toturial"] = (LevelEntry)Resources.Load ("ScriptableObj/toturial");
+//		levelSInfo ["l0"] = (LevelEntry)Resources.Load ("ScriptableObj/l0");
+//	}
+
+	public LevelEntry getLevelInfo(string levelId){
+		if (levelSInfo.ContainsKey(levelId)) {
+			return levelSInfo [levelId];
+		}
+
+		LevelEntry le = (LevelEntry)Resources.Load ("ScriptableObj/"+levelId);
+		if (le == null)
+			return null;
+		levelSInfo [levelId] = le;
+		return le;
+	}
+
+	public LevelShape pickRandomShape(int eNum){
+		if (!randomLevelShapeDic.ContainsKey (eNum)) {
+			return null;
+		}
+		int c = randomLevelShapeDic [eNum].Count;
+		int idx = Random.Range (0,c-1);
+		return randomLevelShapeDic [eNum] [idx];
+	}
+		
+	public LevelShape getToturialShape(){
+		return randomLevelShapeDic [4] [0];
 	}
 }
 

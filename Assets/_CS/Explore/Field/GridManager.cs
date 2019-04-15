@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using AssemblyCSharp;
 
+
+
+
+
+
 public class GridManager : MonoBehaviour {
 
-	public static int GRID_HEIGHT = 5;
-	public static int GRID_WIDTH = 5;
+	public static int GRID_HEIGHT = 7;
+	public static int GRID_WIDTH = 7;// guding kuandu 
 
 	public static float GRID_INTERVAL_WIDTH = 3f;
 	public static float GRID_INTERVAL_HEIGHT = 3f;
@@ -21,11 +26,10 @@ public class GridManager : MonoBehaviour {
 	public GameObject map;
 
 
+	public GameObject indicatorPrefab;
 
 	// Use this for initialization
-	void Start () {
-		initGrid ();
-	}
+
 
 	public void initGrid(){
 		nowIndex = PlayerData.getInstance().playerPos[1]+ GRID_WIDTH * PlayerData.getInstance().playerPos[0];
@@ -70,9 +74,25 @@ public class GridManager : MonoBehaviour {
 		SetMap ();
 
 		Vector3 startPos = playerSymbol.transform.position;
-		startPos.x = 0;
+		//startPos.x = 0;
 		startPos.z = mainCamera.transform.position.z;
+		{
+			if (startPos.y < (cameraBound [1] + cameraHalfHeight)) {
+				startPos.y = (cameraBound [1] + cameraHalfHeight);
+			}
+			if (startPos.y > (cameraBound [3] - cameraHalfHeight)) {
+				startPos.y = (cameraBound [3] - cameraHalfHeight);
+			}
+			if (startPos.x < (cameraBound [0] + cameraHalfWidth)) {
+				startPos.x = (cameraBound [0] + cameraHalfWidth);
+			}
+			if (startPos.x > (cameraBound [2] - cameraHalfWidth)) {
+				startPos.x = (cameraBound [2] - cameraHalfWidth);
+			}
+		}
 		mainCamera.transform.position = startPos;
+
+
 	}
 
 	// Update is called once per frame
@@ -81,9 +101,13 @@ public class GridManager : MonoBehaviour {
 	}
 	void LateUpdate(){
 
-		cameraHalfHeight = mainCamera.pixelHeight * 0.5f / 100f;
-		cameraHalfWidth = mainCamera.pixelWidth * 0.5f / 100f;
+		//cameraHalfHeight = mainCamera.pixelHeight * 0.5f / 100f;
+		//cameraHalfWidth = mainCamera.pixelWidth * 0.5f / 100f;
 		MoveMap ();
+
+
+
+
 	}
 
 	public static float MAX_MAP_SPEED = 20f;
@@ -91,11 +115,18 @@ public class GridManager : MonoBehaviour {
 	{
 		if(!isMovingMap && !isContinueMovingMap)
 			return;
+		
 		if (toMove.y < (cameraBound [1] + cameraHalfHeight)) {
 			toMove.y = (cameraBound [1] + cameraHalfHeight);
 		}
 		if (toMove.y > (cameraBound [3] - cameraHalfHeight)) {
 			toMove.y = (cameraBound [3] - cameraHalfHeight);
+		}
+		if (toMove.x < (cameraBound [0] + cameraHalfWidth)) {
+			toMove.x = (cameraBound [0] + cameraHalfWidth);
+		}
+		if (toMove.x > (cameraBound [2] - cameraHalfWidth)) {
+			toMove.x = (cameraBound [2] - cameraHalfWidth);
 		}
 		toMove.z = mainCamera.transform.localPosition.z;
 		if ((toMove - mainCamera.transform.localPosition).magnitude < 0.01f) {
@@ -141,8 +172,8 @@ public class GridManager : MonoBehaviour {
 
 
 	public void moveMap(Vector3 dragDir){
-		Vector3 moveDir = dragDir/100f * 10f; //blend
-		moveDir.x = 0;
+		
+		Vector3 moveDir = dragDir/15f; //blend
 		moveDir.z = 0;
 		toMove = mainCamera.transform.localPosition - moveDir;
 		//toMove = Input.mousePosition;
@@ -202,7 +233,7 @@ public class GridManager : MonoBehaviour {
 				int nextI = nowI + dir [i,0];
 				int nextJ = nowJ + dir [i,1];
 				if (nextI >= 0 && nextI < GRID_HEIGHT && nextJ >= 0 && nextJ < GRID_WIDTH && PlayerData.getInstance().grids[nextI][nextJ] !=null && (nextI == iIndex && nextJ == jIndex)) {
-					PlayerData.getInstance ().playerPos = new int[]{nextI,nextJ};
+					PlayerData.getInstance ().playerPos = new Vector2Int(nextI,nextJ);
 					StartCoroutine (movingPlayer(index));
 				}
 			}
@@ -211,6 +242,9 @@ public class GridManager : MonoBehaviour {
 	}
 
 	IEnumerator moveMark(int index){
+
+
+
 
 		GameManager.getInstance ().hideDetailPanel ();
 
@@ -230,6 +264,12 @@ public class GridManager : MonoBehaviour {
 			yield return null;
 		}
 		isMoving = false;
+
+		if (PlayerData.getInstance ().guideStage == 0) {
+			PlayerData.getInstance ().guideStage = 1;
+			GuideManager.getInstance ().showGuideMovePlayer (getToturialGridPos ());
+		}
+
 		markedIndex = index;
 		changeEncounterDetail (markedIndex);
 	}
@@ -238,6 +278,11 @@ public class GridManager : MonoBehaviour {
 		GameManager.getInstance().hideDetailPanel ();
 		isMoving = true;
 		Vector3 target = new Vector3 ((index%GRID_WIDTH)*GRID_INTERVAL_WIDTH,-(index/GRID_WIDTH)*GRID_INTERVAL_HEIGHT,0);
+
+		if (PlayerData.getInstance ().guideStage == 1) {
+			PlayerData.getInstance ().guideStage = 2;
+			GuideManager.getInstance ().hideGuide ();
+		}
 
 		while (true) {
 			Vector3 dir = (target - playerSymbol.transform.localPosition);
@@ -258,6 +303,8 @@ public class GridManager : MonoBehaviour {
 			yield return null;
 		}
 		markGO.SetActive (false);
+
+
 
 		isMoving = false;
 		nowIndex = index;
@@ -304,16 +351,30 @@ public class GridManager : MonoBehaviour {
 	public void initCameraControl(){
 		SpriteRenderer activeArea = map.GetComponent<SpriteRenderer> ();
 		cameraBound[0] = -activeArea.bounds.size.x/2;
+		//cameraBound [0] = mainCamera.WorldToScreenPoint;
 		cameraBound[1] = -activeArea.bounds.size.y/2;
 
 		cameraBound[2] = activeArea.bounds.size.x/2;
 		cameraBound[3] = activeArea.bounds.size.y/2;
 
-		cameraHalfHeight = mainCamera.pixelHeight / 100f;
-		cameraHalfWidth = mainCamera.pixelWidth / 100f;
+		Vector2 cameraBoundInWorld = mainCamera.ScreenToWorldPoint (new Vector3 (mainCamera.pixelWidth, mainCamera.pixelHeight, 0));
+
+		//cameraHalfHeight = mainCamera.pixelHeight / 200f;
+		//cameraHalfWidth = mainCamera.pixelWidth / 200f;
+		cameraHalfHeight = cameraBoundInWorld.y;
+		cameraHalfWidth = cameraBoundInWorld.x;
+
+		//Debug.Log(new Vector3 (mainCamera.pixelWidth, mainCamera.pixelHeight, 0));
+		//Debug.Log(mainCamera.ScreenToWorldPoint (new Vector3 (0, 0, 0)));
+		//Debug.Log(mainCamera.ScreenToWorldPoint (new Vector3 (0, 0, 10)));
+		//Debug.Log(mainCamera.ScreenToWorldPoint (new Vector3 (mainCamera.pixelWidth, mainCamera.pixelHeight, 0)));
 
 		//Debug.Log ("height:" + buildCamera.pixelHeight + ";" + "wid" + buildCamera.pixelWidth);
 
+	}
+		
 
+	public Vector2 getToturialGridPos(){
+		return Camera.main.WorldToScreenPoint (grids[15].transform.position);
 	}
 }

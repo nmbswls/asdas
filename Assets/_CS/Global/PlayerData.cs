@@ -162,6 +162,10 @@ public class Scar{
 	}
 }
 
+
+
+
+
 public class PlayerData
 {
 
@@ -178,13 +182,18 @@ public class PlayerData
 	public int heroIdx = 0;
 	public int[] info;
 
+	public string nowLevelId;
+
 	public EncounterState[][] grids;
-	public int[] playerPos = new int[]{2,2};
+	public Vector2Int playerPos = Vector2Int.zero;
 
 
+	public int guideStage = -1;
 
 
 	public bool isWaitingBattle = false;
+
+	public EncounterBattleInfo battleInfo;
 	public int beforeStage = 1;
 	public string beforeEid = "";
 	public bool battleWin;
@@ -217,46 +226,79 @@ public class PlayerData
 	{
 
 		info = new int[10];
-
-
-		generateDungeon (20);
+		PlayerPrefs.DeleteAll ();
+		if (PlayerPrefs.GetInt ("isFirstGame",1)==1) {
+			nowLevelId = "toturial";
+			guideStage = 0;
+		} else {
+			nowLevelId = "l0";
+			guideStage = -1;
+		}
+		generateDungeon (nowLevelId);
 		initTowers ();
 		initBag ();
 		intPotions ();
 		initScar ();
 		initMemoState ();
 	}
+	
+	public void generateDungeon(string levelId){
 
-	public void generateDungeon(int encounterNum){
-		List<string> toChooseFrom = new List<string> ();
-		toChooseFrom.Add ("20");
-		toChooseFrom.Add ("0");
-//		foreach(var item in GameStaticData.getInstance().encounterDic){
-//			toChooseFrom.Add (item.Key);
-//		}
+		LevelEntry levelInfo = GameStaticData.getInstance ().getLevelInfo (levelId);
+		int gridNum = levelInfo.NumOfGrid;
 
-		int totalLeft = GridManager.GRID_HEIGHT * GridManager.GRID_WIDTH;
-		int encounterLeft = encounterNum;
-		if (encounterNum > totalLeft) {
+		List<EncounterEntry> toChooseFrom = new List<EncounterEntry>(levelInfo.PossibleEncounters);
+
+
+		LevelShape ls = GameStaticData.getInstance ().pickRandomShape (gridNum);
+		if (nowLevelId == "toturial") {
+			ls = GameStaticData.getInstance ().getToturialShape ();
+
+			grids = new EncounterState[GridManager.GRID_HEIGHT][];
+			for (int i = 0; i < GridManager.GRID_HEIGHT; i++) {
+				grids[i] = new EncounterState[GridManager.GRID_WIDTH];
+			}
+
+			EncounterEntry entry1 = toChooseFrom [0];
+			EncounterEntry entry2 = toChooseFrom [1];
+			grids [ls.activePos[0].x] [ls.activePos[0].y] = new EncounterState ("empty");
+			grids [ls.activePos[1].x] [ls.activePos[1].y] = new EncounterState (entry1.eid);
+			grids [ls.activePos[2].x] [ls.activePos[2].y] = new EncounterState (entry2.eid);
+
+			playerPos = ls.spawnPos;
+			grids [ls.endPos.x] [ls.endPos.y] = new EncounterState ("next_level_01");
+			return;
+		}
+
+		int totalLeft = gridNum;
+		int encounterLeft = levelInfo.NumOfEncounter;
+
+		if (encounterLeft > totalLeft) {
 			encounterLeft = totalLeft;
 		}
+
 		grids = new EncounterState[GridManager.GRID_HEIGHT][];
 		for (int i = 0; i < GridManager.GRID_HEIGHT; i++) {
 			grids[i] = new EncounterState[GridManager.GRID_WIDTH];
-			for (int j = 0; j < GridManager.GRID_WIDTH; j++) {
-				int ranInt = Random.Range (0,totalLeft);
-				if (ranInt < encounterLeft) {
-					totalLeft--;
-					encounterLeft --;
-					grids [i] [j] = new EncounterState (toChooseFrom[Random.Range(0,toChooseFrom.Count)]);
-				} else {
-					totalLeft--;
-					grids [i] [j] = new EncounterState ();
-				}
+		}
+		for (int i = 0; i < ls.activePos.Count; i++) {
+			if (ls.activePos [i] == ls.endPos) {
+				continue;
+			}
+			int ranInt = Random.Range (0,totalLeft);
+			if (ranInt < encounterLeft) {
+				totalLeft--;
+				encounterLeft --;
+				EncounterEntry entry = toChooseFrom [Random.Range (0, toChooseFrom.Count)];
+				grids [ls.activePos[i][0]] [ls.activePos[i][1]] = new EncounterState (entry.eid);
+			} else {
+				totalLeft--;
+				grids [ls.activePos[i][0]] [ls.activePos[i][1]] = new EncounterState ();
 			}
 		}
-		grids [2] [3] = new EncounterState ("shop");
-		playerPos = new int[]{2,2};
+		//grids [2] [3] = new EncounterState ("shop");
+		playerPos = ls.spawnPos;
+		grids[ls.endPos.x][ls.endPos.y] = new EncounterState ("next_level_01");
 	}
 	
 	public void initPlayerData(){
@@ -265,12 +307,14 @@ public class PlayerData
 
 
 
-	public void initBattle(string eid,int stageIdx){
+	public void initBattle(string eid,int stageIdx,EncounterBattleInfo bInfo){
 		isWaitingBattle = true;
 		beforeEid = eid;
 		beforeStage = stageIdx;
+		battleInfo = bInfo;
 		isFixedBattle = true;
 		fixedMonsters = new List<EnemyCombo> ();
+
 	}
 
 	public void initBattle(){
@@ -367,6 +411,12 @@ public class PlayerData
 		}
 	}
 
+	public void enterNextLevel(){
+		LevelEntry entry = GameStaticData.getInstance ().getLevelInfo (nowLevelId);
+		string nextLevelId = entry.NextLevel;
+		nowLevelId = nextLevelId;
+		generateDungeon (nextLevelId);
+	}
 
 
 

@@ -1,11 +1,11 @@
 ﻿{
 	"eId": "0",
 	"type": 0,
-	"desp": "迷能听见不知名的声音。",
+	"desp": "There is a sound beyond the mist.",
 	"stages": {
 		"2": {
 			"sId": 2,
-			"desp": "你无法移开视线。",
+			"desp": "“You are trapped, my cutie pie.”\nThe pale lady smirks.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
@@ -13,25 +13,25 @@
 			"extra":"monster",
 			"converts": [{
 				"nextStageIdx": 5,
-				"choiceDesp": "呆立原地(战斗)",
+				"choiceDesp": "Fight",
 				"checks": []
 			}]
 		},
 		"1": {
 			"sId": 1,
-			"desp": "她缓步朝你走来",
+			"desp": "She slowly moves towards you.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 					"nextStageIdx": 3,
-					"choiceDesp": "......",
+					"choiceDesp": "Stay still",
 					"checks": []
 				},
 				{
 					"nextStageIdx": 4,
-					"choiceDesp": "使用【破碎的镜子】",
+					"choiceDesp": "Use a quest",
 					"checks": [{
 							"key": "san",
 							"fuhao": 2,
@@ -48,58 +48,58 @@
 		},
 		"0": {
 			"sId": 0,
-			"desp": "站在你面前的，是一位有着白色眼瞳的女人。\n她的皮肤呈现出灰白色，嘴唇却闪着荧光。\n当你与她对视时，你仿佛正望进自己。",
+			"desp": "The pale lady is in front of you. \nHer eyes look empty , yet her lips are shimmering.\nYou feel like looking into the mirror when you look in her eyes.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 					"nextStageIdx": 1,
-					"choiceDesp": "靠近",
+					"choiceDesp": "Step ahead",
 					"checks": []
 				},
 				{
 					"nextStageIdx": 2,
-					"choiceDesp": "远离",
+					"choiceDesp": "Run away",
 					"checks": []
 				}
 			]
 		},
 		"3": {
 			"sId": 3,
-			"desp": "“你从哪里来？”\n女人这样问道。",
+			"desp": "“Where are you from?”\nThe pale lady asks.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 					"nextStageIdx": 10,
-					"choiceDesp": "沉默",
+					"choiceDesp": "Remain silent",
 					"checks": []
 				},
 				{
 					"nextStageIdx": 9,
-					"choiceDesp": "你猜",
+					"choiceDesp": "Use a spell",
 					"checks": []
 				}
 			]
 		},
 		"4": {
 			"sId": 4,
-			"desp": "女人被光芒晃到了眼睛。在那一刹那，你看到她口中的獠牙。",
+			"desp": "The pale lady was dazzled by a flash. \nYou noticed the vampire fangs in her mouth.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 				"nextStageIdx": 8,
-				"choiceDesp": "逃跑",
+				"choiceDesp": "Run away",
 				"checks": []
 			}]
 		},
 		"5": {
 			"sId": 5,
-			"desp": "战斗",
+			"desp": "Fight on!",
 			"stageType": 1,
 			"res": null,
 			"randomValue": 0,
@@ -126,27 +126,27 @@
 		},
 		"6": {
 			"sId": 6,
-			"desp": "你赢了游戏，输了人生",
+			"desp": "You won this round, but you have not won the game named life yet.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 				"nextStageIdx": 13,
-				"choiceDesp": "(结束)",
+				"choiceDesp": "(Close)",
 				"checks": []
 			}]
 		},
 		"7": {
 			"sId": 7,
-			"desp": "你被嫩死了",
+			"desp": "You have earned an one-way trip to hell.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 				"nextStageIdx": 14,
-				"choiceDesp": "(结束)",
+				"choiceDesp": "(Close)",
 				"checks": []
 			}]
 		},
@@ -219,27 +219,27 @@
 		},
 		"11": {
 			"sId": 11,
-			"desp": "你逃跑了",
+			"desp": "You escaped.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 				"nextStageIdx": 15,
-				"choiceDesp": "(结束)",
+				"choiceDesp": "(Close)",
 				"checks": []
 			}]
 		},
 		"12": {
 			"sId": 12,
-			"desp": "你没逃走，被抓住嘿嘿嘿了。",
+			"desp": "The pale lady trapped you. \nYou and her live happily ever after.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 				"nextStageIdx": 16,
-				"choiceDesp": "(结束)",
+				"choiceDesp": "(Close)",
 				"checks": []
 			}]
 		},

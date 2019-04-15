@@ -33,8 +33,8 @@ public class MapItemManager : MonoBehaviour
 			int x = -1;
 			int y = -1;
 			while (true) {
-				x = Random.Range (0,MapManager.MAP_WIDTH-1);
-				y = Random.Range (0,MapManager.MAP_HEIGHT-1);
+				x = Random.Range (0,MapManager.getInstance().MAP_WIDTH-1);
+				y = Random.Range (0,MapManager.getInstance().MAP_HEIGHT-1);
 				if (!MapManager.getInstance ().isCellObc (new Vector3Int (x, y, 0))) {
 					break;
 				} else {

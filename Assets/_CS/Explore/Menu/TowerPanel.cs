@@ -154,6 +154,10 @@ public class TowerPanel : GComponent
 		_property.visible = true;
 		updateCalcedProperty (tt);
 
+		if (PlayerData.getInstance ().guideStage == 14) {
+			GuideManager.getInstance ().showGuideCloseMenu ();
+			PlayerData.getInstance ().guideStage = 15;
+		}
 	}
 
 	void clickComponent(int idx){
@@ -354,6 +358,11 @@ public class TowerPanel : GComponent
 
 		_property.setDamage (atks);
 		_property.setSkill (skills);
+	}
+
+
+	public GObject getFirstTower(){
+		return towers.GetChildAt (0);
 	}
 }
 

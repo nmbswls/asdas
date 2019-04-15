@@ -24,7 +24,7 @@ public class GetItemManager : Window
 
 
 		_confirm = this.contentPane.GetChild ("confirm").asButton;
-		_confirm.onTouchBegin.Add (chooseItem);
+		_confirm.onClick.Add (chooseItem);
 		_confirm.visible = false;
 
 		_skip = this.contentPane.GetChild ("skip").asRichTextField;
@@ -40,6 +40,12 @@ public class GetItemManager : Window
 		GameManager.getInstance ().initGetItemEffect (_new_item_list.LocalToGlobal (posLocal),items[idx]);
 		GameManager.getInstance ().finishItemGet ();
 		this.Hide ();
+
+		if (PlayerData.getInstance ().guideStage == 11) {
+			GuideManager.getInstance ().showGuideDetail ();
+			PlayerData.getInstance ().guideStage = 12;
+		}
+
 	}
 
 	void skip(){
@@ -72,19 +78,50 @@ public class GetItemManager : Window
 		{
 			NewItem item = (NewItem)_new_item_list.AddItemFromPool();
 			item.init (items[i]);
-			item.onTouchBegin.Add (delegate() {
+			item.onClick.Add (delegate() {
 				if(_new_item_list.selectedIndex!=-1){
 					_confirm.visible = true;
 				}
+				if (PlayerData.getInstance ().guideStage == 10) {
+					GuideManager.getInstance ().showGuideConfirmChooseItem ();
+					PlayerData.getInstance ().guideStage = 11;
+				}
 			});
 			item.GetChild ("detail").onTouchBegin.Add (delegate() {
-				Debug.Log("Show Detail");
+				//Debug.Log("Show Detail");
 			});
 		}
 
 
 		_confirm.visible = false;
 
+		if (PlayerData.getInstance ().guideStage == 4) {
+			GuideManager.getInstance ().showGuideChooseItem ();
+			PlayerData.getInstance ().guideStage = 10;
+		}
+	}
+
+
+
+//	public GObject getFirstChoice(){
+//		Rect rect = _new_item_list.GetChildAt(0).TransformRect(new Rect(0, 0, 100, 100), GRoot.inst);
+//
+//		return _new_item_list;
+//	}
+	public Rect getFirstChoice(){
+		GObject firstItem = _new_item_list.GetChildAt (0);
+		Rect rect = firstItem.TransformRect(new Rect(0, 0, firstItem.width, firstItem.height), GRoot.inst);
+		_new_item_list.EnsureBoundsCorrect ();
+
+		//Rect rectGlobal = _new_item_list.LocalToGlobal (rect);
+		Vector2 center = _new_item_list.LocalToGlobal(new Vector3(firstItem.position.x+firstItem.width/2,firstItem.position.y+firstItem.height/2,0));
+		Rect trueRect = new Rect (center.x-rect.size.x/2-10,center.y-rect.size.y/2,rect.size.x+20,rect.size.y+20);
+		//GuideManager.getInstance ()._guideLayer.setMark (GuideManager.getInstance ()._guideLayer.GlobalToLocal(center));
+		return trueRect;
+	}
+
+	public GObject getConfirmButton(){
+		return _confirm;
 	}
 }
 

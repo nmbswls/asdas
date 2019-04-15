@@ -111,10 +111,10 @@ public class PathSeekBehaviour : MonoBehaviour
 
 	void Start ()
 	{
-		map = new SearchMapNode[MapManager.MAP_HEIGHT][];
-		for (int i = 0; i < MapManager.MAP_HEIGHT; i++) {
-			map [i] = new SearchMapNode[MapManager.MAP_WIDTH];
-			for (int j = 0; j < MapManager.MAP_WIDTH; j++) {
+		map = new SearchMapNode[MapManager.getInstance().MAP_HEIGHT][];
+		for (int i = 0; i < MapManager.getInstance().MAP_HEIGHT; i++) {
+			map [i] = new SearchMapNode[MapManager.getInstance().MAP_WIDTH];
+			for (int j = 0; j < MapManager.getInstance().MAP_WIDTH; j++) {
 				map [i] [j] = new SearchMapNode (i,j,!MapManager.getInstance().staticBlocks[i][j]);
 			}
 		}
@@ -146,8 +146,8 @@ public class PathSeekBehaviour : MonoBehaviour
 			tryCount++;
 			int startY = node.row - 1 > 0 ? node.row - 1  : 0;
 			int startX = node.col - 1 > 0 ? node.col - 1  : 0;
-			int endX = node.col + 1 <= MapManager.MAP_WIDTH-1 ? node.col + 1 : MapManager.MAP_WIDTH-1;
-			int endY = node.row + 1 <= MapManager.MAP_HEIGHT-1 ? node.row + 1 : MapManager.MAP_HEIGHT-1;
+			int endX = node.col + 1 <= MapManager.getInstance().MAP_WIDTH-1 ? node.col + 1 : MapManager.getInstance().MAP_WIDTH-1;
+			int endY = node.row + 1 <= MapManager.getInstance().MAP_HEIGHT-1 ? node.row + 1 : MapManager.getInstance().MAP_HEIGHT-1;
 			for (int i = startY; i <= endY; i++) {
 				for (int j = startX; j <= endX; j++) {
 					//

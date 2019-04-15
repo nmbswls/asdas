@@ -69,5 +69,13 @@
 		"speed": 2000,
 		"atk": 2000,
 		"def": 5000
+	},
+	"toturial": {
+		"enemyId": "toturial",
+		"enemyName": "little",
+		"hp": 20000,
+		"speed": 2000,
+		"atk": 1,
+		"def": 1
 	}
 }

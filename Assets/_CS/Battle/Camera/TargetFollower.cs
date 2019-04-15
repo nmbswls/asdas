@@ -14,7 +14,7 @@ public class TargetFollower : MonoBehaviour
 	void Start()
 	{
 		m_camera = GetComponent<Camera>();
-		rightBound = MapManager.TILE_WIDTH * MapManager.MAP_WIDTH / 100f;
+		rightBound = MapManager.TILE_WIDTH * MapManager.getInstance().MAP_WIDTH / 100f;
 
 	}
 

@@ -1,0 +1,102 @@
+﻿{
+	"eId": "toturial_get_item",
+	"type": 0,
+	"desp": "The mist is breathing",
+	"stages": {
+		"0": {
+			"sId": 0,
+			"desp": "The way leads to the darkness...",
+			"stageType": 0,
+			"converts": [{
+					"nextStageIdx": 1,
+					"choiceDesp": "Keep Cautious",
+					"checks": []
+				}
+			]
+		},
+		"1": {
+			"sId": 1,
+			"desp": "Thay are coming...",
+			"stageType": 0,
+			"extra":"toturial_monster",
+			"converts": [{
+				"nextStageIdx": 2,
+				"choiceDesp": "Keep Cautious...",
+				"checks": []
+			}]
+		},
+		"2": {
+			"sId": 2,
+			"desp": "Thay are coming...again...",
+			"stageType": 0,
+			"extra":"toturial_monster",
+			"converts": [{
+				"nextStageIdx": 3,
+				"choiceDesp": "Keep Cautious......",
+				"checks": []
+			}]
+		},
+		"3": {
+			"sId": 3,
+			"desp": "Thay are coming...\nwhat's crying?",
+			"stageType": 0,
+			"extra":"toturial_monster",
+			"converts": [{
+				"nextStageIdx": 4,
+				"choiceDesp": "Raise your sword",
+				"checks": []
+			}]
+		},
+		"4": {
+			"sId": 4,
+			"desp": "战斗",
+			"battleInfo":{"liveTime":0,"killEnemy":3},
+			"stageType": 1,
+			"converts": [{
+					"nextStageIdx": 5,
+					"choiceDesp": "描述符",
+					"checks": [{
+						"key": "win",
+						"fuhao": 1,
+						"value": "true"
+					}]
+				},
+				{
+					"nextStageIdx": 5,
+					"choiceDesp": "描述符",
+					"checks": [{
+						"key": "win",
+						"fuhao": 1,
+						"value": "false"
+					}]
+				}
+			]
+		},
+		"5": {
+			"sId": 5,
+			"desp": "The mist dissipated.",
+			"stageType": 0,
+			"converts": [{
+				"nextStageIdx": 6,
+				"choiceDesp": "(Finish)",
+				"checks": []
+			}]
+		},
+		"6": {
+			"sId": 6,
+			"desp": "结束啦",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": [{
+						"rewardName": "fix_equip",
+						"rewardAmount": 0,
+						"chance": 0
+					}]
+			},
+			"converts": []
+		}
+	}
+
+}

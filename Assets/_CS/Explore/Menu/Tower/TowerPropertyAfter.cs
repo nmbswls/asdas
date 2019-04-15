@@ -47,7 +47,6 @@ public class TowerPropertyAfter : GComponent
 			TowerSkillItem skill = (TowerSkillItem)_skill_list.AddItemFromPool ();
 			skill.setInfo (skills[i]);
 			skill.onClick.Set (delegate() {
-				Debug.Log("ss");
 			});
 		}
 	}

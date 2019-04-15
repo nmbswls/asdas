@@ -18,6 +18,7 @@ public class SkillItem : GComponent
 		_cdText = this.GetChild ("cd").asTextField;
 		_mask = this.GetChild ("mask").asImage;
 
+
 	}
 
 	public void updateCd(int time){

@@ -22,8 +22,8 @@ public class GameLife : MapObject
 	public PhysicsComponent pc;
 
 
-	public float characterSizeX;
-	public float characterSizeY;
+	private float characterSizeX;
+	private float characterSizeY;
 	public bool isPlayer = true;
 
 	//可变属性

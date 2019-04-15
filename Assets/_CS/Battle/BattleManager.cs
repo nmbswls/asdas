@@ -32,7 +32,7 @@ public class BattleManager : Singleton<BattleManager> {
 
 	public int battleTime = 0;
 
-	public int killLeft = 10;
+	int killLeft = 10;
 	int hp;
 	public int maxHP;
 	public int san;
@@ -66,9 +66,24 @@ public class BattleManager : Singleton<BattleManager> {
 	void Start(){
 		mapItemManager = GetComponent<MapItemManager> ();
 		dropManager = GetComponent<MonsterDropManager> ();
-		spawnPlayer ();
+
+
 		MapManager.getInstance ().Init ();
 		initBattle ();
+		spawnPlayer ();
+
+		StartCoroutine (fadeIn());
+
+
+	}
+
+	IEnumerator fadeIn(){
+		Time.timeScale = 0;
+		yield return new WaitForSecondsRealtime (1.5f);
+		Time.timeScale = 1;
+		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
+			GuideManager.getInstance ().showGuidePanel ();
+		}
 	}
 
 	public void spawnEnemy(string enemyId,Vector2Int pos){
@@ -92,27 +107,59 @@ public class BattleManager : Singleton<BattleManager> {
 			}
 			PlayerData.getInstance ().chasingEnemies.Clear ();
 		}
-
 		{
-			List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (3);
-			for (int i = 0; i < 3; i++) {
-				Vector2Int center = MapManager.getInstance ().CellToWorld (spawners[i][0],spawners[i][1]);
+			EncounterBattleInfo binfo = PlayerData.getInstance ().battleInfo;
+			if (binfo.liveTime > 0) {
+			
+			}
+			if (binfo.killEnemy > 0) {
+				Debug.Log ("need kill enemy");
+				killLeft = binfo.killEnemy;
+			} else {
+				killLeft = -1000;
+			}
+		}
+
+		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
+			//first time
+			{
+				List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (1);
+
+				Vector2Int center = MapManager.getInstance ().CellToWorld (spawners[0][0],spawners[0][1]);
 				GameObject o = GameObject.Instantiate(spawnerPrefab,spawnerLayer);
 				EnemySpawner spanwer = o.GetComponent<EnemySpawner> ();
 				spanwer.posXInt = center.x;
 				spanwer.posYInt = center.y;
 				enemySpawners.Add (spanwer);
-				spanwer.enemyName="10005";
+				spanwer.enemyName="10000";
+			}
+
+		} else {
+			{
+				List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (3);
+				for (int i = 0; i < 3; i++) {
+					Vector2Int center = MapManager.getInstance ().CellToWorld (spawners[i][0],spawners[i][1]);
+					GameObject o = GameObject.Instantiate(spawnerPrefab,spawnerLayer);
+					EnemySpawner spanwer = o.GetComponent<EnemySpawner> ();
+					spanwer.posXInt = center.x;
+					spanwer.posYInt = center.y;
+					enemySpawners.Add (spanwer);
+					spanwer.enemyName="10005";
+				}
 			}
 		}
-
-			
-
 
 		for (int i = 0; i < 3; i++) {
 			if(i>=PlayerData.getInstance ().potions.Count)break;
 			potionInBattle[i] = PlayerData.getInstance ().potions [i];
 		}
+		//if(BattleManager)
+
+
+			
+
+
+
 
 		buildableTowers = PlayerData.getInstance ().ownedTowers;
 		money = new int[4];
@@ -161,11 +208,13 @@ public class BattleManager : Singleton<BattleManager> {
 	public void spawnPlayer(){
 		GameObject o = GameObject.Instantiate (playerPrefab,mapObjLayer);
 		player = o.GetComponent<PlayerModule> ();
-		Vector2Int center = MapManager.getInstance ().CellToWorld (2,2);
 
-		player.gl.posXInt = center.x;
-		player.gl.posYInt = center.y;
 		battleMainCamera.GetComponent<TargetFollower> ().Target = o.transform;
+
+		MapManager.getInstance ().spawnPlayer (player.gl);
+		player.gl.updatePosImmediately ();
+
+		battleMainCamera.transform.position = player.transform.position;
 	}
 
 
@@ -179,7 +228,7 @@ public class BattleManager : Singleton<BattleManager> {
 		dropManager.createDrops (dropss,toDie.transform.position);
 		killLeft--;
 		mainUIManager._enemy_left.text = (killLeft > 0 ? killLeft : 0)+"";
-		if (killLeft <= 0) {
+		if (killLeft>-1000&&killLeft <= 0) {
 			showBattleFinish (true);
 		}
 	}

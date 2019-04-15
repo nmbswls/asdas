@@ -89,7 +89,7 @@ public class PlayerController : IUnitController {
 		return output;
 	}
 
-	int mapIdax= 0;
+	int mapIdx= 0;
 
 	// Update is called once per frame
 	void Update () {
@@ -137,7 +137,14 @@ public class PlayerController : IUnitController {
 		}
 
 		if (Input.GetKeyDown ("m")) {
-			MapManager.getInstance ().LoadMap ((mapIdax++)%2 + 1);
+			mapIdx = (mapIdx + 1) % 2;
+			string id = "defalut";
+			if (mapIdx == 0) {
+				id = "map01";
+			} else {
+				id = "map02";
+			}
+			MapManager.getInstance ().LoadMap (id);
 		}
 
 

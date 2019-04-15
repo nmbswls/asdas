@@ -12,8 +12,12 @@ public class MapManager : MonoBehaviour
 		return instance;
 	}
 
-	public static int MAP_WIDTH = 50;
-	public static int MAP_HEIGHT = 30;
+	public int MAP_WIDTH = 50;
+	public int MAP_HEIGHT = 30;
+
+
+	public int MAP_MAX_WIDTH = 50;
+	public int MAP_MAX_HEIGHT = 30;
 
 	public static int TILE_WIDTH = 100;
 	public static int TILE_HEIGHT = 100;
@@ -33,7 +37,7 @@ public class MapManager : MonoBehaviour
 	public int[][] specialBlock;
 
 	List<int[]> possibleSpawnerPos = new List<int[]>();
-
+	int[] playerStartPos = new int[]{0,0};
 	public List<GameObject> tiles = new List<GameObject>();
 	public GameObject tilePrefabs;
 	public Sprite[] images;
@@ -42,13 +46,16 @@ public class MapManager : MonoBehaviour
 
 	public List<MapZone> zones = new List<MapZone>();
 	public static int MAP_ZONE_SIZE = 10;
-	int zoneNumX = ((MAP_WIDTH - 1) / MAP_ZONE_SIZE) + 1;
-	int zoneNumY = ((MAP_HEIGHT - 1) / MAP_ZONE_SIZE) + 1;
+	//int zoneNumX = ((MAP_WIDTH - 1) / MAP_ZONE_SIZE) + 1;
+	//int zoneNumY = ((MAP_HEIGHT - 1) / MAP_ZONE_SIZE) + 1;
 
-	GameObject mapPrefab1;
-	GameObject mapPrefab2;
+	int zoneNumX = 0;
+	int zoneNumY = 0;
 
-	GameObject mapActiveArea1;
+	//GameObject mapPrefab1;
+	//GameObject mapPrefab2;
+
+	//GameObject mapActiveArea1;
 
 	public Transform obstacleLayer;
 	public Transform activeLayer;
@@ -57,7 +64,34 @@ public class MapManager : MonoBehaviour
 		transform.position = Vector3.zero;
 	}
 
-	public void LoadMap(int idx){
+	public bool getMapResource(string mapId){
+		MapInfo mapInfo = (MapInfo)Resources.Load ("map/"+mapId+"/info");
+		GameObject mapObcPrefab = (GameObject)Resources.Load ("map/" + mapId + "/obc");
+		GameObject mapSpePrefab = (GameObject)Resources.Load ("map/" + mapId + "/spe");
+
+		if (mapObcPrefab == null || mapSpePrefab == null) {
+			return false;
+		}
+		GameObject mapObc = null;
+		GameObject mapSpe = null;
+
+		mapObc = GameObject.Instantiate (mapObcPrefab, obstacleLayer);
+		mapSpe = GameObject.Instantiate (mapSpePrefab,activeLayer);
+
+
+
+		mapObc.transform.localPosition = new Vector3 (0, 0, 0);
+		mapSpe.transform.localPosition = new Vector3 (0, 0, 0);
+
+
+		this.obcTilemap = mapObc.GetComponent<Tilemap> ();
+		this.speTilemap = mapSpe.GetComponent<Tilemap> ();
+		this.MAP_WIDTH = mapInfo.width;
+		this.MAP_HEIGHT = mapInfo.height;
+
+		return true;
+	}
+	public void LoadMap(string mapId){
 		if (obcTilemap != null) {
 			GameObject.Destroy (obcTilemap.gameObject);
 		}
@@ -65,29 +99,26 @@ public class MapManager : MonoBehaviour
 			GameObject.Destroy (speTilemap.gameObject);
 		}
 
-		GameObject map = null;
-		GameObject mapSpe = null;
-		if (idx == 1) {
-			map = GameObject.Instantiate (mapPrefab1, obstacleLayer);
-			mapSpe = GameObject.Instantiate (mapActiveArea1,activeLayer);
-		} else if (idx == 2) {
-			map = GameObject.Instantiate (mapPrefab2, obstacleLayer);
-		}
-		if (map == null) {
+		bool res = getMapResource (mapId);
+		if (!res)
 			return;
-		}
-		map.transform.localPosition = new Vector3 (0, 0, 0);
-		this.obcTilemap = map.GetComponent<Tilemap> ();
-		this.speTilemap = mapSpe.GetComponent<Tilemap> ();
-		for(int i=0;i<MAP_HEIGHT;i++){
-			for(int j=0;j<MAP_WIDTH;j++){
+
+		for(int i=0;i<MAP_MAX_HEIGHT;i++){
+			for(int j=0;j<MAP_MAX_WIDTH;j++){
+				
+				if (i >= MAP_HEIGHT || j >= MAP_WIDTH) {
+					tilemap.SetTile (new Vector3Int (j, -i, 0), null);
+					continue;
+				}
 				if (obcTilemap.GetTile (new Vector3Int (j, -i, 0)) != null) {
 					staticBlocks [i] [j] = true;
 				} else {
 					staticBlocks [i] [j] = false;
 				}
 				if (speTilemap.GetTile (new Vector3Int (j, -i, 0)) != null) {
-					switch (speTilemap.GetTile (new Vector3Int (j, -i, 0)).name) {
+					string blockType = speTilemap.GetTile (new Vector3Int (j, -i, 0)).name;
+
+					switch (blockType) {
 					case "BuildArea":
 						specialBlock [i] [j] = 1;
 						break;
@@ -96,6 +127,10 @@ public class MapManager : MonoBehaviour
 						possibleSpawnerPos.Add (new int[]{i,j});
 						speTilemap.SetTile (new Vector3Int (j, -i, 0), null);
 
+						break;
+					case "PlayerSpawner":
+						playerStartPos = new int[]{ i, j };
+						speTilemap.SetTile (new Vector3Int (j, -i, 0), null);
 						break;
 					}
 				}
@@ -166,10 +201,8 @@ public class MapManager : MonoBehaviour
 	// Use this for initialization
 	public void Init ()
 	{
-		mapPrefab1 = Resources.Load ("map/Tilemap_obstacle1") as GameObject;
-		mapPrefab2 = Resources.Load ("map/Tilemap_obstacle2") as GameObject;
 
-		mapActiveArea1 = Resources.Load ("map/Tilemap_active1") as GameObject;
+		//mapActiveArea1 = Resources.Load ("map/Tilemap_active1") as GameObject;
 
 
 		int numOfZone = (((MAP_HEIGHT - 1) / MAP_ZONE_SIZE) + 1) * (((MAP_WIDTH - 1) / MAP_ZONE_SIZE) + 1);
@@ -217,8 +250,12 @@ public class MapManager : MonoBehaviour
 			}
 			//yield return null;
 		}
+		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
+			LoadMap ("toturial");
+		} else {
+			LoadMap ("map01");
+		}
 
-		LoadMap (1);
 	}
 
 
@@ -467,6 +504,14 @@ public class MapManager : MonoBehaviour
 			possibleSpawnerPos[i] = possibleSpawnerPos[pos];
 			possibleSpawnerPos[pos] = x;
 		}
+	}
+
+	public void spawnPlayer(GameLife player){
+		Vector2Int center = CellToWorld (playerStartPos[0],playerStartPos[1]);
+		player.posXInt = center.x;
+		player.posYInt = center.y;
+
+
 	}
 		
 }

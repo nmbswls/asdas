@@ -1,0 +1,71 @@
+﻿{
+	"eId": "toturial_get_item",
+	"type": 0,
+	"desp": "The world seems peaceful.",
+	"stages": {
+		"0": {
+			"sId": 0,
+			"desp": "A pale skeleton lies in from of you.",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+					"nextStageIdx": 1,
+					"choiceDesp": "Search left",
+					"checks": []
+				},
+				{
+					"nextStageIdx": 2,
+					"choiceDesp": "Search right",
+					"checks": []
+				}
+			]
+		},
+		"1": {
+			"sId": 1,
+			"desp": "You get something useless...\nAt least useless for him.",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": [{
+				"nextStageIdx": 3,
+				"choiceDesp": "OK",
+				"checks": []
+			}]
+		},
+		"2": {
+			"sId": 2,
+			"desp": "You get something useless...\nAt least useless for him.",
+			"stageType": 0,
+			"res": null,
+			"randomValue": 0,
+			"battleRes": 0,
+			"extra": "monster",
+			"converts": [{
+				"nextStageIdx": 3,
+				"choiceDesp": "OK",
+				"checks": []
+			}]
+		},
+		"3": {
+			"sId": 3,
+			"desp": "",
+			"stageType": 3,
+			"res": {
+				"type": 0,
+				"finishEffect": "none",
+				"rewords": [{
+						"rewardName": "fix_base_tower",
+						"rewardAmount": 0,
+						"chance": 0
+					}]
+			},
+			"randomValue": 0,
+			"battleRes": 0,
+			"converts": []
+		}
+	}
+
+}

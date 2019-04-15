@@ -86,7 +86,7 @@ public class PhysicsComponent : MonoBehaviour
 		//rb.y = -rb.y;
 		for(int i=lt.y;i<=rb.y;i++){
 			for (int j = lt.x; j <= rb.x; j++) {
-				if (i<0||i>=MapManager.MAP_HEIGHT || j<0|| j>= MapManager.MAP_WIDTH || MapManager.getInstance ().staticBlocks [i] [j] == true) {
+				if (i<0||i>=MapManager.getInstance().MAP_HEIGHT || j<0|| j>= MapManager.getInstance().MAP_WIDTH || MapManager.getInstance ().staticBlocks [i] [j] == true) {
 					return true;
 				}
 			}
@@ -156,7 +156,7 @@ public class PhysicsComponent : MonoBehaviour
 			}
 			{
 				Vector3Int toCheck = new Vector3Int (p.x+1,p.y,0);
-				if (toCheck.x >= MapManager.MAP_WIDTH || MapManager.getInstance().staticBlocks[toCheck.y][toCheck.x]) {
+				if (toCheck.x >= MapManager.getInstance().MAP_WIDTH || MapManager.getInstance().staticBlocks[toCheck.y][toCheck.x]) {
 					res.x = (p.x+1) * MapManager.TILE_WIDTH *10 - bcRectSizeX/ 2;
 				}
 			}
@@ -168,7 +168,7 @@ public class PhysicsComponent : MonoBehaviour
 			}
 			{
 				Vector3Int toCheck = new Vector3Int (p.x,p.y+1,0);
-				if (toCheck.y >= MapManager.MAP_HEIGHT || MapManager.getInstance().staticBlocks[toCheck.y][toCheck.x]) {
+				if (toCheck.y >= MapManager.getInstance().MAP_HEIGHT || MapManager.getInstance().staticBlocks[toCheck.y][toCheck.x]) {
 					res.y = -(p.y+1) * MapManager.TILE_HEIGHT *10 + bcRectSizeY / 2;
 				}
 			}

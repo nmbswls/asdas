@@ -21,7 +21,6 @@ public class TowerSkillItem : GComponent
 		_desp = this.GetChild ("txt").asTextField;
 		_lv_num = this.GetChild ("lv").asTextField;
 		this.onTouchBegin.Add (delegate() {
-			Debug.Log("click");
 			GameManager.getInstance().showDetailAmplifier("tower_skill",skill);
 		});
 	}

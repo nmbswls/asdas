@@ -3,9 +3,9 @@ using System.Collections;
 
 public class MapObject : MonoBehaviour
 {
-	[HideInInspector]
+	//[HideInInspector]
 	public int posXInt;
-	[HideInInspector]
+	//[HideInInspector]
 	public int posYInt;
 //	[HideInInspector]
 //	public int height;
@@ -27,7 +27,7 @@ public class MapObject : MonoBehaviour
 	// Use this for initialization
 	protected virtual void Start ()
 	{
-		mapHeight = MapManager.MAP_HEIGHT;
+		mapHeight = MapManager.getInstance().MAP_HEIGHT;
 		rate = (maxZ - minZ) / mapHeight;
 	}
 	
@@ -35,6 +35,10 @@ public class MapObject : MonoBehaviour
 	protected virtual void Update ()
 	{
 		//transform.position = new Vector3 (transform.position.x, transform.position.y, (float)(mapHeight+(transform.position.y)) * rate + minZ - (isHighLight?5f:0f));
+		transform.position = new Vector3 (posXInt*0.001f, posYInt*0.001f, (float)(mapHeight+(transform.position.y)) * rate + minZ - (isHighLight?5f:0f));
+	}
+
+	public void updatePosImmediately(){
 		transform.position = new Vector3 (posXInt*0.001f, posYInt*0.001f, (float)(mapHeight+(transform.position.y)) * rate + minZ - (isHighLight?5f:0f));
 	}
 

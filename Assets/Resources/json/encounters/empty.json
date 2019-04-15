@@ -1,19 +1,19 @@
 ﻿{
 	"eId": "empty",
 	"type": 0,
-	"desp": "迷雾呈现出你似曾相识的污浊颜色，能听见不知名的声音。",
+	"desp": "The silence amplifies your fear。",
 	"stages": {
 
 		"0": {
 			"sId": 0,
-			"desp": "空无一物的荒原正凝视着你。",
+			"desp": "The empty plane gazes at you.",
 			"stageType": 0,
 			"res": null,
 			"randomValue": 0,
 			"battleRes": 0,
 			"converts": [{
 				"nextStageIdx": 9,
-				"choiceDesp": "整顿",
+				"choiceDesp": "Take a rest",
 				"checks": []
 			}]
 		},
