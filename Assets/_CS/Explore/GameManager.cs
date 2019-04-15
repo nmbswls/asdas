@@ -19,6 +19,8 @@ public class GameManager : Singleton<GameManager> {
 	public GetItemManager getItemManager;
 	public EnterBattlePanel enterBattlePanel;
 
+	public ExploreFinishWindow exploreFinishWindow;
+
 	public ShopInterface shopPanel;
 
 	//FGUI components
@@ -196,6 +198,8 @@ public class GameManager : Singleton<GameManager> {
 
 		shopPanel = new ShopInterface ();
 
+		exploreFinishWindow = new ExploreFinishWindow ();
+
 		enterBattlePanel = new EnterBattlePanel ();
 		getItemManager = new GetItemManager ();
 		itemDetailAmplifier = new ItemDetailAmplifier ();
@@ -275,6 +279,10 @@ public class GameManager : Singleton<GameManager> {
 		_mask.alpha = 0;
 
 		PlayerData.getInstance().enterNextLevel();
+		if (PlayerData.getInstance ().nowLevelId == "end") {
+			exploreFinishWindow.initAndShow();
+			return;
+		}
 		_mask.TweenFade (1, 0.5f).OnComplete (delegate() {
 			gridManager.initGrid();
 			_mask.TweenFade(0,0.5f).OnComplete(delegate() {

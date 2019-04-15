@@ -42,6 +42,7 @@ public class GridManager : MonoBehaviour {
 		if (grids != null) {
 			for (int i = 0; i < GRID_HEIGHT; i++) {
 				for (int j = 0; j < GRID_WIDTH; j++) {
+					if(grids[i*GRID_WIDTH+j]!=null)
 					GameObject.Destroy (grids[i*GRID_WIDTH+j].gameObject);
 				}
 			}
