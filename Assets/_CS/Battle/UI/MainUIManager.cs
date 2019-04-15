@@ -81,7 +81,7 @@ public class MainUIManager : MonoBehaviour
 		updateHp ();
 		updatePotions ();
 		updateCoin ();
-
+		updateLeftEnemy ();
 	}
 
 	void handleMove(EventContext context){
@@ -139,6 +139,10 @@ public class MainUIManager : MonoBehaviour
 		_coins0.text = BattleManager.getInstance ().money [0]+"";
 		_coins1.text = BattleManager.getInstance ().money [1]+"";
 		_coins2.text = BattleManager.getInstance ().money [2]+"";
+	}
+
+	public void updateLeftEnemy(){
+		_enemy_left.text = BattleManager.getInstance ().killLeft+"";
 	}
 }
 

@@ -206,7 +206,7 @@ public class PlayerData
 	public int maxHP = 40;
 	public int san = 2000;
 	public int money = 200;
-	public int level = 15;
+	//public string nowLevelId = "toturial";
 
 	public List<Potion> potions = new List<Potion>();
 	public List<Scar> scars = new List<Scar>();

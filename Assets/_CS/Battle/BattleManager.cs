@@ -32,8 +32,8 @@ public class BattleManager : Singleton<BattleManager> {
 
 	public int battleTime = 0;
 
-	int killLeft = 10;
-	int hp;
+	public int killLeft = 10;
+	public int hp;
 	public int maxHP;
 	public int san;
 	public int defend;
@@ -96,7 +96,7 @@ public class BattleManager : Singleton<BattleManager> {
 
 	public void initBattle(){
 		//怪物由两部分组成，背景怪物 无限刷新 固定怪物 由怪物卡召唤
-
+		killLeft = 10;
 
 		{
 			List<EnemyCombo> enemies = PlayerData.getInstance ().chasingEnemies;
@@ -117,7 +117,6 @@ public class BattleManager : Singleton<BattleManager> {
 			
 			}
 			if (binfo.killEnemy > 0) {
-				Debug.Log ("need kill enemy");
 				killLeft = binfo.killEnemy;
 			} else {
 				killLeft = -1000;
@@ -173,7 +172,7 @@ public class BattleManager : Singleton<BattleManager> {
 		money[2] = 10;
 		money[3] = 10;
 
-		killLeft = 10;
+
 		hp = PlayerData.getInstance().hp;
 		maxHP = PlayerData.getInstance ().maxHP;
 		san = 40;
@@ -232,7 +231,7 @@ public class BattleManager : Singleton<BattleManager> {
 		dropss.Add (3);
 		dropManager.createDrops (dropss,toDie.transform.position);
 		killLeft--;
-		mainUIManager._enemy_left.text = (killLeft > 0 ? killLeft : 0)+"";
+		mainUIManager.updateLeftEnemy ();
 		if (killLeft>-1000&&killLeft <= 0) {
 			showBattleFinish (true);
 		}

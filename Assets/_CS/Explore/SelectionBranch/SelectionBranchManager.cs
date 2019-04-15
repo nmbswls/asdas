@@ -78,7 +78,7 @@ public class SelectionBranchManager : Window
 		base.OnShown ();
 		this.alpha = 0;
 		this.TweenFade (1, 0.3f);
-
+		this.modal = true;
 		changeView (stageIndex);
 	}
 
@@ -141,6 +141,7 @@ public class SelectionBranchManager : Window
 	}
 
 	void panelHide(){
+		this.modal = false;
 		this.TweenFade (0, 0.3f).OnComplete(delegate() {
 			this.Hide ();
 		});

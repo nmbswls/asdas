@@ -105,7 +105,7 @@ public class GameManager : Singleton<GameManager> {
 		hpTextView.text = PlayerData.getInstance ().hp+"";
 		moneyTextView.text = PlayerData.getInstance ().money+"";
 		sanTextView.text = PlayerData.getInstance ().san+"";
-		levelTextView.text = "Level."+PlayerData.getInstance ().level;
+		levelTextView.text = "Level."+PlayerData.getInstance ().nowLevelId;
 	}
 
 
@@ -285,6 +285,7 @@ public class GameManager : Singleton<GameManager> {
 		}
 		_mask.TweenFade (1, 0.5f).OnComplete (delegate() {
 			gridManager.initGrid();
+			resetStats();
 			_mask.TweenFade(0,0.5f).OnComplete(delegate() {
 				_mask.visible = false;
 			});
