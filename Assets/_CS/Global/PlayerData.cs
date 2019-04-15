@@ -414,6 +414,9 @@ public class PlayerData
 	public void enterNextLevel(){
 		LevelEntry entry = GameStaticData.getInstance ().getLevelInfo (nowLevelId);
 		string nextLevelId = entry.NextLevel;
+		if(nextLevelId == "end"){
+			return;
+		}
 		nowLevelId = nextLevelId;
 		generateDungeon (nextLevelId);
 	}
