@@ -168,7 +168,9 @@ public class GameManager : Singleton<GameManager> {
 		showdetailButton = _main.GetChild ("detail_button").asGraph;
 		//showdetailButton.url="detail";
 		showdetailButton.onClick.Add (delegate(EventContext context) {
-			
+			if(!GRoot.inst.touchable){
+				Debug.Log("不能点");
+			}
 			eMenu.Show();
 			if (PlayerData.getInstance ().guideStage == 12) {
 				GuideManager.getInstance ().showGuideTowerTab ();
@@ -317,12 +319,13 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 	void showGetItemEffect(Vector2 originPosInGlobal,NewItem itemCopy){
+		GRoot.inst.AddChild (itemCopy);
 		itemCopy.position = GRoot.inst.GlobalToLocal(new Vector2(originPosInGlobal.x - itemCopy.width/2, originPosInGlobal.y - itemCopy.height/2));
 		itemCopy.sortingOrder = 100;
 		itemCopy.touchable = false;
 		itemCopy.alpha = 0.4f;
 		//GRoot.inst.AddChild (copyView);
-		GRoot.inst.AddChild (itemCopy);
+
 
 		itemCopy.TweenFade (1, 0.8f).OnComplete (delegate() {
 			itemCopy.TweenMove (new Vector2 (0, GRoot.inst.height - itemCopy.height * 0.4f), 0.3f).OnUpdate (delegate(GTweener tweener) {

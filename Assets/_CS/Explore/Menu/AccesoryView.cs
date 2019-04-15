@@ -40,7 +40,12 @@ public class AccesoryView : GButton
 		this.tc = tc;
 		_icon.url = "image/atk";
 		_name.text = "卸下";
-		_detail.text = tc.getEffects();
+		if (tc != null) {
+			_detail.text = tc.getEffects ();
+		} else {
+			_detail.text = "No Equip";
+		}
+
 	}
 
 
