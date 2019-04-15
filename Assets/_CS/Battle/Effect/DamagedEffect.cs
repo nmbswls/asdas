@@ -9,7 +9,8 @@ public class DamagedEffect : BaseEffect
 
 	//int timeLeft = 0;
 
-	void Start(){
+	protected override void Start(){
+		base.Start ();
 		sr = GetComponent<SpriteRenderer> ();
 	}
 

@@ -165,7 +165,7 @@ Transform:
   m_GameObject: {fileID: 17511583}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.015625, y: 0.015625, z: 0.015625}
+  m_LocalScale: {x: 0.014180977, y: 0.014180977, z: 0.014180977}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -8123,17 +8123,17 @@ Prefab:
     - target: {fileID: 8195094282704098410, guid: f49a2ad3c106043ce840c4d33b18b796,
         type: 2}
       propertyPath: m_TileColorArray.Array.data[1].m_Data.r
-      value: 0.15035684
+      value: 0.04460425
       objectReference: {fileID: 0}
     - target: {fileID: 8195094282704098410, guid: f49a2ad3c106043ce840c4d33b18b796,
         type: 2}
       propertyPath: m_TileColorArray.Array.data[1].m_Data.g
-      value: 0.3052454
+      value: 0.2578375
       objectReference: {fileID: 0}
     - target: {fileID: 8195094282704098410, guid: f49a2ad3c106043ce840c4d33b18b796,
         type: 2}
       propertyPath: m_TileColorArray.Array.data[1].m_Data.b
-      value: 0.75735295
+      value: 0.5514706
       objectReference: {fileID: 0}
     - target: {fileID: 8195094282704098410, guid: f49a2ad3c106043ce840c4d33b18b796,
         type: 2}
@@ -8143,22 +8143,22 @@ Prefab:
     - target: {fileID: 8195094282704098410, guid: f49a2ad3c106043ce840c4d33b18b796,
         type: 2}
       propertyPath: m_TileRefreshArray.Array.data[0].m_DirtyIndex
-      value: 45
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8195094282704098410, guid: f49a2ad3c106043ce840c4d33b18b796,
         type: 2}
       propertyPath: m_TileColorArray.Array.data[0].m_Data.r
-      value: 0.14197664
+      value: 0.875
       objectReference: {fileID: 0}
     - target: {fileID: 8195094282704098410, guid: f49a2ad3c106043ce840c4d33b18b796,
         type: 2}
       propertyPath: m_TileColorArray.Array.data[0].m_Data.g
-      value: 0.29525107
+      value: 0.875
       objectReference: {fileID: 0}
     - target: {fileID: 8195094282704098410, guid: f49a2ad3c106043ce840c4d33b18b796,
         type: 2}
       propertyPath: m_TileColorArray.Array.data[0].m_Data.b
-      value: 0.74264705
+      value: 0.875
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f49a2ad3c106043ce840c4d33b18b796, type: 2}
@@ -8214,7 +8214,6 @@ MonoBehaviour:
   dropManager: {fileID: 0}
   playerSkillManager: {fileID: 1438619239}
   battleTime: 0
-  killLeft: 10
   maxHP: 0
   san: 0
   defend: 0
@@ -8344,7 +8343,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1443042524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.342465, y: -5, z: 0}
+  m_LocalPosition: {x: 8.054794, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8680,7 +8679,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1739051936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

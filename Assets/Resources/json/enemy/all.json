@@ -73,7 +73,7 @@
 	"toturial": {
 		"enemyId": "toturial",
 		"enemyName": "little",
-		"hp": 20000,
+		"hp": 2000,
 		"speed": 2000,
 		"atk": 1,
 		"def": 1

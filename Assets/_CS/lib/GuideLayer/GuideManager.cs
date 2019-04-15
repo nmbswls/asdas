@@ -149,7 +149,7 @@ public class GuideManager : Singleton<GuideManager>
 	public void showGuideMovePlayer(Vector2 screenPos){
 		screenPos.y = Screen.height - screenPos.y;
 		Vector2 pos = GRoot.inst.GlobalToLocal(screenPos);
-		GuideManager.getInstance ().showGuide (pos,80," Touch Again &\n Move To Reveal ");
+		GuideManager.getInstance ().showGuide (pos,80," Touch Again \n Move To Reveal ");
 	}
 
 	public void showGuideMoveMark(Vector2 screenPos){
@@ -174,7 +174,7 @@ public class GuideManager : Singleton<GuideManager>
 	}
 
 	public void showGuideFirstTower(){
-		GuideManager.getInstance ().showGuide (gm.eMenu.getFirstTower(),"Enter Tower Panel\nSee What You Have");
+		GuideManager.getInstance ().showGuide (gm.eMenu.getFirstTower(),"Touch One Your Tower\nSee The Detail");
 	}
 
 	public void showGuideCloseMenu(){

@@ -40,7 +40,9 @@ public class BallisticBullet : BasicBullet
 		else 
 			arriveGround = false;
 		vOriginHeight = vHeight;
+
 		transform.position = owner.transform.position;
+
 		gameObject.SetActive (true);
 
 	}

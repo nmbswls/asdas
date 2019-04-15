@@ -17,7 +17,8 @@ public class SpawnTowerEffect : BaseEffect
 	int towerIdx;
 
 
-	void Start(){
+	protected override void Start(){
+		base.Start ();
 		sprite = transform.Find ("sprite").gameObject;
 	}
 

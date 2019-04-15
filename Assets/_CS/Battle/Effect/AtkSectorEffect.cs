@@ -11,7 +11,8 @@ public class AtkSectorEffect : BaseEffect
 
 	SpriteRenderer image;
 
-	void Start(){
+	protected override void Start(){
+		base.Start ();
 		image = GetComponentInChildren<SpriteRenderer> ();
 	}
 

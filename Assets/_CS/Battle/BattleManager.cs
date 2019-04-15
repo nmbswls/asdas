@@ -64,6 +64,7 @@ public class BattleManager : Singleton<BattleManager> {
 		}
 	}
 	void Start(){
+		lockUI ();
 		mapItemManager = GetComponent<MapItemManager> ();
 		dropManager = GetComponent<MonsterDropManager> ();
 
@@ -73,7 +74,7 @@ public class BattleManager : Singleton<BattleManager> {
 		spawnPlayer ();
 
 		StartCoroutine (fadeIn());
-
+		unlockUI ();
 
 	}
 
@@ -109,6 +110,9 @@ public class BattleManager : Singleton<BattleManager> {
 		}
 		{
 			EncounterBattleInfo binfo = PlayerData.getInstance ().battleInfo;
+			if (binfo == null) {
+				binfo = new EncounterBattleInfo ();
+			}
 			if (binfo.liveTime > 0) {
 			
 			}
@@ -119,6 +123,7 @@ public class BattleManager : Singleton<BattleManager> {
 				killLeft = -1000;
 			}
 		}
+		PlayerPrefs.DeleteAll ();
 
 		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
 			//first time
@@ -214,7 +219,7 @@ public class BattleManager : Singleton<BattleManager> {
 		MapManager.getInstance ().spawnPlayer (player.gl);
 		player.gl.updatePosImmediately ();
 
-		battleMainCamera.transform.position = player.transform.position;
+		battleMainCamera.transform.position = new Vector3(player.transform.position.x,player.transform.position.y,battleMainCamera.transform.position.z);
 	}
 
 
@@ -363,5 +368,18 @@ public class BattleManager : Singleton<BattleManager> {
 		return res;
 	}
 
+	int uiLockNum = 0;
+	public void lockUI(){
+		uiLockNum++;
+		if (uiLockNum > 0) {
+			GRoot.inst.touchable = false;
+		}
+	}
 
+	public void unlockUI(){
+		uiLockNum--;
+		if (uiLockNum == 0) {
+			GRoot.inst.touchable = true;
+		}
+	}
 }

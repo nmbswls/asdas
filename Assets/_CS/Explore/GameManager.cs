@@ -55,7 +55,7 @@ public class GameManager : Singleton<GameManager> {
 		//DontDestroyOnLoad (mainCamera.gameObject);
 
 		GameStaticData.getInstance ();
-
+		lockUI ();
 		initUI ();
 		gridManager.initGrid ();
 
@@ -68,6 +68,7 @@ public class GameManager : Singleton<GameManager> {
 			if (PlayerData.getInstance ().guideStage == 0) {
 				GuideManager.getInstance ().showGuideMoveMark (gridManager.getToturialGridPos ());
 			}
+			unlockUI();
 		});
 
 		Time.timeScale = 1;
