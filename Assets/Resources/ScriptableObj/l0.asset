@@ -15,16 +15,16 @@ MonoBehaviour:
   numOfGrid: 6
   numOfEncounter: 3
   possibleEncounters:
-  - eid: 3
+  - eid: empty
     chance: 0
     condition: 
-  - eid: 4
+  - eid: empty
     chance: 0
     condition: 
-  - eid: 5
+  - eid: empty
     chance: 0
     condition: 
-  - eid: 6
+  - eid: empty
     chance: 0
     condition: 
   nextLevel: l1

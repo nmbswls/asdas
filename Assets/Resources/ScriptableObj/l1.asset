@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Name: l1
   m_EditorClassIdentifier: 
   levelId: l1
-  numOfGrid: 7
+  numOfGrid: 6
   numOfEncounter: 3
   possibleEncounters:
-  - eid: 6
+  - eid: empty
     chance: 0
     condition: 
-  - eid: 7
+  - eid: empty
     chance: 0
     condition: 
-  - eid: 8
+  - eid: empty
     chance: 0
     condition: 
-  - eid: 9
+  - eid: empty
     chance: 0
     condition: 
-  nextLevel: l2
+  nextLevel: end

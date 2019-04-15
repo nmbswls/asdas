@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: l4
   m_EditorClassIdentifier: 
   levelId: l4
-  numOfGrid: 0
+  numOfGrid: 6
   numOfEncounter: 0
   possibleEncounters: []
   nextLevel: l5

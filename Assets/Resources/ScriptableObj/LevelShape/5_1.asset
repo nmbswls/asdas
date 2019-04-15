@@ -11,6 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4170a0645abe143f3b5094616689af38, type: 3}
   m_Name: 5_1
   m_EditorClassIdentifier: 
-  activePos: []
-  spawnPos: {x: 0, y: 0}
-  endPos: {x: 0, y: 0}
+  activePos:
+  - {x: 2, y: 0}
+  - {x: 2, y: 1}
+  - {x: 2, y: 2}
+  - {x: 1, y: 1}
+  - {x: 3, y: 1}
+  spawnPos: {x: 2, y: 0}
+  endPos: {x: 2, y: 2}
