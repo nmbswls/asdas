@@ -35,7 +35,12 @@ public class GetItemManager : Window
 	void chooseItem(){
 		int idx = _new_item_list.selectedIndex;
 		//Debug.Log (idx);
-		PlayerData.getInstance ().gainComponent (items [idx]);
+		if (items [idx].StartsWith ("c")) {
+			PlayerData.getInstance ().gainComponent (items [idx]);
+		}else if(items [idx].StartsWith ("t")){
+			PlayerData.getInstance ().gainTowerBase (items [idx]);
+		}
+
 		Vector3 posLocal = _new_item_list.GetChildAt (idx).position;
 		GameManager.getInstance ().initGetItemEffect (_new_item_list.LocalToGlobal (posLocal),items[idx]);
 		GameManager.getInstance ().finishItemGet ();
@@ -51,19 +56,23 @@ public class GetItemManager : Window
 	void skip(){
 		this.Hide ();
 	}
-
-
-
-	public void func(){
-		string[] rewards = new string[6];
-		for (int i = 0; i < 6; i++) {
 		
+
+	public void initAndShow(List<EncounterReward> rewards){
+		List<string> items = new List<string> ();
+		for (int i = 0; i < rewards.Count; i++) {
+			if (rewards [i].rewardName == "fix_base_tower") {
+				items.Add ("t01");
+				items.Add ("t01");
+				items.Add ("t01");
+			} else if (rewards [i].rewardName == "fix_base_equip") {
+				items.Add ("c01");
+				items.Add ("c01");
+				items.Add ("c01");
+			} else {
+				items = GameStaticData.getInstance().getRandomComponents (3);
+			}
 		}
-	}
-
-
-
-	public void initAndShow(List<string> items){
 		this.items = items;
 		Show ();
 	}
@@ -77,6 +86,8 @@ public class GetItemManager : Window
 		for(int i=0;i<items.Count;i++)
 		{
 			NewItem item = (NewItem)_new_item_list.AddItemFromPool();
+
+
 			item.init (items[i]);
 			item.onClick.Add (delegate() {
 				if(_new_item_list.selectedIndex!=-1){

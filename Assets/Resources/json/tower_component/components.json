@@ -62,7 +62,7 @@
 		}]
 	},
 	{
-		"cid": "default",
+		"cid": "c_default",
 		"cname": "碎片",
 		"cdesp": "无用之物",
 		"effects": []

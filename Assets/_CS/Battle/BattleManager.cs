@@ -16,7 +16,7 @@ public class BattleManager : Singleton<BattleManager> {
 
 	public List<EnemySpawner> enemySpawners = new List<EnemySpawner> ();
 
-	public List<GameLife> enemies = new List<GameLife>();
+	List<GameLife> enemies = new List<GameLife>();
 	private List<Tower> towers = new List<Tower>();
 
 	public PlayerModule player;
@@ -135,7 +135,7 @@ public class BattleManager : Singleton<BattleManager> {
 				spanwer.posXInt = center.x;
 				spanwer.posYInt = center.y;
 				enemySpawners.Add (spanwer);
-				spanwer.enemyName="10000";
+				spanwer.enemyName="toturial";
 			}
 
 		} else {
@@ -246,6 +246,15 @@ public class BattleManager : Singleton<BattleManager> {
 		mainUIManager.showBattleFinishPanel ();
 	}
 
+
+	//	private AsyncOperation async = null;
+	//	IEnumerator UnloadBattle()
+	//	{
+	//		//GameManager.getInstance ().finishBattle();
+	//		async = SceneManager.LoadSceneAsync("Explore");
+	//		yield return async;
+	//
+	//	}
 	public void battleFinish(){
 		if (battleWillFinish)
 			return;
@@ -254,7 +263,10 @@ public class BattleManager : Singleton<BattleManager> {
 		battleMainCamera.gameObject.SetActive (false);
 		mainUIManager._mainView.visible = false;
 		PlayerData.getInstance ().finishBattle (true);
-		StartCoroutine (UnloadBattle());
+
+		Load.SceneName = "Explore";//B场景的名字 
+		SceneManager.LoadScene("Loading"); 
+		//StartCoroutine (UnloadBattle());
 	}
 		
 
@@ -291,14 +303,7 @@ public class BattleManager : Singleton<BattleManager> {
 		
 	}
 
-	private AsyncOperation async = null;
-	IEnumerator UnloadBattle()
-	{
-		//GameManager.getInstance ().finishBattle();
-		async = SceneManager.LoadSceneAsync("Explore");
-		yield return async;
 
-	}
 
 
 	void Update(){
@@ -380,5 +385,13 @@ public class BattleManager : Singleton<BattleManager> {
 		if (uiLockNum == 0) {
 			GRoot.inst.touchable = true;
 		}
+	}
+
+	public List<GameLife> getTmpEnemyList(){
+		return new List<GameLife>(enemies);
+	}
+
+	public void registerEnemy(GameLife newEnemy){
+		if(!enemies.Contains(newEnemy))enemies.Add (newEnemy);
 	}
 }

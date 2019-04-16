@@ -76,13 +76,7 @@ public class GameManager : Singleton<GameManager> {
 		Time.timeScale = 1;
 	}
 
-	private AsyncOperation async = null;
-	IEnumerator LoadBattle()
-	{
-		async = SceneManager.LoadSceneAsync("A1");
-		yield return async;
-		//_main.visible = false;
-	}
+//	
 	
 	// Update is called once per frame
 	void Update () {
@@ -460,9 +454,20 @@ public class GameManager : Singleton<GameManager> {
 		_enterBattle.visible = false;
 	}
 
+	//  private AsyncOperation async = null;
+	//	IEnumerator LoadBattle()
+	//	{
+	//		async = SceneManager.LoadSceneAsync("A1");
+	//		yield return async;
+	//		//_main.visible = false;
+	//	}
+
 	public void enterBattle(){
 		if (!inBattle) {
-			StartCoroutine (LoadBattle());
+			Load.SceneName = "Battle";//B场景的名字 
+			SceneManager.LoadScene("Loading"); 
+
+			//StartCoroutine (LoadBattle());
 			inBattle = true;
 			mainCamera.gameObject.SetActive (false);
 		}

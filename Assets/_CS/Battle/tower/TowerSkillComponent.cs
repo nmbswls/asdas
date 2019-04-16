@@ -12,28 +12,27 @@ public enum ePassiveCheckPoint{
 
 public class TowerSkillComponent : BaseSkillComponent
 {
-	public Dictionary<string,TowerSkill> staticSkillInfo;
+	//public Dictionary<string,TowerSkill> staticSkillInfo;
 
 	void Start ()
 	{
-		staticSkillInfo = GameStaticData.getInstance ().towerSkills;
+		//staticSkillInfo = GameStaticData.getInstance ().towerSkills;
 	}
 
 	public override void setSkillCD(int readySkill){
-		skillCoolDown[readySkill] = staticSkillInfo[skills[readySkill].skillId].cooldown;
-
+		skillCoolDown[readySkill] = GameStaticData.getInstance ().getTowerSkillInfo(skills[readySkill].skillId).cooldown;
 	}
 
 
 	protected override bool isPermanentSkill(string skillId){
-		TowerSkill ts = staticSkillInfo[skillId];
+		TowerSkill ts = GameStaticData.getInstance ().getTowerSkillInfo(skillId);
 		if (ts.isPassive && ts.isPermanent) {
 			return true;
 		}
 		return false;
 	}
 	protected override bool isPassiveSkill(string skillId){
-		TowerSkill ts = staticSkillInfo[skillId];
+		TowerSkill ts = GameStaticData.getInstance ().getTowerSkillInfo(skillId);
 		if (ts.isPassive) {
 			return true;
 		}

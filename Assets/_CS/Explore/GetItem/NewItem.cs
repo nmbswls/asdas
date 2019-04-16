@@ -24,6 +24,7 @@ public class NewItem : GButton
 			_icon.url = "";
 			_txt.text = tc.cname + '\n' + tc.cdesp;
 		}else{
+			Debug.Log (itemId);
 			_txt.text = "要水货伤痕p";
 		}
 

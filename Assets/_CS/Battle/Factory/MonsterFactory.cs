@@ -21,7 +21,7 @@ public class MonsterFactory
 		gl.initEnemy (enemyData);
 		gl.posXInt = posInWorld.x;
 		gl.posYInt = posInWorld.y;
-		BattleManager.getInstance ().enemies.Add (gl);
+		BattleManager.getInstance ().registerEnemy(gl);
 		return gl;
 	}
 }

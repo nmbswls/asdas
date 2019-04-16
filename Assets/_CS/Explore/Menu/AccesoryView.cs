@@ -45,7 +45,6 @@ public class AccesoryView : GButton
 		} else {
 			_detail.text = "No Equip";
 		}
-
 	}
 
 

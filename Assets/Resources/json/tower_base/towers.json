@@ -56,8 +56,8 @@
 			"skillLevel": 1
 		}]
 	},
-	"default": {
-		"tid": "default",
+	"t_default": {
+		"tid": "t_default",
 		"tname": "默认塔",
 		"tdesp": "一组默认塔",
 

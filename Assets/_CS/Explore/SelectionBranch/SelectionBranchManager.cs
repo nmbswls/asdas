@@ -127,7 +127,9 @@ public class SelectionBranchManager : Window
 		if (res.type == eFinishType.NORMAL) {
 			if (res.rewords.Count > 0) {
 				List<string> l = GameStaticData.getInstance().getRandomComponents (3);
-				GameManager.getInstance ().getItemManager.initAndShow (l);
+				//GameManager.getInstance ().getItemManager.initAndShow (l);
+				GameManager.getInstance ().getItemManager.initAndShow (res.rewords);
+
 			} else {
 				GameManager.getInstance ().finishItemGet ();
 			}

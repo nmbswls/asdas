@@ -138,7 +138,7 @@ public class Tower : MapObject
 			castTime += dTime;
 			if (castTime > castPreTime&&!skillHasTriggered) {
 				SkillState skill = skillComponent.skills [castIdx];
-				TowerSkill s = GameStaticData.getInstance ().towerSkills [skill.skillId];
+				TowerSkill s = GameStaticData.getInstance ().getTowerSkillInfo (skill.skillId);
 				if (s.isSelfTarget) {
 					gainBuff ();
 				} else {
@@ -170,7 +170,7 @@ public class Tower : MapObject
 			for (int i = 0; i < readySkills.Count; i++) {
 				SkillState skill = skillComponent.skills [readySkills [i]];
 				Vector2 diff = closestOne.transform.position - transform.position;
-				TowerSkill s = GameStaticData.getInstance ().towerSkills [skill.skillId];
+				TowerSkill s = GameStaticData.getInstance ().getTowerSkillInfo (skill.skillId);
 
 				if (s.isSelfTarget) {
 					readyUsableSkill.Add (readySkills[i]);
@@ -186,7 +186,7 @@ public class Tower : MapObject
 			SkillState toUse = skillComponent.skills[readyUsableSkill [0]];
 
 
-			TowerSkill ss = GameStaticData.getInstance ().towerSkills [toUse.skillId];
+			TowerSkill ss = GameStaticData.getInstance ().getTowerSkillInfo (toUse.skillId);
 			if (ss.isSelfTarget) {
 				Debug.Log ("自家buff");
 				anim.SetTrigger ("buff");
@@ -260,7 +260,7 @@ public class Tower : MapObject
 				float cx = transform.position.x;
 				float cy = transform.position.y;
 				List<GameLife> validTarget = new List<GameLife> ();
-				foreach (GameLife enemy in BattleManager.getInstance().enemies) {
+				foreach (GameLife enemy in BattleManager.getInstance().getTmpEnemyList()) {
 					float x = enemy.transform.position.x;
 					float y = enemy.transform.position.y;
 
@@ -362,7 +362,7 @@ public class Tower : MapObject
 		foreach (SkillState skill in skillComponent.skills) {
 			if (skill == null)
 				continue;
-			TowerSkill sinfo = GameStaticData.getInstance().towerSkills[skill.skillId];
+			TowerSkill sinfo = GameStaticData.getInstance().getTowerSkillInfo(skill.skillId);
 			if (sinfo.isPassive && sinfo.checkPoint == ePassiveCheckPoint.ATK) {
 				attackEffect.Add (new Buff (sinfo.x[skill.skillLevel], 50, 1000));
 			}

@@ -54,7 +54,7 @@
 			"stageType": 1,
 			"converts": [{
 					"nextStageIdx": 5,
-					"choiceDesp": "描述符",
+					"choiceDesp": "win",
 					"checks": [{
 						"key": "win",
 						"fuhao": 1,
@@ -63,7 +63,7 @@
 				},
 				{
 					"nextStageIdx": 5,
-					"choiceDesp": "描述符",
+					"choiceDesp": "lose",
 					"checks": [{
 						"key": "win",
 						"fuhao": 1,
@@ -90,7 +90,7 @@
 				"type": 0,
 				"finishEffect": "none",
 				"rewords": [{
-						"rewardName": "fix_equip",
+						"rewardName": "fix_base_equip",
 						"rewardAmount": 0,
 						"chance": 0
 					}]

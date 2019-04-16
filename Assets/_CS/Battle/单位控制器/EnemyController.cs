@@ -47,16 +47,15 @@ public class EnemyController : IUnitController
 	}
 
 	void Start(){
-		if (!BattleManager.getInstance ().enemies.Contains (GetComponent<GameLife> ())) {
-			BattleManager.getInstance ().enemies.Add (GetComponent<GameLife> ());
-		}
+		
+		BattleManager.getInstance ().registerEnemy (GetComponent<GameLife> ());
 	}
 
 
 
 	public void flocking(){
 		Vector3 offset = Vector3.zero;
-		foreach (GameLife gl in BattleManager.getInstance ().enemies) {
+		foreach (GameLife gl in BattleManager.getInstance ().getTmpEnemyList()) {
 			Vector3 diff = (gl.transform.position - transform.position);
 			if (diff.magnitude < 0.4f) {
 				offset += -diff.normalized * (0.4f-diff.magnitude)*4;

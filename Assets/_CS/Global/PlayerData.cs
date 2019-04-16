@@ -332,21 +332,18 @@ public class PlayerData
 	public void initTowers(){
 		for (int i = 1; i < 8; i++) {
 			TowerTemplate tt = new TowerTemplate ();
-			TowerBase tb = null;
-			GameStaticData.getInstance ().towerBaseInfo.TryGetValue ("t0"+i,out tb);
-			if(tb==null)tb=GameStaticData.getInstance ().towerBaseInfo["default"];
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t0"+i);
+
 			tt.tbase = tb;
 			ownedTowers.Add (tt);
 		}
 	}
 	public void initBag(){
 		for (int i = 0; i < 20; i++) {
-			
-			TowerComponent tc = null;
-			GameStaticData.getInstance().componentStaticInfo.TryGetValue("c0"+(i%6),out tc);
-			if (tc == null) {
-				tc = GameStaticData.getInstance().componentStaticInfo["default"];
-			}
+
+
+
+			TowerComponent tc = GameStaticData.getInstance ().getComponentInfo ("c0"+(i%6));
 			bagComponents.Add (tc);
 		}
 	}
@@ -374,12 +371,15 @@ public class PlayerData
 	}
 
 	public void gainComponent(string componentId){
-		TowerComponent tc = null;
-		if (GameStaticData.getInstance ().componentStaticInfo.TryGetValue (componentId, out tc)) {
-			bagComponents.Add (tc);
-		} else {
-			bagComponents.Add (GameStaticData.getInstance ().componentStaticInfo["0"]);
-		}
+		TowerComponent tc = GameStaticData.getInstance ().getComponentInfo (componentId);
+		bagComponents.Add (tc);
+	}
+
+	public void gainTowerBase(string tid){
+		TowerBase tb = GameStaticData.getInstance ().getTowerBase (tid);
+		TowerTemplate tt = new TowerTemplate ();
+		tt.tbase = tb;
+		ownedTowers.Add (tt);
 	}
 
 	public void addMonster(EnemyCombo enemyAbstract){

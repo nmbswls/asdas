@@ -109,15 +109,16 @@ public class GameStaticData
 	public List<UsableHeroInfo> heroes = new List<UsableHeroInfo>();
 	public Dictionary<string, EncounterInfo> encounterDic = new Dictionary<string, EncounterInfo>();
 
-	public Dictionary<string,TowerComponent> componentStaticInfo = new Dictionary<string,TowerComponent>();
+	Dictionary<string,TowerComponent> componentStaticInfo = new Dictionary<string,TowerComponent>();
 
 	public Dictionary<string,PotionStaticInfo> potionStaticInfo = new Dictionary<string,PotionStaticInfo>();
 	public Dictionary<string,ScarStaticInfo> scarStaticInfo = new Dictionary<string,ScarStaticInfo>();
 
-	public Dictionary<string,TowerBase> towerBaseInfo = new Dictionary<string,TowerBase>();
+	Dictionary<string,TowerBase> towerBaseInfo = new Dictionary<string,TowerBase>();
 
 	public Dictionary<string,MemoInfo> memoInfo = new Dictionary<string,MemoInfo>();
-	public Dictionary<string,TowerSkill> towerSkills = new Dictionary<string,TowerSkill>();
+
+	Dictionary<string,TowerSkill> towerSkills = new Dictionary<string,TowerSkill>();
 	public Dictionary<string,EnemySkill> enemySkills = new Dictionary<string,EnemySkill>();
 
 	public List<MemoCombinationRule> memoCombineInfo = new List<MemoCombinationRule>();
@@ -234,9 +235,9 @@ public class GameStaticData
 		}
 		{
 			PotionStaticInfo p = new PotionStaticInfo ();
-			p.pid = "default";
+			p.pid = "p_default";
 			p.pname = "None";
-			potionStaticInfo ["default"] = p;
+			potionStaticInfo ["p_default"] = p;
 		}
 
 	}
@@ -254,9 +255,9 @@ public class GameStaticData
 
 		{
 			ScarStaticInfo p = new ScarStaticInfo ();
-			p.scarId = "default";
+			p.scarId = "scar_default";
 			p.scarName = "None";
-			scarStaticInfo ["default"] = p;
+			scarStaticInfo ["scar_default"] = p;
 		}
 
 	}
@@ -325,7 +326,7 @@ public class GameStaticData
 	public EnemyData getEnemyInfo(string eid){
 		EnemyData data = null;
 		if (!enemyStaticInfo.TryGetValue(eid,out data)) {
-			data = enemyStaticInfo ["default"];
+			data = enemyStaticInfo ["e_default"];
 		}
 		return data;
 	}
@@ -333,7 +334,7 @@ public class GameStaticData
 	public TowerBase getTowerBase(string tid){
 		TowerBase data = null;
 		if (!towerBaseInfo.TryGetValue(tid,out data)) {
-			data = towerBaseInfo ["default"];
+			data = towerBaseInfo ["t_default"];
 		}
 		return data;
 	}
@@ -341,14 +342,14 @@ public class GameStaticData
 	public ScarStaticInfo getScarInfo(string sid){
 		ScarStaticInfo data = null;
 		if (!scarStaticInfo.TryGetValue(sid,out data)) {
-			data = scarStaticInfo ["default"];
+			data = scarStaticInfo ["scar_default"];
 		}
 		return data;
 	}
 	public PotionStaticInfo getPotionInfo(string pid){
 		PotionStaticInfo data = null;
 		if (!potionStaticInfo.TryGetValue(pid,out data)) {
-			data = potionStaticInfo ["default"];
+			data = potionStaticInfo ["p_default"];
 		}
 		return data;
 	}
@@ -357,7 +358,7 @@ public class GameStaticData
 	public TowerComponent getComponentInfo(string cid){
 		TowerComponent data = null;
 		if (!componentStaticInfo.TryGetValue(cid,out data)) {
-			data = componentStaticInfo ["default"];
+			data = componentStaticInfo ["c_default"];
 		}
 		return data;
 	}
@@ -365,7 +366,7 @@ public class GameStaticData
 	public TowerSkill getTowerSkillInfo(string skillId){
 		TowerSkill data = null;
 		if (!towerSkills.TryGetValue(skillId,out data)) {
-			data = towerSkills ["default"];
+			data = towerSkills ["ts_default"];
 		}
 		return data;
 	}

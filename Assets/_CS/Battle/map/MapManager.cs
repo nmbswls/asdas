@@ -307,7 +307,7 @@ public class MapManager : MonoBehaviour
 
 	public List<GameLife> getEnemiesInRange(GameLife center, int range){
 		List<GameLife> res = new List<GameLife> ();
-		foreach (GameLife gl in BattleManager.getInstance ().enemies) {
+		foreach (GameLife gl in BattleManager.getInstance ().getTmpEnemyList()) {
 			if (gl.gameObject == center)
 				continue;
 			int dis = (int)((center.transform.position - gl.transform.position).magnitude * 1000);
@@ -323,8 +323,10 @@ public class MapManager : MonoBehaviour
 		GameLife closestEnemy = null;
 		int idx = 0;
 
-		foreach (GameLife gl in BattleManager.getInstance ().enemies) {
+		foreach (GameLife gl in BattleManager.getInstance ().getTmpEnemyList()) {
 			if (gl.gameObject == center)
+				continue;
+			if (!gl.IsAlive)
 				continue;
 			Vector3 Diff2d = (center.transform.position - gl.transform.position);
 			Diff2d.z = 0;

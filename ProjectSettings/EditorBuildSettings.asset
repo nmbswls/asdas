@@ -12,5 +12,8 @@ EditorBuildSettings:
     path: Assets/Scene/Explore.unity
     guid: 62b0f8dce1b8a4c74853ac3d38824b0f
   - enabled: 1
-    path: Assets/Scene/A1.unity
+    path: Assets/Scene/Battle.unity
     guid: 46e4c1a7c1ce54648a9a9bc5ad31b191
+  - enabled: 1
+    path: Assets/Scene/Loading.unity
+    guid: 3853b37a1834b451e9b67b9e4b4e084f

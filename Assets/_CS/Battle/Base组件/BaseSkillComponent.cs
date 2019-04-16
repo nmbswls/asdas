@@ -42,7 +42,7 @@ public class BaseSkillComponent : MonoBehaviour
 				continue;
 			}
 			int range = 3000;
-			List<GameLife> enemyCopy = new List<GameLife> (BattleManager.getInstance ().enemies);
+			List<GameLife> enemyCopy = BattleManager.getInstance ().getTmpEnemyList();
 			foreach (GameLife e in enemyCopy) {
 				Vector2 a = transform.position;
 				Vector2 b = e.transform.position;
