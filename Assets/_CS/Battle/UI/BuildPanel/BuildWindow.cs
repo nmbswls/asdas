@@ -20,7 +20,7 @@ public class BuildWindow : Window
 		if (_list.numItems > 0) {
 			_list.selectedIndex = 0;
 			_detail.visible = true;
-			_detail.updateView (((BuildItem)_list.GetChildAt(0)).info);
+			_detail.updateView (((BuildItem)_list.GetChildAt(0)).getTTInfo());
 			//_detail.GetChild ("name").asTextField.text = ((BuildItem)(_list.GetChildAt(0))).Name;
 		}
 		_list.columnGap = (int)interval;
@@ -52,7 +52,7 @@ public class BuildWindow : Window
 			this.Hide();
 		});
 		_list.onClickItem.Add(__clickItem);
-		_list.itemRenderer = RenderListItem;
+		//_list.itemRenderer = RenderListItem;
 		_list.EnsureBoundsCorrect();
 		_detail = (BuildDetail)this.contentPane.GetChild ("detail").asCom;
 		_detail.visible = false;
@@ -64,7 +64,8 @@ public class BuildWindow : Window
 		foreach (TowerTemplate tt in BattleManager.getInstance ().buildableTowers)
 		{
 			BuildItem item = (BuildItem)_list.AddItemFromPool("ui://UIMain/BuildItem");
-			item.info = tt;
+			item.setTowerInfo (tt);
+
 		}
 		float interval = 300/(_list.numChildren>8?8:_list.numChildren);
 		_list.columnGap = (int)interval;
@@ -75,8 +76,9 @@ public class BuildWindow : Window
 	void RenderListItem(int index, GObject obj)
 	{
 		BuildItem bi = (BuildItem)obj;
+
 		//bi.position - _list.width;
-//		button.icon = "i" + UnityEngine.Random.Range(0, 10);
+		bi.icon = "image/TowerBigPicture/"+BattleManager.getInstance ().buildableTowers[index].tbase.tid;
 
 	}
 
@@ -96,7 +98,7 @@ public class BuildWindow : Window
 	{
 		BuildItem item = (BuildItem)context.data;
 		_detail.visible = true;
-		_detail.updateView (item.info);
+		_detail.updateView (item.getTTInfo());
 		//this.contentPane.GetChild("n11").asLoader.url = item.icon;
 		//this.contentPane.GetChild("n13").text = item.icon;
 	}

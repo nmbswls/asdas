@@ -52,11 +52,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67160293ce3549d6afab1b874a8e3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  posXInt: 0
+  posYInt: 0
+  isHighLight: 0
+  shadow: {fileID: 0}
+  actualObj: {fileID: 0}
+  difficultyLevel: 1
   enemyName: 10001
   currentEnemyIdx: 0
   MAX_ENEMY: 5
   nowEnemy: 0
-  spawnInteval: 50000
+  spawnInteval: 30000
   localEnemies: []
 --- !u!212 &212128923301584846
 SpriteRenderer:

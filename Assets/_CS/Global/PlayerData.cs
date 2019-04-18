@@ -9,6 +9,10 @@ using Newtonsoft.Json;
 public class TowerTemplate{
 	public TowerBase tbase;
 	public TowerComponent[] components = new TowerComponent[5];
+}
+
+public class TowerBattleProperty{
+
 
 }
 
@@ -187,7 +191,7 @@ public class PlayerData
 	{
 
 		info = new int[10];
-		PlayerPrefs.DeleteAll ();
+		//PlayerPrefs.DeleteAll ();
 		if (PlayerPrefs.GetInt ("isFirstGame",1)==1) {
 			nowLevelId = "toturial";
 			guideStage = 0;
@@ -231,7 +235,7 @@ public class PlayerData
 			return;
 		}
 
-		int totalLeft = gridNum;
+		int totalLeft = gridNum - 2;
 		int encounterLeft = levelInfo.NumOfEncounter;
 
 		if (encounterLeft > totalLeft) {
@@ -243,7 +247,7 @@ public class PlayerData
 			grids[i] = new EncounterState[GridManager.GRID_WIDTH];
 		}
 		for (int i = 0; i < ls.activePos.Count; i++) {
-			if (ls.activePos [i] == ls.endPos) {
+			if (ls.activePos [i] == ls.endPos || ls.activePos [i] == ls.spawnPos) {
 				continue;
 			}
 			int ranInt = Random.Range (0,totalLeft);
