@@ -300,7 +300,7 @@ public class GridManager : MonoBehaviour {
 			}
 			{
 				Vector3 startPos = playerSymbol.transform.position;
-				startPos.x = 0;
+				//startPos.x = 0;
 				startPos.z = mainCamera.transform.position.z;
 				isMovingMap = true;
 				toMove = startPos;

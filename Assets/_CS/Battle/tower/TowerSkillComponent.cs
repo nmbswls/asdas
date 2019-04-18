@@ -73,7 +73,7 @@ public class TowerSkillComponent : BaseSkillComponent
 				case "1009":
 					if (timer > 5000) {
 						localTimers[ts.skillId] = 0;
-						BattleManager.getInstance ().player.gl.DoDamage (-5);
+						BattleManager.getInstance ().player.gl.DoDamage (-5000);
 					}
 					break;
 

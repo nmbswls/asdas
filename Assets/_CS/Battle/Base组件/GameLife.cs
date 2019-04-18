@@ -281,7 +281,7 @@ public class GameLife : MapObject
 
 	public void DoDamage(int damage){
 		hp -= damage;
-		EmitManager.inst.Emit(transform, 0, (int)(damage*0.001f), UnityEngine.Random.Range(0, 10) == 5);
+		EmitManager.inst.Emit(transform, 0, (int)(damage*0.001f),isPlayer);
 		if (hp <= 0) {
 			OnDie ();
 		}

@@ -32,6 +32,7 @@ public class EmitComponent : GComponent
 
 		TextFormat tf = _numberText.textFormat;
 		tf.color = Color.red;
+		tf.size = 24;
 		if (type == 0)
 			tf.font = EmitManager.inst.hurtFont1;
 		else
@@ -41,15 +42,14 @@ public class EmitComponent : GComponent
 		}
 
 		if (hurt < 0) {
-			tf.color = Color.red;
+			tf.color = Color.green;
 			_numberText.textFormat = tf;
 			_numberText.text = "+" + (-hurt);
 		} else {
-			tf.color = Color.green;
+			tf.color = Color.red;
 			_numberText.textFormat = tf;
 			_numberText.text = "-" + hurt;
 		}
-
 
 
 
@@ -66,6 +66,8 @@ public class EmitComponent : GComponent
 		Vector2 rnd = Vector2.Scale(UnityEngine.Random.insideUnitCircle, JITTER_FACTOR);
 		int toX = (int)rnd.x * 2;
 		int toY = (int)rnd.y * 2;
+
+
 
 		EmitManager.inst.view.AddChild(this);
 		GTween.To(Vector2.zero, new Vector2(toX, toY), 1f).SetTarget(this)

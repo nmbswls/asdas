@@ -380,19 +380,7 @@ public class BattleManager : Singleton<BattleManager> {
 	}
 
 	int uiLockNum = 0;
-	public void lockUI(){
-		uiLockNum++;
-		if (uiLockNum > 0) {
-			GRoot.inst.touchable = false;
-		}
-	}
 
-	public void unlockUI(){
-		uiLockNum--;
-		if (uiLockNum == 0) {
-			GRoot.inst.touchable = true;
-		}
-	}
 
 	public List<GameLife> getTmpEnemyList(){
 		return new List<GameLife>(enemies);
@@ -400,5 +388,23 @@ public class BattleManager : Singleton<BattleManager> {
 
 	public void registerEnemy(GameLife newEnemy){
 		if(!enemies.Contains(newEnemy))enemies.Add (newEnemy);
+	}
+
+
+
+	public void lockUI(){
+		uiLockNum++;
+		if (uiLockNum > 0) {
+			GRoot.inst.touchable = false;
+			mainUIManager._mainView.touchable = false;
+		}
+	}
+
+	public void unlockUI(){
+		uiLockNum--;
+		if (uiLockNum == 0) {
+			GRoot.inst.touchable = true;
+			mainUIManager._mainView.touchable = true;
+		}
 	}
 }
