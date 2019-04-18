@@ -26,14 +26,10 @@ public class MainUIManager : MonoBehaviour
 
 	public static Vector3 BuildButtonPosInScreen;
 
-	void Awake(){
-		
 
-		//_build.onClick.Add(() => { _bagWindow.Show(); });
-	}
 
 	// Use this for initialization
-	void Start ()
+	public void Init ()
 	{
 
 		UIPackage.AddPackage("FairyGUI/UIMain");

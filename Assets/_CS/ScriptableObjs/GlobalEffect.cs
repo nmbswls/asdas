@@ -7,16 +7,14 @@ using System.Collections;
 public class GlobalEffect : MonoBehaviour
 {
 
-	// Use this for initialization
-	void Start ()
-	{
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}
+	[SerializeField]
+	public string globalEffectId;
+
+	[SerializeField]
+	public string globalEffectName;
+
+	[SerializeField]
+	[TextArea(3,5)]
+	public string globalEffectDesp;
 }
 

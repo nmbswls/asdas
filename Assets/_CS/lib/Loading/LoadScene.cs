@@ -20,6 +20,7 @@ public class LoadScene : MonoBehaviour {
 	public float nowProcess; 
 	void Start () 
 	{ 
+		asyncOperation = null;
 		StartCoroutine(loadAsync()); 
 		loadingTime = 0f;
 		changeTime = 0f;
@@ -67,7 +68,7 @@ public class LoadScene : MonoBehaviour {
 	IEnumerator loadAsync() 
 	{ 
 		asyncOperation = SceneManager.LoadSceneAsync(Load.SceneName); 
-		asyncOperation .allowSceneActivation = false; 
+		asyncOperation.allowSceneActivation = false; 
 		yield return asyncOperation ; 
 	} 
 }

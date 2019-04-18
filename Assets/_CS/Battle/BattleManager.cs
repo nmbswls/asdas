@@ -64,7 +64,11 @@ public class BattleManager : Singleton<BattleManager> {
 		}
 	}
 	void Start(){
+
+		initStatus ();
+		mainUIManager.Init ();
 		lockUI ();
+
 		mapItemManager = GetComponent<MapItemManager> ();
 		dropManager = GetComponent<MonsterDropManager> ();
 
@@ -76,6 +80,20 @@ public class BattleManager : Singleton<BattleManager> {
 		StartCoroutine (fadeIn());
 		unlockUI ();
 
+	}
+
+	void initStatus(){
+		buildableTowers = PlayerData.getInstance ().ownedTowers;
+		money = new int[4];
+		money[0] = 200;
+		money[1] = 10;
+		money[2] = 10;
+		money[3] = 10;
+
+
+		hp = PlayerData.getInstance().hp;
+		maxHP = PlayerData.getInstance ().maxHP;
+		san = 40;
 	}
 
 	IEnumerator fadeIn(){
@@ -165,17 +183,7 @@ public class BattleManager : Singleton<BattleManager> {
 
 
 
-		buildableTowers = PlayerData.getInstance ().ownedTowers;
-		money = new int[4];
-		money[0] = 200;
-		money[1] = 10;
-		money[2] = 10;
-		money[3] = 10;
 
-
-		hp = PlayerData.getInstance().hp;
-		maxHP = PlayerData.getInstance ().maxHP;
-		san = 40;
 
 
 	}
