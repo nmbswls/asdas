@@ -134,6 +134,8 @@ public class GameStaticData
 
 	public List<HeroTalent> talents = new List<HeroTalent>();
 
+	Dictionary<string,GlobalEffect> globalEffects = new Dictionary<string,GlobalEffect>();
+
 	public void initHeroes(){
 
 		{
@@ -217,6 +219,15 @@ public class GameStaticData
 		}
 
 
+	}
+
+	public void loadGlobalEffects(){
+		
+		Object[] content = Resources.LoadAll ("ScriptableObj/GlobalEffect");
+		foreach (Object o in content) {
+			GlobalEffect tb = (GlobalEffect)o;
+			//globalEffects.Add (tb.tid,tb);
+		}
 	}
 
 	public void loadComponentInfo(){

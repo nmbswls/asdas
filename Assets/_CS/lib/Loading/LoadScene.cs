@@ -20,6 +20,7 @@ public class LoadScene : MonoBehaviour {
 	public float nowProcess; 
 	void Start () 
 	{ 
+		Time.timeScale = 1;
 		asyncOperation = null;
 		StartCoroutine(loadAsync()); 
 		loadingTime = 0f;

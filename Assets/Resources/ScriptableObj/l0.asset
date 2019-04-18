@@ -13,18 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelId: l0
   numOfGrid: 6
-  numOfEncounter: 3
+  numOfEncounter: 1
   possibleEncounters:
-  - eid: empty
-    chance: 0
-    condition: 
-  - eid: empty
-    chance: 0
-    condition: 
-  - eid: empty
-    chance: 0
-    condition: 
-  - eid: empty
+  - eid: 0
     chance: 0
     condition: 
   nextLevel: l1

@@ -17,8 +17,8 @@ MonoBehaviour:
   maxLv: 3
   cooldown: 
   x: 010000000200000003000000
-  y: 00000000
-  z: 00000000
+  y: 000000000000000000000000
+  z: 000000000000000000000000
   tsType: 3
   targetType: 0
   bulletStyle:

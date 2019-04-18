@@ -4,23 +4,23 @@ using System.Collections.Generic;
 
 public class GlobalEffectManager
 {
-	Dictionary<GlobalEffect,List<GameObject>> globalEffects = new Dictionary<GlobalEffect,List<GameObject>>();
+	Dictionary<string,List<GameObject>> globalEffects = new Dictionary<string,List<GameObject>>();
 	static GlobalEffectManager _instance;
 
-//	public static GlobalEffectManager inst
-//	{
-//		get
-//		{
-//			if (_instance == null)
-//				_instance = new BulletManager();
-//			return _instance;
-//		}
-//	}
-//
-//
-//	public void removeEffect(GameObject source, string effectId){
-//	
-//	}
+	public static GlobalEffectManager inst
+	{
+		get
+		{
+			if (_instance == null)
+				_instance = new GlobalEffectManager();
+			return _instance;
+		}
+	}
+
+
+	public void removeEffect(GameObject source, string effectId){
+		
+	}
 
 
 }
