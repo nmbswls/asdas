@@ -120,10 +120,7 @@ GameObject:
   - component: {fileID: 114750110160550178}
   - component: {fileID: 50325281904860986}
   - component: {fileID: 61795200928550404}
-  - component: {fileID: 114270797719094120}
   - component: {fileID: 114870678536352350}
-  - component: {fileID: 114559265025235298}
-  - component: {fileID: 114299316958176188}
   m_Layer: 11
   m_Name: enemy_base
   m_TagString: enemy
@@ -307,7 +304,7 @@ Animator:
   m_GameObject: {fileID: 1514072045280048}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 07dead026f4e84e6698b37d64326cda1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -387,48 +384,6 @@ MonoBehaviour:
   - {x: -0.1, y: 0, z: 0}
   - {x: 0, y: -0.2, z: 0}
   - {x: 0.1, y: 0, z: 0}
---- !u!114 &114270797719094120
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1921214829137270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8299a869b4494d1f8ba38384a2ee3ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollFlags: 0
-  owner: {fileID: 0}
-  doMove: 0
-  moveBy: {x: 0, y: 0}
-  velocity: {x: 0, y: 0}
-  canSlide: 1
---- !u!114 &114299316958176188
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1921214829137270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f1c2062ebbe40c386d1246842daaec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  withUI: 1
---- !u!114 &114559265025235298
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1921214829137270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df4640112e1f84665acdbb1215888a71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  burnedEffectPrefab: {fileID: 1636459604488942, guid: 074af4952a9fe4e4d82c5f2c74d70925,
-    type: 2}
 --- !u!114 &114750110160550178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -515,7 +470,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ba1d8b2e65c3444eface2532937d7c05, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -523,7 +478,7 @@ SpriteRenderer:
   m_Size: {x: 3.46, y: 5.01}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!212 &212733593821783014
 SpriteRenderer:

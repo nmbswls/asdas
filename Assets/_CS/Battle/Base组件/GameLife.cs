@@ -94,10 +94,21 @@ public class GameLife : MapObject
 		pCtrl = GetComponent<IUnitController> ();
 		anim = GetComponentInChildren<Animator> ();
 		//rBody = GetComponent<Rigidbody2D>();
+
+
 		pc = GetComponent<PhysicsComponent> ();
+		if (pc == null) {
+			pc = gameObject.AddComponent<PhysicsComponent>();
+		}
+
 		image = GetComponentInChildren<SpriteRenderer> ();
 
+
+
 		buffManager = GetComponent<EnemyBuffComponent> ();
+		if (buffManager == null) {
+			buffManager = gameObject.AddComponent<EnemyBuffComponent>();
+		}
 
 
 		effectManager = GetComponent<BuffEffectComponent> ();

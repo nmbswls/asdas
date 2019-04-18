@@ -39,8 +39,20 @@ public class EmitComponent : GComponent
 		if (isPlayer) {
 			tf.size = 60;
 		}
-		_numberText.textFormat = tf;
-		_numberText.text = "-" + hurt;
+
+		if (hurt < 0) {
+			tf.color = Color.red;
+			_numberText.textFormat = tf;
+			_numberText.text = "+" + (-hurt);
+		} else {
+			tf.color = Color.green;
+			_numberText.textFormat = tf;
+			_numberText.text = "-" + hurt;
+		}
+
+
+
+
 
 		if (critical)
 			_symbolLoader.url = EmitManager.inst.criticalSign;

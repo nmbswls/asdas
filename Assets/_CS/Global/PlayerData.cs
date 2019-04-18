@@ -348,6 +348,20 @@ public class PlayerData
 			tt.tbase = tb;
 			ownedTowers.Add (tt);
 		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t10");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t11");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
 
 	}
 	public void initBag(){

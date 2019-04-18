@@ -210,6 +210,9 @@ public class BattleManager : Singleton<BattleManager> {
 
 
 	public void spawnPlayer(){
+		
+
+
 		GameObject o = GameObject.Instantiate (playerPrefab,mapObjLayer);
 		player = o.GetComponent<PlayerModule> ();
 
@@ -217,6 +220,10 @@ public class BattleManager : Singleton<BattleManager> {
 
 		MapManager.getInstance ().spawnPlayer (player.gl);
 		player.gl.updatePosImmediately ();
+
+		string heroName = "hero"+((PlayerData.getInstance().heroIdx+1)+"").PadLeft (2,'0');
+		AnimatorOverrideController animCtrl =  Resources.Load ("OverrideAnimCtrl/player/"+heroName) as AnimatorOverrideController;
+		o.GetComponentInChildren<Animator>().runtimeAnimatorController = animCtrl;
 
 		battleMainCamera.transform.position = new Vector3(player.transform.position.x,player.transform.position.y,battleMainCamera.transform.position.z);
 	}

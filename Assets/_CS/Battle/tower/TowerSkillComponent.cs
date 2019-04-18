@@ -70,10 +70,10 @@ public class TowerSkillComponent : BaseSkillComponent
 			int timer = localTimers[ts.skillId];
 
 			switch (ts.skillId) {
-				case "1010":
+				case "1009":
 					if (timer > 5000) {
 						localTimers[ts.skillId] = 0;
-						
+						BattleManager.getInstance ().player.gl.DoDamage (-5);
 					}
 					break;
 

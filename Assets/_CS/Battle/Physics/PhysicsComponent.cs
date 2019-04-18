@@ -21,16 +21,14 @@ public class PhysicsComponent : MonoBehaviour
 	int bcRectSizeX;
 	int bcRectSizeY;
 
-	void Awake(){
+
+	// Use this for initialization
+	void Start ()
+	{
 		owner = GetComponent<GameLife> ();
 		BoxCollider2D bc = GetComponent<BoxCollider2D> ();
 		bcRectSizeX = (int)(bc.size.x * 1000);
 		bcRectSizeY = (int)(bc.size.y * 1000);
-	}
-	// Use this for initialization
-	void Start ()
-	{
-	
 	}
 	public bool doMove;
 	//public Vector2 moveToTarget;
