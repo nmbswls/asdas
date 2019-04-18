@@ -6,7 +6,10 @@ public class BaseSkillComponent : MonoBehaviour
 {
 
 	public static int MAX_SKILL = 4;
+
+	[HideInInspector]
 	public int[] skillCoolDown = new int[MAX_SKILL];
+	[HideInInspector]
 	public SkillState[] skills= new SkillState[MAX_SKILL];
 
 	public static int CHECK_PERMANENT_INTERVAL = 500;
@@ -16,16 +19,36 @@ public class BaseSkillComponent : MonoBehaviour
 	{
 		checkCoolDown (timeInt);
 		checkLastingSkill (timeInt);
+
+		tickLogic (timeInt);
 	}
 
+	public bool hasSkill(string sid){
+		for (int i = 0; i < skills.Length; i++) {
+			if (skills [i] == null || skills [i].skillId == null) {
+				continue;
+			}
+			if (skills [i].skillId == sid) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected virtual void tickLogic(int timeInt){
+	
+	}
 	public void checkCoolDown(int timeInt){
 
 		for (int i = 0; i < MAX_SKILL; i++) {
-			if (skills [i] == null)
+			if (skills [i] == null || skills [i].skillId==null)
 				continue;
 			if (skillCoolDown [i] > 0)
 				skillCoolDown [i] -= timeInt;	
 		}
+	}
+	protected virtual void calcuAuraSkill(SkillState skillState){
+	
 	}
 
 	public void checkLastingSkill(int timeInt){
@@ -36,31 +59,21 @@ public class BaseSkillComponent : MonoBehaviour
 		}
 		lastInteval = CHECK_PERMANENT_INTERVAL;
 		for (int i = 0; i < MAX_SKILL; i++) {
-			if (skills [i] == null)
+			if (skills [i] == null || skills [i].skillId==null)
 				continue;
 			if (!isPermanentSkill (skills [i].skillId)) {
 				continue;
 			}
-			int range = 3000;
-			List<GameLife> enemyCopy = BattleManager.getInstance ().getTmpEnemyList();
-			foreach (GameLife e in enemyCopy) {
-				Vector2 a = transform.position;
-				Vector2 b = e.transform.position;
-				if ((a - b).magnitude * 1000 < range) {
-					e.showFollowingEffect (1);
-					e.DoDamage (1000);
-				}
-			}
-
+			calcuAuraSkill (skills[i]);
 		}
 	}
 
 	public List<int> getReadySkill(){
 		List<int> possibleSkills = new List<int> ();
 		for (int i = 0; i < MAX_SKILL; i++) {
-			if (skills [i] == null)
+			if (skills [i] == null || skills [i].skillId==null)
 				continue;
-			if(!isPassiveSkill(skills [i].skillId)&&skillCoolDown[i] <= 0) {
+			if(isActiveSkill(skills [i].skillId) && skillCoolDown[i] <= 0) {
 				possibleSkills.Add (i);
 			}
 		}
@@ -71,6 +84,9 @@ public class BaseSkillComponent : MonoBehaviour
 		return false;
 	}
 	protected virtual bool isPassiveSkill(string skillId){
+		return false;
+	}
+	protected virtual bool isActiveSkill(string skillId){
 		return false;
 	}
 

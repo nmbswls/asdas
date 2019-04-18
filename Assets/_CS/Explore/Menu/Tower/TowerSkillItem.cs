@@ -20,7 +20,7 @@ public class TowerSkillItem : GComponent
 		_icon = this.GetChild ("icon").asLoader;
 		_desp = this.GetChild ("txt").asTextField;
 		_lv_num = this.GetChild ("lv").asTextField;
-		this.onTouchBegin.Add (delegate() {
+		this.onClick.Add (delegate() {
 			GameManager.getInstance().showDetailAmplifier("tower_skill",skill);
 		});
 	}

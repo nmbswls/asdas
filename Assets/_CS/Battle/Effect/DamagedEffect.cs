@@ -36,7 +36,6 @@ public class DamagedEffect : BaseEffect
 	}
 
 	protected override void OnRelease(){
-		Destroy (gameObject);
 	}
 }
 

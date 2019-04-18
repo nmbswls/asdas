@@ -209,9 +209,13 @@ public class GameStaticData
 
 	public void loadTowerInfo(){
 		
-		//TowerData towerData = JsonUtility.FromJson<TowerData> (towerAsset.text);
-		TextAsset ta = Resources.Load ("json/tower_base/towers") as TextAsset;
-		towerBaseInfo = JsonConvert.DeserializeObject<Dictionary<string,TowerBase>> (ta.text);
+
+		Object[] content = Resources.LoadAll ("ScriptableObj/TowerBase");
+		foreach (Object o in content) {
+			TowerBase tb = (TowerBase)o;
+			towerBaseInfo.Add (tb.tid,tb);
+		}
+
 
 	}
 
@@ -298,8 +302,16 @@ public class GameStaticData
 	}
 
 	void loadTowerSkillInfo(){
-		TextAsset ta = Resources.Load ("json/tower_skill/100") as TextAsset;
-		towerSkills = JsonConvert.DeserializeObject<Dictionary<string,TowerSkill>> (ta.text);
+		//TextAsset ta = Resources.Load ("json/tower_skill/100") as TextAsset;
+		//towerSkills = JsonConvert.DeserializeObject<Dictionary<string,TowerSkill>> (ta.text);
+
+
+		Object[] content = Resources.LoadAll ("ScriptableObj/TowerSkill");
+		foreach (Object o in content) {
+			TowerSkill ts = (TowerSkill)o;
+			towerSkills.Add (ts.skillId,ts);
+		}
+
 	}
 	void loadEnemySkillInfo(){
 		TextAsset ta = Resources.Load ("json/enemy_skill/100") as TextAsset;
@@ -366,7 +378,7 @@ public class GameStaticData
 	public TowerSkill getTowerSkillInfo(string skillId){
 		TowerSkill data = null;
 		if (!towerSkills.TryGetValue(skillId,out data)) {
-			data = towerSkills ["ts_default"];
+			data = towerSkills ["1001"];
 		}
 		return data;
 	}

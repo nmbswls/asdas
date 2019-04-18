@@ -57,8 +57,9 @@ public class GameManager : Singleton<GameManager> {
 		//DontDestroyOnLoad (mainCamera.gameObject);
 
 		GameStaticData.getInstance ();
-		lockUI ();
 		initUI ();
+		lockUI ();
+
 		gridManager.initGrid ();
 
 		_mask.visible = true;
@@ -496,6 +497,7 @@ public class GameManager : Singleton<GameManager> {
 		uiLockNum++;
 		if (uiLockNum > 0) {
 			GRoot.inst.touchable = false;
+			_main.touchable = false;
 		}
 	}
 
@@ -503,6 +505,7 @@ public class GameManager : Singleton<GameManager> {
 		uiLockNum--;
 		if (uiLockNum == 0) {
 			GRoot.inst.touchable = true;
+			_main.touchable = true;
 		}
 	}
 

@@ -292,8 +292,8 @@ public class TowerPanel : GComponent
 		TowerBase tb = tt.tbase;
 
 
-		int atkInteval = tb.atkInteval;
-		int atkRange = tb.atkRange;
+		int atkInteval = tb.towerModel.atkInterval;
+		int atkRange = tb.towerModel.atkRange;
 
 		List<AtkInfo> atks = new List<AtkInfo> ();
 

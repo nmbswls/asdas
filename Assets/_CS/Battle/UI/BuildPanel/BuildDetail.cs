@@ -16,6 +16,35 @@ public class BuildDetail : GComponent
 	GList _damage_list;
 	GList _skill_list;
 
+	public static string getAtkSpdTxt(int atkInterval){
+		if (atkInterval < 500) {
+			return "Very Fast";
+		} else if (atkInterval < 1000) {
+			return "Fast";
+		} else if (atkInterval < 2000) {
+			return "Middle";
+		} else if (atkInterval < 2000) {
+			return "Slow";
+		} else {
+			return "Very Slow";
+		}
+	}
+
+	public static string getAtkRangeTxt(int atkRange){
+		if (atkRange < 500) {
+			return "Very Fast";
+		} else if (atkRange < 1000) {
+			return "Fast";
+		} else if (atkRange < 2000) {
+			return "Middle";
+		} else if (atkRange < 2000) {
+			return "Slow";
+		} else {
+			return "Very Slow";
+		}
+	}
+
+
 	public override void ConstructFromXML(FairyGUI.Utils.XML cxml)
 	{
 		base.ConstructFromXML(cxml);
@@ -37,9 +66,21 @@ public class BuildDetail : GComponent
 	public void updateView(TowerTemplate tt){
 		TowerBase tb = tt.tbase;
 
+		_name.text = tb.tname;
 
-		int atkInteval = tb.atkInteval;
-		int atkRange = tb.atkRange;
+		_cost.text = tb.cost [0] + " " + tb.cost [1] + " " + tb.cost [2];
+
+		if (tb.atkType == eAtkType.MELLE_AOE || tb.atkType == eAtkType.MELLE_POINT) {
+			string s = "Melee";
+			_range.text = s;
+		} else {
+			string s = getAtkRangeTxt (tb.towerModel.atkRange);
+			_range.text = s;
+		}
+
+		int atkInteval = tb.towerModel.atkInterval;
+		_range.text = getAtkSpdTxt (atkInteval);
+
 
 		List<AtkInfo> atks = new List<AtkInfo> ();
 
@@ -96,8 +137,8 @@ public class BuildDetail : GComponent
 		skills.AddRange (extraSkills);
 
 		setHit(tb.mingzhong);
-		setAtkRange(tb.atkRange+"");
-		setAtkSpd(tb.atkInteval+"");
+		//setAtkRange(tb.towerModel.atkRange+"");
+		//setAtkSpd(tb.towerModel.atkInterval+"");
 
 		setDamage (atks);
 		setSkill (skills);
@@ -113,11 +154,9 @@ public class BuildDetail : GComponent
 	public void setSkill(List<SkillState> skills){
 		_skill_list.RemoveChildrenToPool ();
 
-		for (int i = 0; i < skills.Count+1; i++) {
+		for (int i = 0; i < skills.Count; i++) {
 			TowerSkillItem skill = (TowerSkillItem)_skill_list.AddItemFromPool ();
-			skill.onTouchEnd.Set (delegate() {
-				Debug.Log("ss");
-			});
+			skill.touchable = false;
 		}
 	}
 	public void setHit(int hit){

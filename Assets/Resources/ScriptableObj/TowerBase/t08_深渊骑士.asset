@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d8df64e865640559d9ac115325ec82, type: 3}
+  m_Name: "t08_\u6DF1\u6E0A\u9A91\u58EB"
+  m_EditorClassIdentifier: 
+  tid: t08
+  tname: "\u9ED1\u6697\u9A91\u58EB"
+  towerModel: {fileID: 11400000, guid: 58d6bca3c100e46f787e3405633410c4, type: 2}
+  tdesp: "\u5B83\u5230\u5E95\u662F\u4EBA\u8FD8\u662F\u9B3C\uFF1F"
+  bulletStyle:
+    bulletName: Darkness
+    isBall: 0
+    flySpeed: 0
+  cost: 320000000100000000000000
+  atkType: 2
+  mainAtk:
+    damage: 2000
+    property: -1
+  extraAtk: []
+  mingzhong: 50
+  skills:
+  - skillId: 1011
+    skillLevel: 1

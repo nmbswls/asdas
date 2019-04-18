@@ -1,0 +1,12 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Scratch
+  m_Controller: {fileID: 9100000, guid: 2668e652b7cd24b4b913668662ef16b2, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 9e46678dd54264a3fbef758050d50358, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f5f843874094a46039e76a58bf9a7398, type: 2}

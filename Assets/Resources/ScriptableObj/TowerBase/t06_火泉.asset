@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d8df64e865640559d9ac115325ec82, type: 3}
+  m_Name: "t06_\u706B\u6CC9"
+  m_EditorClassIdentifier: 
+  tid: t06
+  tname: "\u706B\u6CC9"
+  towerModel: {fileID: 11400000, guid: aaf7a692c33a145469beb1faeaad6be0, type: 2}
+  tdesp: "\u71C3\u70E7\u706B\u6E56\u7684\u9B54\u5973\u738B\u5EA7"
+  bulletStyle:
+    bulletName: default
+    isBall: 0
+    flySpeed: 0
+  cost: 280000000a00000000000000
+  atkType: -1
+  mainAtk:
+    damage: 1000
+    property: -1
+  extraAtk: []
+  mingzhong: 0
+  skills:
+  - skillId: 1003
+    skillLevel: 1

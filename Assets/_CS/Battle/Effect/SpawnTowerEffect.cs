@@ -64,7 +64,6 @@ public class SpawnTowerEffect : BaseEffect
 		sprite = null;
 		v = Vector3Int.zero;
 		toSpawnPosInCell = Vector2Int.zero;
-		Destroy (gameObject);
 	}
 }
 

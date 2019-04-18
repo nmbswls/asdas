@@ -5,9 +5,11 @@ using System.Collections.Generic;
 public class EffectManager
 {
 
-	public static int MAX_BULLET_IDLE_NUMBER = 50;
+
+	public static int MAX_EFFECT_IDLE_NUMBER = 10;
 	static EffectManager _instance;
 
+	public GameObject effectBasePrefab;
 	public GameObject effectPrefab;
 
 	public GameObject spawnTowerEffectPrefab;
@@ -31,11 +33,14 @@ public class EffectManager
 	private readonly Stack<GameObject> _componentPool = new Stack<GameObject>();
 
 
-	public static Dictionary<string,GameObject> prefabDic = new Dictionary<string,GameObject>();
+	public Dictionary<string,AnimatorOverrideController> effectDic = new Dictionary<string,AnimatorOverrideController>();
 
 
 	public EffectManager()
 	{
+
+		effectBasePrefab = Resources.Load ("Prefabs/effect_base") as GameObject;
+
 		effectPrefab = Resources.Load ("Prefabs/effect/effect01") as GameObject;
 		spawnTowerEffectPrefab = Resources.Load ("Prefabs/effect/effect_tower_spawn") as GameObject;
 		atkHintEffectPrefab = Resources.Load ("Prefabs/effect/atk_hint") as GameObject;
@@ -44,14 +49,30 @@ public class EffectManager
 
 		effectLayer = GameObject.Find ("EffectLayer").transform;
 
+		AnimatorOverrideController anim = Resources.Load ("OverrideAnimCtrl/effect/default") as AnimatorOverrideController;
+		effectDic ["default"] = anim;
+
+	}
+
+	public AnimatorOverrideController getEffect(string effectName){
+		if (!effectDic.ContainsKey (effectName)) {
+			AnimatorOverrideController anim = Resources.Load ("OverrideAnimCtrl/effect/"+effectName) as AnimatorOverrideController;
+			if (anim != null) {
+				effectDic [effectName] = anim;
+			} else {
+				effectDic [effectName] = effectDic ["default"];
+			}
+		}
+
+		return effectDic [effectName];
 	}
 
 	public void Emit(Transform pos)
 	{
 		GameObject b;
-		if (_componentPool.Count > 0)
-			b = _componentPool.Pop ();
-		else
+		//if (_componentPool.Count > 0)
+		//	b = _componentPool.Pop ();
+		//else
 			b = GameObject.Instantiate (effectPrefab,pos.parent);
 		ItemGottenEffect effect = b.GetComponent<ItemGottenEffect> ();
 		effect.init (pos.position);
@@ -78,25 +99,51 @@ public class EffectManager
 		e.init (pos.position,range,time);
 	}
 
-	public void EmitDamageEffect(Transform target, int time = 300){
-		GameObject effect = GameObject.Instantiate (damagedEffectPrefab,effectLayer);
-		DamagedEffect e = effect.GetComponent<DamagedEffect> ();
-		e.init (target,time);
+//	public void EmitDamageEffect(Transform target, int time = 300){
+//		GameObject effect = GameObject.Instantiate (damagedEffectPrefab,effectLayer);
+//		DamagedEffect e = effect.GetComponent<DamagedEffect> ();
+//		e.init (target,time);
+//	}
+
+	public void EmitNormalEffectOnFixedPos(string effectName, Vector2Int targetPos, int lasting){
+
+		GameObject effect;
+		if (_componentPool.Count > 0)
+			effect = _componentPool.Pop ();
+		else
+			effect = GameObject.Instantiate (effectBasePrefab,effectLayer);
+
+		AnimatorOverrideController animator = getEffect (effectName);
+		BaseEffect be = effect.GetComponent<BaseEffect> ();
+		effect.GetComponentInChildren<SpriteRenderer> ().sprite = null;
+		effect.GetComponentInChildren<Animator>().runtimeAnimatorController = animator;
+		be.init (lasting,targetPos);
 	}
 
-	public void EmitNormalEffectOnFixedPos(string effectName, Vector3 pos, int time){
-		if (!prefabDic.ContainsKey (effectName))
-			return;
-		GameObject effect = GameObject.Instantiate(prefabDic [effectName],effectLayer);
-		BaseEffect e = effect.GetComponent<BaseEffect> ();
-		effect.transform.position = pos;
-		e.init (time);
+	public void EmitFollowingEffect(string effectName, int lasting, MapObject owner){
+		GameObject effect;
+		if (_componentPool.Count > 0)
+			effect = _componentPool.Pop ();
+		else
+			effect = GameObject.Instantiate (effectBasePrefab,effectLayer);
+
+		AnimatorOverrideController animator = getEffect (effectName);
+		BaseEffect be = effect.GetComponent<BaseEffect> ();
+		effect.GetComponentInChildren<SpriteRenderer> ().sprite = null;
+
+
+		effect.GetComponentInChildren<Animator>().runtimeAnimatorController = animator;
+
+		be.init ((int)(animator["effect_default"].length*1000),owner);
 	}
 
 	public void ReturnComponent(GameObject com)
 	{
-		if (_componentPool.Count < MAX_BULLET_IDLE_NUMBER) {
+		
+		if (_componentPool.Count < MAX_EFFECT_IDLE_NUMBER) {
 			_componentPool.Push (com);
+		} else {
+			GameObject.Destroy (com);
 		}
 	}
 }

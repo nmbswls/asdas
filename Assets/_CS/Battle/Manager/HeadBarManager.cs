@@ -10,7 +10,6 @@ public class HeadBarManager : Singleton<HeadBarManager>
 	GComponent highLightEnemy = null;
 	void Start()
 	{
-		Application.targetFrameRate = 60;
 		foreach(GameLife enemy in BattleManager.getInstance ().getTmpEnemyList()){
 			UIPanel panel = enemy.transform.Find("HeadBar").GetComponent<UIPanel>();
 			panel.ui.GetChild("n0").asProgress.value = enemy.hp;
@@ -24,9 +23,6 @@ public class HeadBarManager : Singleton<HeadBarManager>
 			UIPanel panel = enemy.transform.Find("HeadBar").GetComponent<UIPanel>();
 			panel.ui.GetChild("n0").asProgress.value = enemy.hp;
 			panel.ui.GetChild ("n0").asProgress.max = enemy.maxHP;
-
-
-
 		}
 
 	}

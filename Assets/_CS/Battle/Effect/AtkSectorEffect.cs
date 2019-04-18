@@ -28,7 +28,6 @@ public class AtkSectorEffect : BaseEffect
 
 	protected override void OnRelease(){
 		image = null;
-		Destroy (gameObject);
 	}
 
 

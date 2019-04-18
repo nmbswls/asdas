@@ -27,9 +27,9 @@ public class BallisticBullet : BasicBullet
 	}
 
 
-	public virtual void init(Tower owner, GameObject target, bool isHoming, int vHeight = 0,int height = 0){
+	public virtual void init(Tower owner, GameLife target, bool isHoming, int vHeight = 0,int height = 0){
 		this.owner = owner;
-		this.target = target.GetComponent<GameLife>();
+		this.target = target;
 		this.vHeight = vHeight;
 		this.height = height;
 		this.isHoming = isHoming;

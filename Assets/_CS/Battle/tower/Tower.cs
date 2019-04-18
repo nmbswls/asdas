@@ -9,15 +9,14 @@ public class DamageData{
 	public float crit;
 }
 
-public enum eProperty{
-	NONE=-1,
-	FIRE = 0,
-	WATER = 1,
-	WIND = 2,
-	ICE = 3,
-	LIGHT = 4,
-	DARK = 5,
-	VOID = 6,
+
+
+public enum eAtkStage
+{
+	CANT = -1,
+	READY = 0,
+	PRE_YAO = 1,
+	POST_YAO = 2,
 }
 
 public class Tower : MapObject
@@ -35,50 +34,55 @@ public class Tower : MapObject
 
 	public int atkInterval = 2000;
 	public int atkRange = 3000;
-	public int atkPreanimTime = 300;
+	public int atkPreTime = 300;
+	public int atkPostTime = 700;
+
+	//public TowerModel towerModel;
 
 	public int castPreTime = 800;
-	public int castTimeDuration = 1500;
-	public bool skillHasTriggered = false;
+	public int castPostTime = 700;
 
-	public static int findTargetInteval = 250;
+
+
+	public static int FIND_TARGET_INTERVAL = 250;
 	public int findTargetTimer;
 
-	public static int checkSkillInteval = 250;
+	public static int CHECK_SKILL_INTERVAL = 250;
 	public int checkSkillTimer;
 
 	public Vector2Int posInCell = Vector2Int.zero;
-
 
 	private Animator anim;
 
 	private TowerTemplate tt;
 
 	TowerSkillComponent skillComponent;
-	public BaseBuffComponent buffManager;
-	public GameObject buffShow;
+	public TowerBuffComponent buffManager;
+
 
 	[SerializeField]
 	private GameLife hateTarget = null;
-	private GameLife atkTarget = null;
+
 
 	private GameLife castTarget = null;
 
-	public GameObject bulletPrefab;
-	[SerializeField]
-	private int coolDown = 0;
-	[SerializeField]
-	private int atkTimer = 0;
+
 
 
 	void Awake(){
 		anim = GetComponentInChildren<Animator> ();
+
 		skillComponent = GetComponent<TowerSkillComponent> ();
 		if (skillComponent == null) {
 			skillComponent = gameObject.AddComponent<TowerSkillComponent> ();
 		}
+		skillComponent.Init(this);
 
-		buffManager = GetComponent<BaseBuffComponent> ();
+		buffManager = GetComponent<TowerBuffComponent> ();
+		if (buffManager == null) {
+			buffManager = gameObject.AddComponent<TowerBuffComponent> ();
+		}
+		buffManager.Init(this);
 	}
 
 
@@ -94,9 +98,9 @@ public class Tower : MapObject
 			this.atkType = towerTemplate.tbase.atkType;
 			this.mainAtk = towerTemplate.tbase.mainAtk;
 			this.extraAtk = towerTemplate.tbase.extraAtk;
-			this.atkInterval = towerTemplate.tbase.atkInteval;
-			this.atkRange = towerTemplate.tbase.atkRange;
-			this.atkPreanimTime = towerTemplate.tbase.atkPreanimTime;
+			this.atkInterval = towerTemplate.tbase.towerModel.atkInterval;
+			this.atkRange = towerTemplate.tbase.towerModel.atkRange;
+			this.atkPreTime = towerTemplate.tbase.towerModel.atkPreTime;
 			this.mingzhong = towerTemplate.tbase.mingzhong;
 			//this.tt = towerTemplate;
 
@@ -111,100 +115,341 @@ public class Tower : MapObject
 		//posLt += new Vector2Int (MapManager.TILE_WIDTH * 5,-MapManager.TILE_HEIGHT * 5);
 		posXInt = posLt.x;
 		posYInt = posLt.y;
-		coolDown = 1000;
-		atkTimer = 0;
+		atkCoolDown = 1000;
+		atkBhvTimer = 0;
 
 		initialized = true;
 	}
 
-	void genBullet(string style, bool isHoming, GameObject target,int height = 5000){
+	void genBullet(string bulletStyle, GameLife target, bool isHoming, bool isBallistic){
+		int originHeight = 0;
+		if (isBallistic) {
+			originHeight = 5000;
+		}
+		BulletManager.inst.EmitBullet (bulletStyle, this,target,isHoming, originHeight);
 
-		BulletManager.inst.Emit (style,gameObject,target,isHoming,height);
-
-//		GameObject o = GameObject.Instantiate (bulletPrefab,transform.parent);
-//		o.transform.position = transform.position;
-//		o.GetComponent<Bullet> ().target = atkTarget.gameObject;
 	}
 
-	int castTime = 0;
+
+	//private GameLife atkTarget = null;
+
+
+	private eAtkStage castStage = eAtkStage.READY;
+
+	private int castBhvTimer = 0;
+
 	int castIdx = -1;
 
-	void checkSkill(int dTime){
+	void checkCastBehaviour(int dTime){
 		
-		if (atkTarget != null && atkTimer < atkPreanimTime) {
+//		if (atkTarget != null && atkBhvTimer < atkPreTime) {
+//			return;
+//		}
+
+		//攻击前摇时 不进行施法
+		if (atkStage == eAtkStage.PRE_YAO) {
 			return;
 		}
-		if (castIdx != -1) {
-			castTime += dTime;
-			if (castTime > castPreTime&&!skillHasTriggered) {
-				SkillState skill = skillComponent.skills [castIdx];
-				TowerSkill s = GameStaticData.getInstance ().getTowerSkillInfo (skill.skillId);
-				if (s.isSelfTarget) {
-					gainBuff ();
-				} else {
-					genBullet (s.bulletStyle, true,castTarget.gameObject,0);
+
+		//效果结算
+		if (castStage == eAtkStage.READY) {
+			return;
+		}
+
+		castBhvTimer += dTime;
+
+		bool isSkillEffect = false;
+
+		if (castStage==eAtkStage.PRE_YAO && castBhvTimer > castPreTime) {
+			castStage = eAtkStage.POST_YAO;
+			isSkillEffect = true;
+		} else if (castStage==eAtkStage.POST_YAO && castBhvTimer > castPreTime + castPostTime) {
+			castStage = eAtkStage.READY;
+			castBhvTimer = 0;
+		}
+
+		if (isSkillEffect) {
+			SkillState skill = skillComponent.skills [castIdx];
+			TowerSkill s = GameStaticData.getInstance ().getTowerSkillInfo (skill.skillId);
+			if (s.tsType == eTowerSkillType.SELF_TARGET) {
+				gainBuff ();
+			} else if (s.tsType == eTowerSkillType.ACTIVE) {
+				if (s.targetType == eAtkType.RANGED_HOMING) {
+					genBullet (s.bulletStyle.bulletName,castTarget,true,false);
+					castTarget = null;
+				} else if (s.targetType == eAtkType.RANGED_INSTANT) {
+					applyAtk (castTarget,s.bulletStyle.bulletName);
 					castTarget = null;
 				}
-					
-				skillHasTriggered = true;
+
+			}else {
+				
 			}
-			if (castTime > castTimeDuration) {
-				castIdx = -1;
-				castTime = 0;
-				skillHasTriggered = false;
-			}
-			return;
 		}
 
+
+
+
+
+	}
+
+	void checkAutoSkill(int dTime){
+		
+		if (checkSkillTimer > 0) {
+			checkSkillTimer -= dTime;
+		}
 		if (checkSkillTimer > 0)
 			return;
-		
-		List<int> readySkills = skillComponent.getReadySkill();
 
+		if (castStage != eAtkStage.READY) {
+			return;
+		}
+		checkSkillTimer = CHECK_SKILL_INTERVAL;
+
+		List<int> readySkills = skillComponent.getReadySkill();
 
 		GameLife closestOne = MapManager.getInstance().getClosestEnemy (this);
 
 		List<int> readyUsableSkill = new List<int> ();
 
-		if (readySkills.Count > 0) {
-			for (int i = 0; i < readySkills.Count; i++) {
-				SkillState skill = skillComponent.skills [readySkills [i]];
-				Vector2 diff = closestOne.transform.position - transform.position;
-				TowerSkill s = GameStaticData.getInstance ().getTowerSkillInfo (skill.skillId);
+		if (readySkills.Count == 0) {
+			return;
+		}
+		if (closestOne == null || !closestOne.IsAlive) {
+			return;
+		}
+			
+		for (int i = 0; i < readySkills.Count; i++) {
+			SkillState skill = skillComponent.skills [readySkills [i]];
 
-				if (s.isSelfTarget) {
-					readyUsableSkill.Add (readySkills[i]);
-				} else {
-					if (diff.magnitude * 1000f <= s.x[skill.skillLevel]) {
-						readyUsableSkill.Insert (0,readySkills[i]);
-					}
+			int diss = (posXInt - closestOne.posXInt) * (posXInt - closestOne.posXInt) + (posYInt - closestOne.posYInt)*(posYInt - closestOne.posYInt);
+			int dis = (int)Mathf.Sqrt (diss);
+
+
+			//Vector2 diff = closestOne.transform.position - transform.position;
+
+			TowerSkill s = GameStaticData.getInstance ().getTowerSkillInfo (skill.skillId);
+
+			if (s.tsType == eTowerSkillType.SELF_TARGET) {
+				readyUsableSkill.Add (readySkills[i]);
+			} else {
+				if (dis <= s.x[skill.skillLevel-1]) {
+					readyUsableSkill.Insert (0,readySkills[i]);
 				}
 			}
 		}
 
-		if (readyUsableSkill.Count > 0) {
-			SkillState toUse = skillComponent.skills[readyUsableSkill [0]];
+		if (readyUsableSkill.Count == 0) {
+			return;
+		}
 
+		SkillState toUse = skillComponent.skills[readyUsableSkill [0]];
+		TowerSkill ss = GameStaticData.getInstance ().getTowerSkillInfo (toUse.skillId);
 
-			TowerSkill ss = GameStaticData.getInstance ().getTowerSkillInfo (toUse.skillId);
-			if (ss.isSelfTarget) {
-				Debug.Log ("自家buff");
-				anim.SetTrigger ("buff");
+		if (ss.tsType == eTowerSkillType.SELF_TARGET) {
+			anim.SetTrigger ("buff");
+		} else if (ss.tsType == eTowerSkillType.ACTIVE) {
+			
+			castTarget = closestOne;
+			anim.SetTrigger ("skill");
+			anim.SetFloat ("skill_style",Random.Range (0,2)*1.0f);
+
+		}else {
+			
+		}
+
+		skillComponent.setSkillCD(readyUsableSkill [0]);
+		castBhvTimer = 0;
+		castStage = eAtkStage.PRE_YAO;
+		castIdx = readyUsableSkill [0];
+	}
+
+	void checkAtkTarget(int dTime){
+		if (findTargetTimer > 0) {
+			findTargetTimer -= dTime;
+		}
+
+		if (findTargetTimer > 0) {
+			return;
+		}
+
+		if (hateTarget != null) {
+			if (!hateTarget.IsAlive) {
+				hateTarget = null;
 			} else {
-				
-				Debug.Log ("攻击");
-				castTarget = closestOne;
-				anim.SetTrigger ("skill");
-				Random.Range (0,2);
-				anim.SetFloat ("skill_style",Random.Range (0,2)*1.0f);
+				int diss = (posXInt - hateTarget.posXInt) * (posXInt - hateTarget.posXInt) + (posYInt - hateTarget.posYInt)*(posYInt - hateTarget.posYInt);
+				int dis = (int)Mathf.Sqrt (diss);
+				if(dis > atkRange){
+					hateTarget = null;
+				}
+			}
+		}
+		if (hateTarget == null) {
+			hateTarget = MapManager.getInstance().getClosestEnemy (this);
+			if (hateTarget!=null&&!hateTarget.IsAlive) {
+				hateTarget = null;
+			}
+			if (hateTarget != null ) {
+				int diss = (posXInt - hateTarget.posXInt) * (posXInt - hateTarget.posXInt) + (posYInt - hateTarget.posYInt)*(posYInt - hateTarget.posYInt);
+				int dis = (int)Mathf.Sqrt (diss);
+
+				if (dis > atkRange) {
+					hateTarget = null;
+				}
+			}
+			findTargetTimer = FIND_TARGET_INTERVAL;
+		}
+
+	}
+
+	void checkBuff(int dTime){
+		if (buffManager == null) {
+			return;
+		}
+		buffManager.Tick (dTime);
+
+	}
+
+	void checkSkill(int dTime){
+		if (skillComponent == null) {
+			return;
+		}
+
+		skillComponent.Tick(dTime);
+		checkCastBehaviour (dTime);
+
+
+		checkAutoSkill (dTime);
+	}
+
+
+	private GameLife atkTarget = null;
+	private int atkCoolDown = 0;
+	private eAtkStage atkStage = eAtkStage.READY;
+	private int atkBhvTimer = 0;
+
+
+	void applyMeleeAtk(GameLife atkTarget){
+		applyAtk (atkTarget);
+	}
+
+	void applyHomingRangeAtk(GameLife atkTarget){
+		string bulletStyle = tt.tbase.bulletStyle.bulletName;
+
+		genBullet (bulletStyle,atkTarget,true,false);
+	}
+
+	void applyUnhomingRangeAtk(GameLife atkTarget){
+		string bulletStyle = tt.tbase.bulletStyle.bulletName;
+
+		genBullet (bulletStyle,atkTarget,false,false);
+	}
+
+	void applayMeleeAOE(GameLife atkTarget){
+		
+		Vector2 faceDir = (atkTarget.transform.position - transform.position);
+		EffectManager.inst.EmitAtkSectorEffect (transform, faceDir);
+
+		float cx = transform.position.x;
+		float cy = transform.position.y;
+		List<GameLife> validTarget = new List<GameLife> ();
+		foreach (GameLife enemy in BattleManager.getInstance().getTmpEnemyList()) {
+			float x = enemy.transform.position.x;
+			float y = enemy.transform.position.y;
+
+			Vector2 dir = new Vector2 (x - cx, y - cy);
+			if (dir.magnitude * 1000 < atkRange && Vector2.Dot (faceDir.normalized, dir.normalized) > Mathf.Cos (60f * Mathf.Deg2Rad)) {
+				validTarget.Add (enemy);
+				//enemy.DoDamage (damage,property);
 			}
 
-			skillComponent.setSkillCD(readyUsableSkill [0]);
-			castTime = 0;
-			castIdx = readyUsableSkill [0];
-			skillHasTriggered = false;
 		}
-		checkSkillTimer = checkSkillInteval;
+		foreach (GameLife target in validTarget) {
+			applyAtk (target);
+		}
+	}
+
+	void checkBeforeAtk(int dTime){
+		if (atkType == eAtkType.NONE) {
+			return;
+		}
+		//处理冷却时间
+		if (atkCoolDown > 0) {
+			atkCoolDown -= dTime;
+		}
+		if(atkCoolDown>0){
+			return;
+		}
+
+		//正在动作时无法攻击
+		if (atkStage != eAtkStage.READY || castStage != eAtkStage.READY) {
+			return;
+		}
+
+		if (hateTarget != null) {
+			atkCoolDown = atkInterval;
+			anim.SetTrigger ("atk");
+			atkBhvTimer = 0;
+			atkTarget = hateTarget;
+			atkStage = eAtkStage.PRE_YAO;
+		}
+	}
+
+	void checkAtkBehaviour(int dTime){
+		
+		//如果当前未攻击 不进行判定
+		if (atkStage == eAtkStage.READY) {
+			return;
+		}
+
+		//累加攻击计时器 并改变攻击状态
+		atkBhvTimer += dTime;
+
+		bool isAttackEffect = false;
+		if (atkStage==eAtkStage.PRE_YAO && atkBhvTimer > atkPreTime) {
+			atkStage = eAtkStage.POST_YAO;
+			isAttackEffect = true;
+		} else if (atkStage==eAtkStage.POST_YAO && atkBhvTimer > atkPreTime + atkPostTime) {
+			atkStage = eAtkStage.READY;
+			atkBhvTimer = 0;
+		}
+			
+		//当攻击丢失时 重置攻击状态
+		if (atkTarget == null || !atkTarget.IsAlive) {
+			isAttackEffect = false;
+			atkStage = eAtkStage.READY;
+			atkBhvTimer = 0;
+		}
+		//当还未进行攻击时 返回
+		if (!isAttackEffect) {
+			return;
+		}
+
+		switch(atkType){
+			case eAtkType.NONE  :
+				return;
+			case eAtkType.MELLE_POINT  :
+				applyAtk (atkTarget);
+				break; 
+			case eAtkType.RANGED_HOMING:
+				applyHomingRangeAtk (atkTarget);
+				break;
+			case eAtkType.MELLE_AOE:
+				applayMeleeAOE (atkTarget);
+				break;
+			case eAtkType.RANGED_INSTANT:
+				applyAtk (atkTarget);
+				break;
+			case eAtkType.RANGED_MULTI:
+				break;
+			case eAtkType.RANGED_UNHOMING:
+				applyUnhomingRangeAtk (atkTarget);
+				break;
+			default : /* 可选的 */
+				break; 
+		}
+
+		atkTarget = null;
 	}
 
 
@@ -214,132 +459,14 @@ public class Tower : MapObject
 
 
 		int dTime = (int)(Time.deltaTime*1000);
-
-		if (buffManager!=null) {
-			buffManager.Tick ((int)(Time.deltaTime * 1000f));
-			if (buffShow != null) {
-				if (buffManager.buffs.Count > 0) {
-					buffShow.SetActive (true);
-				} else {
-					buffShow.SetActive (false);
-				}
-			}
-
-		}
-		if(findTargetTimer>0)findTargetTimer -= dTime;
-		if(checkSkillTimer>0)checkSkillTimer -= dTime;
-		atkTimer += dTime;
-		if(skillComponent!=null){
-			skillComponent.Tick(dTime);
-			checkSkill (dTime);
-		}
-		if (coolDown > 0) {
-			coolDown -= dTime;
-		}
-		if (atkType == eAtkType.NONE) {
-			return;
-		}
-		if (atkType == eAtkType.MELLE_POINT) {
-			if (atkTarget != null && atkTimer > atkPreanimTime) {
-				applyAtk (atkTarget);
-				//atkTarget.knock (atkTarget.transform.position - this.transform.position, 0.2f, 6f);
-				//atkTarget.DoDamage (damage,property);
-				atkTarget = null;
-			}
-		} else if (atkType == eAtkType.RANGED_HOMING) {
-			if (atkTarget != null && atkTimer > atkPreanimTime) {
-				genBullet (tt.tbase.bulletStyle,true,atkTarget.gameObject);
-				atkTarget = null;
-			}
-		} else if (atkType == eAtkType.MELLE_AOE) {
-			if (atkTarget != null && atkTimer > atkPreanimTime) {
-
-				Vector2 faceDir = (atkTarget.transform.position - transform.position);
-				EffectManager.inst.EmitAtkSectorEffect (transform, faceDir);
-
-				float cx = transform.position.x;
-				float cy = transform.position.y;
-				List<GameLife> validTarget = new List<GameLife> ();
-				foreach (GameLife enemy in BattleManager.getInstance().getTmpEnemyList()) {
-					float x = enemy.transform.position.x;
-					float y = enemy.transform.position.y;
-
-					Vector2 dir = new Vector2 (x - cx, y - cy);
-					if (dir.magnitude * 1000 < atkRange && Vector2.Dot (faceDir.normalized, dir.normalized) > Mathf.Cos (60f * Mathf.Deg2Rad)) {
-						validTarget.Add (enemy);
-						//enemy.DoDamage (damage,property);
-					}
-
-				}
-				foreach (GameLife target in validTarget) {
-					applyAtk (target);
-				}
-				//atkTarget.DoDamage (damage);
-				atkTarget = null;
-			}
-
-		} else if (atkType == eAtkType.RANGED_INSTANT) {
-			if (atkTarget != null && atkTimer > atkPreanimTime) {
-				applyAtk (atkTarget);
-				//atkTarget.DoDamage (damage,property);
-				atkTarget = null;
-			}
-		} else if (atkType == eAtkType.RANGED_MULTI) {
-//			if (atkTarget != null && atkTimer > atkPreanimTime) {
-//				atkTarget.DoDamage (damage);
-//				atkTarget = null;
-//			}
-		} else if (atkType == eAtkType.RANGED_UNHOMING) {
-			if (atkTarget != null && atkTimer > atkPreanimTime) {
-				genBullet (tt.tbase.bulletStyle,false,atkTarget.gameObject);
-				atkTarget = null;
-			}
-		}
-
-		if (coolDown > 0) {
-			return;
-		}
-		if (castIdx != -1)
-			return;
-		updateTarget ();
-
-		if (hateTarget != null) {
-			coolDown = atkInterval;
-			anim.SetTrigger ("atk");
-			atkTimer = 0;
-			atkTarget = hateTarget;
-		}
+		checkAtkTarget (dTime);
+		checkBuff (dTime);
+		checkSkill (dTime);
+		checkAtkBehaviour (dTime);
+		checkBeforeAtk (dTime);
 	}
 
 
-	public void updateTarget(){
-		if (hateTarget != null) {
-			if (!hateTarget.IsAlive) {
-				hateTarget = null;
-			} else {
-				int dis = (int)((transform.position - hateTarget.transform.position).magnitude * 1000);
-				if(dis > atkRange){
-					hateTarget = null;
-				}
-			}
-		}
-		if (hateTarget == null&&findTargetTimer<=0) {
-			hateTarget = MapManager.getInstance().getClosestEnemy (this);
-			if (hateTarget!=null&&!hateTarget.IsAlive) {
-				hateTarget = null;
-			}
-			if (hateTarget != null ) {
-				Vector3 Diff2d = (transform.position - hateTarget.transform.position);
-				Diff2d.z = 0;
-				int dis = (int)(Diff2d.magnitude * 1000);
-				if (dis > atkRange) {
-					hateTarget = null;
-				}
-			}
-			findTargetTimer = findTargetInteval;
-		}
-
-	}
 
 	public void gainBuff(){
 		//buffManager.addBuff (new Buff(1,50,5000));
@@ -355,7 +482,7 @@ public class Tower : MapObject
 //	}
 
 
-	public void applyAtk(GameLife hit){
+	public void applyAtk(GameLife hit,string damageEffect = "damaged01"){
 		//hit.knock (atkTarget.transform.position - this.transform.position, 0.2f, 6f);
 
 		List<Buff> attackEffect = new List<Buff> ();
@@ -363,14 +490,16 @@ public class Tower : MapObject
 			if (skill == null)
 				continue;
 			TowerSkill sinfo = GameStaticData.getInstance().getTowerSkillInfo(skill.skillId);
-			if (sinfo.isPassive && sinfo.checkPoint == ePassiveCheckPoint.ATK) {
-				attackEffect.Add (new Buff (sinfo.x[skill.skillLevel], 50, 1000));
+			if (sinfo.tsType == eTowerSkillType.PASSIVE && sinfo.checkPoint == ePassiveCheckPoint.ATK) {
+				attackEffect.Add (new Buff (sinfo.x[skill.skillLevel-1], 50, 1000));
 			}
 		}
 		List<AtkInfo> atk = new List<AtkInfo> ();
 		atk.Add (mainAtk);
 		atk.AddRange (extraAtk);
 		hit.DoDamage (atk,mingzhong,property,attackEffect);
+
+		EffectManager.inst.EmitFollowingEffect (damageEffect,500,hit);
 	}
 }
 

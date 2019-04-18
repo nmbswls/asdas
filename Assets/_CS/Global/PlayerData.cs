@@ -9,8 +9,10 @@ using Newtonsoft.Json;
 public class TowerTemplate{
 	public TowerBase tbase;
 	public TowerComponent[] components = new TowerComponent[5];
+
 }
 
+[System.Serializable]
 public class AtkInfo{
 	public int damage = 1000;
 	public eProperty property = eProperty.NONE;
@@ -28,49 +30,8 @@ public class AtkInfo{
 	}
 }
 
-[System.Serializable]
-public class TowerBase{
-	public string tid;
-	public string tname;
-	public string tdesp;
 
-	public string bulletStyle = "default";
-	public int[] cost = new int[3];
 
-	public eAtkType atkType = eAtkType.MELLE_POINT;
-	public AtkInfo mainAtk = new AtkInfo();
-	public List<AtkInfo> extraAtk = new List<AtkInfo>();
-	public int mingzhong;
-	public int atkInteval = 2000;
-	public int atkRange = 3000;
-	public int atkPreanimTime = 300;
-	public List<SkillState> skills = new List<SkillState>();
-}
-
-[System.Serializable]
-public class TowerSkill{
-	public string skillId;
-	public string skillName;
-	public string skillDesp;
-
-	public string bulletStyle; 
-
-	public int maxLv;
-	public int cooldown = 20000;
-	public bool isSelfTarget = false;
-	public eAtkType atkType = eAtkType.MELLE_POINT;
-	public bool isPassive = false;
-	public bool isPermanent = false;
-	public ePassiveCheckPoint checkPoint = ePassiveCheckPoint.ATK;
-	public List<int> x;
-	public List<int> y;
-	public List<int> z;
-	public TowerSkill(){
-	}
-	public TowerSkill(string skillId){
-		this.skillId = skillId;
-	}
-}
 
 [System.Serializable]
 public class SkillState{
@@ -330,13 +291,64 @@ public class PlayerData
 
 
 	public void initTowers(){
-		for (int i = 1; i < 8; i++) {
+
+		{
 			TowerTemplate tt = new TowerTemplate ();
-			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t0"+i);
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t01");
 
 			tt.tbase = tb;
 			ownedTowers.Add (tt);
 		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t02");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t03");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t04");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t05");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t06");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t07");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t08");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+
 	}
 	public void initBag(){
 		for (int i = 0; i < 20; i++) {

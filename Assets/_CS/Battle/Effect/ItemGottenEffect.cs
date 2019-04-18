@@ -35,7 +35,7 @@ public class ItemGottenEffect : BaseEffect
 	protected override void OnRelease(){
 		screenPos = Vector3.zero;
 		GetComponent<TrailRenderer> ().Clear ();
-		EffectManager.inst.ReturnComponent(gameObject);
+		GameObject.Destroy (gameObject);
 	}
 
 }

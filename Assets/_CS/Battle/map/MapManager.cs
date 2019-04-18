@@ -28,6 +28,7 @@ public class MapManager : MonoBehaviour
 	public Tile baseTile;//使用的最基本的Tile，我这里是白色块，然后根据数据设置不同颜色生成不同Tile
 
 	public Tilemap tilemap;
+	public SpriteRenderer smokeShadow;
 	public Tilemap obcTilemap;
 	public Tilemap speTilemap;
 
@@ -69,9 +70,14 @@ public class MapManager : MonoBehaviour
 		GameObject mapObcPrefab = (GameObject)Resources.Load ("map/" + mapId + "/obc");
 		GameObject mapSpePrefab = (GameObject)Resources.Load ("map/" + mapId + "/spe");
 
+
 		if (mapObcPrefab == null || mapSpePrefab == null) {
 			return false;
 		}
+
+		smokeShadow.size = new Vector2(mapInfo.width,mapInfo.height);
+		smokeShadow.transform.position = new Vector3 (mapInfo.width/2 + 0.5f,-mapInfo.height/2 - 0.5f,smokeShadow.transform.position.z);
+
 		GameObject mapObc = null;
 		GameObject mapSpe = null;
 

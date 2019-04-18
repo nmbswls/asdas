@@ -4,7 +4,7 @@ using System.Collections;
 public class MonsterFactory
 {
 	public static GameLife createEnemy(string name, Vector2Int posInWorld,Transform target){
-		GameObject prefab = Resources.Load ("Prefabs/enemy/enemy_base") as GameObject;
+		GameObject prefab = Resources.Load ("Prefabs/enemy_base") as GameObject;
 		//TextAsset enemyStatus = Resources.Load ("json/enemy/"+name+"_data") as TextAsset;
 		EnemyData enemyData = GameStaticData.getInstance().getEnemyInfo(name);
 

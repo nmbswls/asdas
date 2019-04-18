@@ -4,26 +4,33 @@ using System.Collections.Generic;
 
 public class GameLife : MapObject
 {
+	[HideInInspector]
 	public IUnitController pCtrl;
 
-	public BaseBuffComponent buffManager;
+	[HideInInspector]
+	public EnemyBuffComponent buffManager;
+
+	[HideInInspector]
 	public TowerSkillComponent skillComponent;
 
-	public FollowingEffectManager effectManager;
+	[HideInInspector]
+	public BuffEffectComponent effectManager;
 
+	[HideInInspector]
 	public GameObject emoji;
 
 //	public CharPhysicsController charPhysicsCtrl;
 
 	//固有属性
+	[HideInInspector]
 	public int id;
+	[HideInInspector]
 	public Animator anim;
+	[HideInInspector]
 	public SpriteRenderer image;
+	[HideInInspector]
 	public PhysicsComponent pc;
 
-
-	private float characterSizeX;
-	private float characterSizeY;
 	public bool isPlayer = true;
 
 	//可变属性
@@ -68,7 +75,6 @@ public class GameLife : MapObject
 	public bool isMoving = false;
 	public bool isAttcking = false;
 
-	bool isUsingSkill = false;
 	//-1 normal attack
 	//0 - 3 special attack
 	//-2 damaged
@@ -91,8 +97,13 @@ public class GameLife : MapObject
 		pc = GetComponent<PhysicsComponent> ();
 		image = GetComponentInChildren<SpriteRenderer> ();
 
-		buffManager = GetComponent<BaseBuffComponent> ();
-		effectManager = GetComponent<FollowingEffectManager> ();
+		buffManager = GetComponent<EnemyBuffComponent> ();
+
+
+		effectManager = GetComponent<BuffEffectComponent> ();
+		if (effectManager == null) {
+			effectManager = gameObject.AddComponent<BuffEffectComponent>();
+		}
 
 	}
 
@@ -151,14 +162,14 @@ public class GameLife : MapObject
 	private float m_originWalkSpeed = 3f;
 
 	// Use this for initialization
-	void Start ()
+	protected override void Start ()
 	{
 		base.Start ();
 		isMoving = false;
 		isAttcking = false;
 
-		characterSizeY = image.bounds.size.y;
-		characterSizeX = image.bounds.size.x;
+		//characterSizeY = image.bounds.size.y;
+		//characterSizeX = image.bounds.size.x;
 
 		faceDir = 2;
 		lastPosInCell = MapManager.getInstance ().tilemap.WorldToCell (transform.position);
@@ -172,7 +183,7 @@ public class GameLife : MapObject
 	}
 
 	// Update is called once per frame
-	void Update ()
+	protected override void Update ()
 	{			
 		base.Update ();
 
@@ -264,7 +275,7 @@ public class GameLife : MapObject
 			OnDie ();
 		}
 		BattleManager.getInstance().placeHPOnTopLayer (this);
-		EffectManager.inst.EmitDamageEffect (transform);
+		EffectManager.inst.EmitNormalEffectOnFixedPos ("damaged01",new Vector2Int(posXInt,posYInt),500);
 	}
 
 	public void DoDamage(List<AtkInfo> atk,int mingzhong,eProperty type,List<Buff> attachedEffect){
@@ -288,16 +299,10 @@ public class GameLife : MapObject
 			OnDie ();
 		}
 		BattleManager.getInstance().placeHPOnTopLayer (this);
-		EffectManager.inst.EmitDamageEffect (transform);
+
 	}
 
 
-	public void showFollowingEffect(int type){
-		//GameObject e;
-		//e.SetActive(true);
-		//视图可以使用协程
-		effectManager.showEffect();
-	}
 
 	public void showEmoji(int type){
 		transform.Find ("emoji").gameObject.SetActive(true);

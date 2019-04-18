@@ -13,9 +13,13 @@ public class MapObject : MonoBehaviour
 	[HideInInspector]
 	public bool isHighLight = false;
 
+	[HideInInspector]
 	public GameObject shadow;
 
+	[HideInInspector]
 	public GameObject actualObj;
+
+
 	public static float maxZ = 100f;
 	public static float minZ = 0f;
 
