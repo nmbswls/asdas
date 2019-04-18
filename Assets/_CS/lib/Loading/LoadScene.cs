@@ -47,7 +47,7 @@ public class LoadScene : MonoBehaviour {
 			loadingText.text = "Loading" + subfix;
 		}
 		int toProcess; 
-		if (asyncOperation .progress < 0.9f) 
+		if (asyncOperation.progress < 0.9f) 
 		{ 
 			toProcess = (int)asyncOperation .progress * 100; 
 		} 

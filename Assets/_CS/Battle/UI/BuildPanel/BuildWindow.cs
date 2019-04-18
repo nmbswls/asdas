@@ -24,11 +24,11 @@ public class BuildWindow : Window
 			//_detail.GetChild ("name").asTextField.text = ((BuildItem)(_list.GetChildAt(0))).Name;
 		}
 		_list.columnGap = (int)interval;
-		Time.timeScale = Time.timeScale==0?1:0;
+		BattleManager.getInstance ().pause ();
 	}
 
 	protected override void OnHide(){
-		Time.timeScale = Time.timeScale==0?1:0;
+		BattleManager.getInstance ().unPause ();
 	}
 
 	public void buildConfirm(){

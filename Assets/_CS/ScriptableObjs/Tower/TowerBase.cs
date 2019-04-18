@@ -73,6 +73,9 @@ public class TowerBase : ScriptableObject
 	public int mingzhong;
 
 	[SerializeField]
+	public int atkSpd;
+
+	[SerializeField]
 	public List<SkillState> skills = new List<SkillState>();
 }
 	

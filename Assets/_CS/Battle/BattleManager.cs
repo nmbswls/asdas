@@ -97,9 +97,9 @@ public class BattleManager : Singleton<BattleManager> {
 	}
 
 	IEnumerator fadeIn(){
-		Time.timeScale = 0;
+		pause ();
 		yield return new WaitForSecondsRealtime (1.5f);
-		Time.timeScale = 1;
+		unPause ();
 		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
 			GuideManager.getInstance ().showGuidePanel ();
 		}
@@ -176,16 +176,6 @@ public class BattleManager : Singleton<BattleManager> {
 			potionInBattle[i] = PlayerData.getInstance ().potions [i];
 		}
 		//if(BattleManager)
-
-
-			
-
-
-
-
-
-
-
 	}
 
 	GameLife highlightEnemy = null;
@@ -256,7 +246,7 @@ public class BattleManager : Singleton<BattleManager> {
 	void showBattleFinish(bool isWin){
 		if (isShowingBattleFinishPanel)
 			return;
-		Time.timeScale = 0;
+		pause ();
 		isShowingBattleFinishPanel = true;
 		mainUIManager.showBattleFinishPanel ();
 	}
@@ -278,7 +268,7 @@ public class BattleManager : Singleton<BattleManager> {
 		battleMainCamera.gameObject.SetActive (false);
 		mainUIManager._mainView.visible = false;
 		PlayerData.getInstance ().finishBattle (true);
-
+		unPause ();
 		Load.SceneName = "Explore";//B场景的名字 
 		SceneManager.LoadScene("Loading"); 
 		//StartCoroutine (UnloadBattle());
@@ -322,7 +312,6 @@ public class BattleManager : Singleton<BattleManager> {
 
 
 	void Update(){
-
 		int timeInt = (int)(Time.deltaTime * 1000f);
 		battleTime += timeInt;
 		foreach (EnemySpawner spawner in enemySpawners) {
@@ -331,9 +320,7 @@ public class BattleManager : Singleton<BattleManager> {
 		if (Input.GetKeyDown ("z")) {
 			showBattleFinish (true);
 		}
-		if (Input.GetKeyDown ("x")) {
-			Time.timeScale = Time.timeScale==0?1:0;
-		}
+
 		if (Input.GetKeyDown ("c")) {
 			dropManager.createDrops (new List<int>(),player.transform.position+Vector3.right*3f);
 		}
@@ -413,6 +400,21 @@ public class BattleManager : Singleton<BattleManager> {
 		if (uiLockNum == 0) {
 			GRoot.inst.touchable = true;
 			mainUIManager._mainView.touchable = true;
+		}
+	}
+
+	int pauseCount = 0;
+	public void pause(){
+		pauseCount++;
+		if (pauseCount > 0) {
+			Time.timeScale = 0;
+		}
+	}
+
+	public void unPause(){
+		pauseCount--;
+		if (pauseCount == 0) {
+			Time.timeScale = 1;
 		}
 	}
 }

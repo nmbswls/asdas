@@ -15,7 +15,10 @@ public class GuidePanel : Window
 
 
 	protected override void OnHide(){
-		Time.timeScale = Time.timeScale==0?1:0;
+		if (BattleManager.getInstance () != null) {
+			BattleManager.getInstance ().unPause ();
+		}
+
 	}
 
 
@@ -40,7 +43,9 @@ public class GuidePanel : Window
 	}
 
 	protected override void OnShown(){
-		Time.timeScale = 0;
+		if (BattleManager.getInstance () != null) {
+			BattleManager.getInstance ().pause ();
+		}
 		nowIndex = 0;
 		_picture.url = "guide/" + nowIndex;
 	}
