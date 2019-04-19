@@ -14774,9 +14774,13 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 1500
     m_Data: {fileID: 11400000, guid: 5cd77a4a66bb649dfaaabf0bb8ae6ff0, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 1500
     m_Data: {fileID: 21300000, guid: e269a7acbee334677a291014b31b8b65, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 1500
     m_Data:
@@ -14823,6 +14827,8 @@ Tilemap:
     e32: 0
     e33: 1
   m_TileRefreshArray:
+  - serializedVersion: 1
+    m_DirtyIndex: 0
   - serializedVersion: 1
     m_DirtyIndex: 0
 --- !u!483693784 &1906650518
