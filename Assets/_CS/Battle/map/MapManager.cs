@@ -76,7 +76,7 @@ public class MapManager : MonoBehaviour
 		}
 
 		smokeShadow.size = new Vector2(mapInfo.width,mapInfo.height);
-		smokeShadow.transform.position = new Vector3 (mapInfo.width/2 + 0.5f,-mapInfo.height/2 - 0.5f,smokeShadow.transform.position.z);
+		smokeShadow.transform.position = new Vector3 (mapInfo.width*1.0f/2,-mapInfo.height*1.0f/2,smokeShadow.transform.position.z);
 
 		GameObject mapObc = null;
 		GameObject mapSpe = null;
@@ -260,7 +260,7 @@ public class MapManager : MonoBehaviour
 		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
 			LoadMap ("toturial");
 		} else {
-			LoadMap ("toturial");
+			LoadMap ("test");
 		}
 
 	}
