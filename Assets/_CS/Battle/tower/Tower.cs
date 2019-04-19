@@ -177,7 +177,7 @@ public class Tower : MapObject
 					genBullet (s.bulletStyle.bulletName,castTarget,true,false);
 					castTarget = null;
 				} else if (s.targetType == eAtkType.RANGED_INSTANT) {
-					applyAtk (castTarget,s.bulletStyle.bulletName);
+					applyNormalAtk (castTarget,s.bulletStyle.bulletName);
 					castTarget = null;
 				}
 
@@ -329,7 +329,7 @@ public class Tower : MapObject
 
 
 	void applyMeleeAtk(GameLife atkTarget){
-		applyAtk (atkTarget);
+		applyNormalAtk (atkTarget);
 	}
 
 	void applyHomingRangeAtk(GameLife atkTarget){
@@ -364,7 +364,7 @@ public class Tower : MapObject
 
 		}
 		foreach (GameLife target in validTarget) {
-			applyAtk (target);
+			applyNormalAtk (target);
 		}
 	}
 
@@ -428,7 +428,7 @@ public class Tower : MapObject
 			case eAtkType.NONE  :
 				return;
 			case eAtkType.MELLE_POINT  :
-				applyAtk (atkTarget);
+				applyNormalAtk (atkTarget);
 				break; 
 			case eAtkType.RANGED_HOMING:
 				applyHomingRangeAtk (atkTarget);
@@ -437,7 +437,7 @@ public class Tower : MapObject
 				applayMeleeAOE (atkTarget);
 				break;
 			case eAtkType.RANGED_INSTANT:
-				applyAtk (atkTarget);
+				applyNormalAtk (atkTarget);
 				break;
 			case eAtkType.RANGED_MULTI:
 				break;
@@ -481,12 +481,12 @@ public class Tower : MapObject
 //	}
 
 
-	public void applyAtk(GameLife hit,string damageEffect = "damaged01"){
+	public void applyNormalAtk(GameLife hit,string damageEffect = "damaged01"){
 		//hit.knock (atkTarget.transform.position - this.transform.position, 0.2f, 6f);
 
 		List<Buff> attackEffect = new List<Buff> ();
 		foreach (SkillState skill in skillComponent.skills) {
-			if (skill == null)
+			if (skill == null || skill.skillId == null)
 				continue;
 			TowerSkill sinfo = GameStaticData.getInstance().getTowerSkillInfo(skill.skillId);
 			if (sinfo.tsType == eTowerSkillType.PASSIVE && sinfo.checkPoint == ePassiveCheckPoint.ATK) {
@@ -497,6 +497,34 @@ public class Tower : MapObject
 		atk.Add (mainAtk);
 		atk.AddRange (extraAtk);
 		hit.DoDamage (atk,mingzhong,property,attackEffect);
+
+		EffectManager.inst.EmitFollowingEffect (damageEffect,500,hit);
+	}
+
+	public void applyMagicAtk(GameLife hit, SkillState skill, string damageEffect = "damaged01"){
+
+
+		TowerSkill sinfo = GameStaticData.getInstance().getTowerSkillInfo(skill.skillId);
+
+		int lv = skill.skillLevel;
+		int damage = 0;
+		switch (skill.skillId) {
+			case "1004":
+				damage = sinfo.x[lv-1];
+				break;
+			case "1005":
+				damage = sinfo.x[lv-1];
+				break;
+			case "1006":
+				damage = sinfo.x[lv-1];
+				break;
+		default:
+			break;
+
+		}
+
+
+		hit.DoDamage (damage);
 
 		EffectManager.inst.EmitFollowingEffect (damageEffect,500,hit);
 	}

@@ -6,6 +6,8 @@ public class BasicBullet : MonoBehaviour
 	public int speed = 5;
 
 	protected bool isHoming;
+	protected bool isNormalAtk = true;
+	protected SkillState skill = null;
 
 	public int vOriginHeight = 0;
 	protected Tower owner;

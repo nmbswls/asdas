@@ -115,7 +115,7 @@ public class BallisticBullet : BasicBullet
 
 	protected override void applyAtk(GameLife hit){
 		if (owner != null && owner.isActiveAndEnabled) {
-			owner.applyAtk (hit);
+			owner.applyNormalAtk (hit);
 			//hit.DoDamage (owner.damage,owner.property);
 			EffectManager.inst.EmitAtkCircleEffect (hit.transform,3);
 		}
