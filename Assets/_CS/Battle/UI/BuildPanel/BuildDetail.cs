@@ -100,11 +100,11 @@ public class BuildDetail : GComponent
 		_damage_list.RemoveChildrenToPool ();
 		{
 			TowerDamageItem damage = (TowerDamageItem)_damage_list.AddItemFromPool ();
-			damage.setDamage (mainAtk.property,mainAtk.damage);
+			damage.setDamage (mainAtk.property,mainAtk.damage/1000);
 		}
 		for (int i = 0; i < extraAtk.Count; i++) {
 			TowerDamageItem damage = (TowerDamageItem)_damage_list.AddItemFromPool ();
-			damage.setDamage (extraAtk[i].property,extraAtk[i].damage);
+			damage.setDamage (extraAtk[i].property,extraAtk[i].damage/1000);
 		}
 	}
 	public void setSkill(List<SkillState> skills){

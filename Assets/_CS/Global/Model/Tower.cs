@@ -42,7 +42,7 @@ public class TowerBattleProperty{
 
 		//List<SkillState> extraSkills = new List<SkillState> ();
 
-		foreach (TowerComponent tc in tt.components) {
+		foreach (TowerComponent tc in components) {
 			foreach (TowerComponentEffect effect in tc.effects) {
 				switch(effect.type){
 				case eTowerComponentEffectType.ATK_CHANGE:
