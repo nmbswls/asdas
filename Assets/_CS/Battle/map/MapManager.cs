@@ -260,7 +260,7 @@ public class MapManager : MonoBehaviour
 		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
 			LoadMap ("toturial");
 		} else {
-			LoadMap ("test");
+			LoadMap ("toturial");
 		}
 
 	}

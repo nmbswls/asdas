@@ -104,6 +104,9 @@ public class PathSeekBehaviour : MonoBehaviour
 
 
 	void setTarget(){
+		if (BattleManager.getInstance ().player == null) {
+			return;
+		}
 		target = BattleManager.getInstance ().player.gl;
 		target.followers.Add (this);
 	}

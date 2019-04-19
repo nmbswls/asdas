@@ -16,8 +16,12 @@ public class MonsterDropManager : MonoBehaviour
 	// Update is called once per frame
 	public void Tick (int timeInt)
 	{
+		if (BattleManager.getInstance ().player == null) {
+			return;
+		}
 		MapObject player = BattleManager.getInstance ().player.gl;
 		foreach (MonsterDrop drop in monsterDroppings) {
+			
 			if (drop.triggered||drop.isMovingOrigin)
 				continue;
 			Vector2 p1 = drop.transform.position;
@@ -35,6 +39,7 @@ public class MonsterDropManager : MonoBehaviour
 			MonsterDrop drop = o.GetComponent<MonsterDrop> ();
 			drop.dropManager = this;
 			monsterDroppings.Add (drop);
+			drop.unpickableTime = 0.5f;;
 			drop.moveToRandomNearby ();
 		}
 

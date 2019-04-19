@@ -9,7 +9,10 @@ public class MonsterDrop : MonoBehaviour
 	MapObject target = null;
 
 	public Vector2 targetPos;
+
 	public bool isMovingOrigin = false;
+
+	public float unpickableTime = 0;
 	// Use this for initialization
 
 	
@@ -18,6 +21,9 @@ public class MonsterDrop : MonoBehaviour
 	{
 		if (destroyed)
 			return;
+		if (unpickableTime > 0) {
+			unpickableTime -= Time.deltaTime;
+		}
 		if (!triggered) {
 			if (isMovingOrigin) {
 				Vector2 d = (targetPos - new Vector2(transform.position.x,transform.position.y));
@@ -49,6 +55,8 @@ public class MonsterDrop : MonoBehaviour
 		}
 	}
 	public void trigger(){
+		if (unpickableTime > 0)
+			return;
 		if (triggered)
 			return;
 		triggered = true;

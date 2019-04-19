@@ -74,8 +74,10 @@ public class BattleManager : Singleton<BattleManager> {
 
 
 		MapManager.getInstance ().Init ();
-		initBattle ();
 		spawnPlayer ();
+		initEnemySpawner ();
+		initBattle ();
+
 		mainUIManager.updateHp ();
 		mainUIManager.updatePotions ();
 		mainUIManager.updateCoin ();
@@ -115,36 +117,17 @@ public class BattleManager : Singleton<BattleManager> {
 		};
 	}
 
-	public void initBattle(){
-		//怪物由两部分组成，背景怪物 无限刷新 固定怪物 由怪物卡召唤
-		killLeft = 10;
-
+	void initEnemySpawner(){
+		List<EnemyCombo> enemies = PlayerData.getInstance ().chasingEnemies;
 		{
-			List<EnemyCombo> enemies = PlayerData.getInstance ().chasingEnemies;
 			List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (enemies.Count);
 
 			for (int i = 0; i < spawners.Count; i++) {
-				Vector2Int center = MapManager.getInstance ().CellToWorld (spawners[i][0],spawners[i][1]);
-				spawnEnemy(enemies [i].enemyId [0],center);
+				Vector2Int center = MapManager.getInstance ().CellToWorld (spawners [i] [0], spawners [i] [1]);
+				spawnEnemy (enemies [i].enemyId [0], center);
 			}
 			PlayerData.getInstance ().chasingEnemies.Clear ();
 		}
-		{
-			EncounterBattleInfo binfo = PlayerData.getInstance ().battleInfo;
-			if (binfo == null) {
-				binfo = new EncounterBattleInfo ();
-			}
-			if (binfo.liveTime > 0) {
-			
-			}
-			if (binfo.killEnemy > 0) {
-				killLeft = binfo.killEnemy;
-			} else {
-				killLeft = -1000;
-			}
-		}
-		PlayerPrefs.DeleteAll ();
-
 		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
 			//first time
 			{
@@ -161,8 +144,9 @@ public class BattleManager : Singleton<BattleManager> {
 
 		} else {
 			{
+
 				List<int[]> spawners = MapManager.getInstance ().getRandomSpawnerPos (3);
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < spawners.Count; i++) {
 					Vector2Int center = MapManager.getInstance ().CellToWorld (spawners[i][0],spawners[i][1]);
 					GameObject o = GameObject.Instantiate(spawnerPrefab,spawnerLayer);
 					EnemySpawner spanwer = o.GetComponent<EnemySpawner> ();
@@ -173,6 +157,26 @@ public class BattleManager : Singleton<BattleManager> {
 				}
 			}
 		}
+	}
+	public void initBattle(){
+		//怪物由两部分组成，背景怪物 无限刷新 固定怪物 由怪物卡召唤
+		killLeft = 10;
+
+		{
+			EncounterBattleInfo binfo = PlayerData.getInstance ().battleInfo;
+			if (binfo == null) {
+				binfo = new EncounterBattleInfo ();
+			}
+			if (binfo.liveTime > 0) {
+			
+			}
+			if (binfo.killEnemy > 0) {
+				killLeft = binfo.killEnemy;
+			} else {
+				killLeft = -1000;
+			}
+		}
+		//PlayerPrefs.DeleteAll ();
 
 		for (int i = 0; i < 3; i++) {
 			if(i>=PlayerData.getInstance ().potions.Count)break;

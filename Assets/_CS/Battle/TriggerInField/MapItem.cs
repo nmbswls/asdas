@@ -6,6 +6,7 @@ public class MapItem : MonoBehaviour
 	public string type;
 	public int value;
 
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -15,6 +16,11 @@ public class MapItem : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		
+	}
+
+	void Tick(int timeInt){
+		
 	}
 
 	public void init(string type, int value){
