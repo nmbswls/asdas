@@ -6,7 +6,7 @@ public class RolePanel : GComponent
 {
 	GList l0;
 	GList l1;
-
+	GComponent _property;
 	GTextField _san;
 	GTextField _hp;
 	GTextField _money;
@@ -17,10 +17,10 @@ public class RolePanel : GComponent
 		base.ConstructFromXML (xml);
 		l0 = this.GetChild ("potions").asList;
 		l1 = this.GetChild ("scars").asList;
-
-		_san = this.GetChild ("san").asTextField;
-		_hp = this.GetChild ("hp").asTextField;
-		_money = this.GetChild ("money").asTextField;
+		_property = this.GetChild ("property").asCom;
+		_san = _property.GetChild ("san").asTextField;
+		_hp = _property.GetChild ("hp").asTextField;
+		_money = _property.GetChild ("money").asTextField;
 
 		_talents [0] = this.GetChild ("talent0").asLoader;
 		_talents [1] = this.GetChild ("talent1").asLoader;

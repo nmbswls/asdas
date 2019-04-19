@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b318e3963af874eaa89b2f9518547021, type: 3}
+  m_Name: "s1009_\u6CBB\u7597\u4E2D\u5FC3"
+  m_EditorClassIdentifier: 
+  skillId: 1009
+  skillName: Life Center
+  skillDesp: When the tower exists, recover hp per 5 second.
+  maxLv: 3
+  cooldown: 
+  x: 010000000200000003000000
+  y: 000000000000000000000000
+  z: 000000000000000000000000
+  tsType: 3
+  targetType: 0
+  bulletStyle:
+    bulletName: default
+    isBall: 0
+    flySpeed: 0
+  checkPoint: 0
+  debuff: 0

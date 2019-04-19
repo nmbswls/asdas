@@ -23,9 +23,10 @@ MonoBehaviour:
   atkType: 0
   mainAtk:
     damage: 1000
-    property: -1
+    property: 0
   extraAtk: []
   mingzhong: 20
+  atkSpd: 0
   skills:
   - skillId: 1005
     skillLevel: 1

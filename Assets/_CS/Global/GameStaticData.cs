@@ -231,13 +231,19 @@ public class GameStaticData
 	}
 
 	public void loadComponentInfo(){
-		//componentStaticInfo.Add ("0", new TowerComponent ());
-		TextAsset ta = Resources.Load ("json/tower_component/components") as TextAsset;
-		List<TowerComponent> ll = JsonConvert.DeserializeObject<List<TowerComponent>> (ta.text);
-		//Dictionary<string,TowerComponent> dic = new Dictionary<string,TowerComponent> ();
-		foreach (TowerComponent tc in ll) {
-			componentStaticInfo.Add (tc.cid, tc);
+		Object[] content = Resources.LoadAll ("ScriptableObj/Components");
+		foreach (Object o in content) {
+			TowerComponent tc = (TowerComponent)o;
+			componentStaticInfo.Add (tc.cid,tc);
+			//globalEffects.Add (tb.tid,tb);
 		}
+		//componentStaticInfo.Add ("0", new TowerComponent ());
+//		TextAsset ta = Resources.Load ("json/tower_component/components") as TextAsset;
+//		List<TowerComponent> ll = JsonConvert.DeserializeObject<List<TowerComponent>> (ta.text);
+//		//Dictionary<string,TowerComponent> dic = new Dictionary<string,TowerComponent> ();
+//		foreach (TowerComponent tc in ll) {
+//			componentStaticInfo.Add (tc.cid, tc);
+//		}
 	}
 
 	public void loadPotionInfo(){

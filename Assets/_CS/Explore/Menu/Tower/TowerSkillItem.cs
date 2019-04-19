@@ -30,7 +30,7 @@ public class TowerSkillItem : GComponent
 		TowerSkill sinfo = GameStaticData.getInstance ().getTowerSkillInfo (skill.skillId);
 		_desp.text = sinfo.skillDesp;
 		_lv_num.text = skill.skillLevel + "";
-		_icon.url = "image/TowerSkill/"+skill.skillId;
+		_icon.url = GameConstant.TOWER_SKILL_ICON_PATH+skill.skillId;
 	}
 }
 

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b318e3963af874eaa89b2f9518547021, type: 3}
+  m_Name: "s1006_\u95EA\u7535\u7BAD"
+  m_EditorClassIdentifier: 
+  skillId: 1006
+  skillName: Lightning Arrow
+  skillDesp: 'cause x damage.
+
+'
+  maxLv: 3
+  cooldown: e02e0000e02e0000e02e0000
+  x: 70170000401f000010270000
+  y: 000000000000000000000000
+  z: 000000000000000000000000
+  tsType: 0
+  targetType: 2
+  bulletStyle:
+    bulletName: LightningArrow
+    isBall: 0
+    flySpeed: 0
+  checkPoint: 0
+  debuff: 0

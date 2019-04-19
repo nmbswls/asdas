@@ -28,10 +28,10 @@ public class ComponentView : GComponent
 	public void setInfo(TowerComponent tc){
 		this.tc = tc;
 		if (tc == null) {
-			cIcon.url = "Equips/empty";
+			cIcon.url = GameConstant.TOWER_COMPONENT_ICON_PATH+"empty";
 			_detail.text = "";
 		} else {
-			cIcon.url = "Equips/" + tc.cid;
+			cIcon.url = GameConstant.TOWER_COMPONENT_ICON_PATH + tc.cid;
 			_detail.text = tc.cname + "\n" + tc.getEffects();
 		}
 

@@ -15,6 +15,7 @@ public class TowerDamageItem : GComponent
 
 	public void setDamage(eProperty property, int damage){
 		_num.text = damage + "";
+		_icon.url = GameConstant.PROPERTY_ICON_PATH + property.ToString();
 	}
 }
 

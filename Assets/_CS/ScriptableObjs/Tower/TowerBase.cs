@@ -16,14 +16,13 @@ public enum eAtkType
 
 [System.Serializable]
 public enum eProperty{
-	NONE=-1,
-	FIRE = 0,
-	WATER = 1,
-	WIND = 2,
-	ICE = 3,
-	LIGHT = 4,
-	DARK = 5,
-	VOID = 6,
+	NONE= 0,
+	RED = 1,
+	BLUE = 2,
+	GREEN = 3,
+	PURPLE = 4,
+	YELLOW = 5,
+	BLACK = 6,
 }
 
 [System.Serializable]

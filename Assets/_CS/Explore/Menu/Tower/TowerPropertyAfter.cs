@@ -34,12 +34,22 @@ public class TowerPropertyAfter : GComponent
 
 	}
 
-	public void setDamage(List<AtkInfo> atk){
+	public void setName(string tname){
+		_tname.text = tname;
+	}
+
+	public void setDamage(AtkInfo mainAtk, List<AtkInfo> extraAtk){
 		_damage_list.RemoveChildrenToPool ();
-		for (int i = 0; i < atk.Count; i++) {
+		{
 			TowerDamageItem damage = (TowerDamageItem)_damage_list.AddItemFromPool ();
+			damage.setDamage (mainAtk.property,mainAtk.damage/1000);
+		}
+		for (int i = 0; i < extraAtk.Count; i++) {
+			TowerDamageItem damage = (TowerDamageItem)_damage_list.AddItemFromPool ();
+			damage.setDamage (extraAtk[i].property,extraAtk[i].damage/1000);
 		}
 	}
+
 	public void setSkill(List<SkillState> skills){
 		_skill_list.RemoveChildrenToPool ();
 
@@ -50,6 +60,10 @@ public class TowerPropertyAfter : GComponent
 			});
 		}
 	}
+
+
+
+
 	public void setHit(int hit){
 		_hit.text = hit + "";
 	}
@@ -57,8 +71,9 @@ public class TowerPropertyAfter : GComponent
 	public void setAtkRange(string range){
 		_range.text = range;
 	}
-	public void setAtkSpd(string atkSpd){
-		_spd.text = atkSpd;
+	public void setAtkSpd(string actualInterval, string atkSpd){
+		_spd.text = actualInterval + "  (+"+atkSpd+")";
 	}
+
 }
 

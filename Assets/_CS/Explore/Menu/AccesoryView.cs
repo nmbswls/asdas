@@ -26,11 +26,11 @@ public class AccesoryView : GButton
 	public void updateView(TowerComponent tc){
 		this.tc = tc;
 		if (tc == null) {
-			_icon.url = "Equips/empty";
+			_icon.url = GameConstant.TOWER_COMPONENT_ICON_PATH+"empty";
 			_name.text = "";
 			_detail.text = "";
 		} else {
-			_icon.url = "Equips/" + tc.cid;
+			_icon.url = GameConstant.TOWER_COMPONENT_ICON_PATH + tc.cid;
 			_name.text = tc.cname;
 			_detail.text = tc.getEffects();
 		}

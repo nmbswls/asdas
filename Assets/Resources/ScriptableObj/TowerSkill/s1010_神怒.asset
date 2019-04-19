@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b318e3963af874eaa89b2f9518547021, type: 3}
+  m_Name: "s1010_\u795E\u6012"
+  m_EditorClassIdentifier: 
+  skillId: 1010
+  skillName: "\u795E\u6012"
+  skillDesp: "\u53EC\u5524\u5929\u96F7\u51B2\u51FB"
+  maxLv: 3
+  cooldown: 102700001027000010270000
+  x: d0070000b80b0000a00f0000
+  y: 000000000000000000000000
+  z: 000000000000000000000000
+  tsType: 0
+  targetType: 3
+  bulletStyle:
+    bulletName: shennu
+    isBall: 0
+    flySpeed: 0
+  checkPoint: 0
+  debuff: 0

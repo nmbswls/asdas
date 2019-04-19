@@ -230,7 +230,13 @@ public class BattleManager : Singleton<BattleManager> {
 		AnimatorOverrideController animCtrl =  Resources.Load ("OverrideAnimCtrl/player/"+heroName) as AnimatorOverrideController;
 		o.GetComponentInChildren<Animator>().runtimeAnimatorController = animCtrl;
 
-		battleMainCamera.transform.position = new Vector3(player.transform.position.x,player.transform.position.y,battleMainCamera.transform.position.z);
+		Vector3 point = player.transform.position;
+		if (point.x < 3) {
+			point.x = 3;
+		}
+
+
+		battleMainCamera.transform.position = new Vector3(point.x,point.y,battleMainCamera.transform.position.z);
 	}
 
 

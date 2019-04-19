@@ -6,7 +6,11 @@ using System.Collections.Generic;
 public class BuildDetail : GComponent
 {
 	GTextField _name;
-	GTextField _cost;
+	GComponent _cost_panel;
+	GTextField _cost1;
+	GTextField _cost2;
+	GTextField _cost3;
+
 
 	GTextField _hit;
 	GTextField _range;
@@ -50,7 +54,10 @@ public class BuildDetail : GComponent
 		base.ConstructFromXML(cxml);
 
 		_name = this.GetChild ("name").asTextField;
-		_cost = this.GetChild ("cost").asTextField;
+		_cost_panel = this.GetChild ("cost").asCom;
+		_cost1 = _cost_panel.GetChild ("cost1").asTextField;
+		_cost2 = _cost_panel.GetChild ("cost1").asTextField;
+		_cost3 = _cost_panel.GetChild ("cost1").asTextField;
 
 		_hit = this.GetChild ("hit").asTextField;
 		_range = this.GetChild ("range").asTextField;
@@ -71,7 +78,9 @@ public class BuildDetail : GComponent
 
 		_name.text = tb.tname;
 
-		_cost.text = tb.cost [0] + " " + tb.cost [1] + " " + tb.cost [2];
+		_cost1.text = tb.cost [0]+"";
+		_cost2.text = tb.cost [1]+"";
+		_cost3.text = tb.cost [2]+"";
 
 		if (tb.atkType == eAtkType.MELLE_AOE || tb.atkType == eAtkType.MELLE_POINT) {
 			string s = "Melee";
@@ -112,6 +121,7 @@ public class BuildDetail : GComponent
 
 		for (int i = 0; i < skills.Count; i++) {
 			TowerSkillItem skill = (TowerSkillItem)_skill_list.AddItemFromPool ();
+			skill.setInfo (skills [i]);
 			skill.touchable = false;
 		}
 	}
