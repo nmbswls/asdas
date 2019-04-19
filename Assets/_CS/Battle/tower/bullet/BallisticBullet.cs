@@ -4,7 +4,6 @@ using System.Collections;
 public class BallisticBullet : BasicBullet
 {
 
-	public bool isHoming;
 	public Vector3 fixedTargetPos;
 
 	public bool arriveGround = false;

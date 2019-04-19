@@ -127,7 +127,6 @@ public class Tower : MapObject
 			originHeight = 5000;
 		}
 		BulletManager.inst.EmitBullet (bulletStyle, this,target,isHoming, originHeight);
-
 	}
 
 

@@ -5,9 +5,12 @@ public class BasicBullet : MonoBehaviour
 {
 	public int speed = 5;
 
+	protected bool isHoming;
+
 	public int vOriginHeight = 0;
 	protected Tower owner;
 	protected GameLife target;
+
 
 	public SpriteRenderer actualImage;
 
@@ -33,7 +36,7 @@ public class BasicBullet : MonoBehaviour
 	{
 		actualImage = transform.Find ("sprite").GetComponent<SpriteRenderer>();
 	}
-	// Update is called once per frame
+
 	protected virtual void Update ()
 	{
 		UpdateLogic ((int)(Time.deltaTime * 1000));
