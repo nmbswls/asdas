@@ -64,6 +64,9 @@ public class BuildDetail : GComponent
 	}
 
 	public void updateView(TowerTemplate tt){
+		
+		TowerBattleProperty property = TowerBattleProperty.genTowerBattleProperty (tt);
+
 		TowerBase tb = tt.tbase;
 
 		_name.text = tb.tname;
@@ -74,7 +77,7 @@ public class BuildDetail : GComponent
 			string s = "Melee";
 			_range.text = s;
 		} else {
-			string s = getAtkRangeTxt (tb.towerModel.atkRange);
+			string s = getAtkRangeTxt (property.atkRange);
 			_range.text = s;
 		}
 
@@ -82,73 +85,26 @@ public class BuildDetail : GComponent
 		_range.text = getAtkSpdTxt (atkInteval);
 
 
-		List<AtkInfo> atks = new List<AtkInfo> ();
 
-		AtkInfo mainAtk = new AtkInfo(tb.mainAtk);
-
-		for (int i = 0; i < tb.extraAtk.Count; i++) {
-			atks.Add (new AtkInfo(tb.extraAtk[i]));
-		}
-
-		List<SkillState> skills = new List<SkillState> ();
-		skills.AddRange (tb.skills);
-
-		List<SkillState> extraSkills = new List<SkillState> ();
-
-
-		foreach (TowerComponent tc in tt.components) {
-			if (tc == null)
-				continue;
-			foreach (TowerComponentEffect effect in tc.effects) {
-				if (effect.type == eTowerComponentEffectType.ATK_CHANGE) {
-					mainAtk.damage += effect.x;
-				}else if(effect.type == eTowerComponentEffectType.EXTRA_ABILITY){
-					//extras.Add (effect.extra);
-					SkillState skill = new SkillState();
-					skill.skillId = effect.extra;
-					skill.skillLevel = effect.x;
-					extraSkills.Add (skill);
-
-				}else if(effect.type == eTowerComponentEffectType.ATK_SPD_CHANGE){
-
-				}else if(effect.type == eTowerComponentEffectType.ATK_RANGE_CHANGE){
-
-				}else if(effect.type == eTowerComponentEffectType.EXTRA_ATK){
-
-					if (mainAtk.property == (eProperty)effect.x) {
-						mainAtk.damage += effect.y;
-					} else {
-						bool found = false;
-						for (int i = 0; i < atks.Count; i++) {
-							if (atks [i].property == (eProperty)effect.x) {
-								found = true;
-								atks [i].damage += effect.y;
-								break;
-							}
-						}
-						if (!found) {
-							atks.Add (new AtkInfo(effect.x,effect.y));
-						}
-					}
-				}
-			}
-		}
-		atks.Insert (0,mainAtk);
-		skills.AddRange (extraSkills);
 
 		setHit(tb.mingzhong);
 		//setAtkRange(tb.towerModel.atkRange+"");
 		//setAtkSpd(tb.towerModel.atkInterval+"");
 
-		setDamage (atks);
-		setSkill (skills);
+		setDamage (property.mainAtk,property.extraAtk);
+		setSkill (property.originSkills);
 	}
 
 
-	public void setDamage(List<AtkInfo> atk){
+	public void setDamage(AtkInfo mainAtk, List<AtkInfo> extraAtk){
 		_damage_list.RemoveChildrenToPool ();
-		for (int i = 0; i < atk.Count; i++) {
+		{
 			TowerDamageItem damage = (TowerDamageItem)_damage_list.AddItemFromPool ();
+			damage.setDamage (mainAtk.property,mainAtk.damage);
+		}
+		for (int i = 0; i < extraAtk.Count; i++) {
+			TowerDamageItem damage = (TowerDamageItem)_damage_list.AddItemFromPool ();
+			damage.setDamage (extraAtk[i].property,extraAtk[i].damage);
 		}
 	}
 	public void setSkill(List<SkillState> skills){

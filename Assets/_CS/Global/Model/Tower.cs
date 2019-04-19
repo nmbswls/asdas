@@ -9,8 +9,7 @@ public class TowerTemplate{
 public class TowerBattleProperty{
 
 	public int atkRange;
-	public int atkInterval;
-	public eAtkType atkType;
+	public int atkSpd;
 	public List<AtkInfo> extraAtk;
 	public AtkInfo mainAtk;
 	public List<SkillState> originSkills;
@@ -41,7 +40,7 @@ public class TowerBattleProperty{
 		List<SkillState> skills = new List<SkillState> ();
 		skills.AddRange (tb.skills);
 
-		List<SkillState> extraSkills = new List<SkillState> ();
+		//List<SkillState> extraSkills = new List<SkillState> ();
 
 		foreach (TowerComponent tc in tt.components) {
 			foreach (TowerComponentEffect effect in tc.effects) {
@@ -50,22 +49,30 @@ public class TowerBattleProperty{
 					mainAtk.damage += effect.x;
 					break;
 				case eTowerComponentEffectType.EXTRA_ABILITY:
-					SkillState skill = new SkillState();
-					skill.skillId = effect.extra;
-					skill.skillLevel = effect.x;
-//					TowerSkill ts = 
-//					bool found = false;
-//					for (int i = 0; i < skills.Count; i++) {
-//						if (skills [i].skillId == skill.skillId) {
-//							found = true;
-//							skills [i].skillLevel += skill.skillLevel;
-//							if(skills [i].skillLevel > )
-//							break;
-//						}
-//					}
-//					if (!found) {
-//						extraSkills.Add (skill);
-//					}
+//					
+					string skillId = effect.extra;
+					int skillLevel = effect.x;
+					TowerSkill ts = GameStaticData.getInstance ().getTowerSkillInfo (skillId);
+
+					{
+						bool found = false;
+						for (int i = 0; i < skills.Count; i++) {
+							if (skills [i].skillId == skillId) {
+								found = true;
+								skills [i].skillLevel += skillLevel;
+								if (skills [i].skillLevel > ts.maxLv) {
+									skills [i].skillLevel = ts.maxLv;
+								}
+								break;
+							}
+						}
+						if (!found) {
+							SkillState skill = new SkillState ();
+							skill.skillId = skillId;
+							skill.skillLevel = skillLevel;
+							skills.Add (skill);
+						}
+					}
 					break;
 				case eTowerComponentEffectType.ATK_SPD_CHANGE:
 					atkSpeed += effect.x;
@@ -97,7 +104,11 @@ public class TowerBattleProperty{
 			}
 		}
 		TowerBattleProperty res = new TowerBattleProperty ();
-
+		res.atkRange = atkRange;
+		res.atkSpd = atkSpeed;
+		res.mainAtk = mainAtk;
+		res.extraAtk = extraAtk;
+		res.originSkills = skills;
 		return res;
 	}
 }

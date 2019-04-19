@@ -57,6 +57,7 @@ public class GameManager : Singleton<GameManager> {
 		//DontDestroyOnLoad (mainCamera.gameObject);
 
 		GameStaticData.getInstance ();
+		initPlayer ();
 		initUI ();
 		resetStats ();
 
@@ -80,7 +81,11 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 //	
-	
+	void initPlayer(){
+		string heroName = "hero"+((PlayerData.getInstance().heroIdx+1)+"").PadLeft (2,'0');
+		Sprite s = Resources.Load<Sprite> ("image/"+heroName);
+		gridManager.playerSymbol.GetComponentInChildren<SpriteRenderer> ().sprite = s;
+	}
 	// Update is called once per frame
 	void Update () {
 //		if (Input.GetKeyUp (KeyCode.B)) {

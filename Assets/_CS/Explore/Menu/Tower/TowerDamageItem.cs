@@ -13,5 +13,8 @@ public class TowerDamageItem : GComponent
 		_num = this.GetChild ("v").asTextField;
 	}
 
+	public void setDamage(eProperty property, int damage){
+		_num.text = damage + "";
+	}
 }
 
