@@ -34,10 +34,10 @@ public class GridManager : MonoBehaviour {
 	public void initGrid(){
 
 
-
-
 		nowIndex = PlayerData.getInstance().playerPos[1]+ GRID_WIDTH * PlayerData.getInstance().playerPos[0];
 		PlayerData.getInstance ().grids [nowIndex / GRID_WIDTH] [nowIndex % GRID_WIDTH].isFinish = true;
+
+
 		//grids[nowIndex].reveal();
 		if (grids != null) {
 			for (int i = 0; i < GRID_HEIGHT; i++) {

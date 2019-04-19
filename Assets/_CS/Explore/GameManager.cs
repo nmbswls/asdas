@@ -93,6 +93,7 @@ public class GameManager : Singleton<GameManager> {
 //		if (Input.GetKeyUp (KeyCode.C)) {
 //			getNewScar (new List<Scar>());
 //		}
+		Debug.Log(Time.timeScale);
 
 	}
 
@@ -280,6 +281,8 @@ public class GameManager : Singleton<GameManager> {
 			exploreFinishWindow.initAndShow();
 			return;
 		}
+		//gridManager.initGrid();
+		//resetStats();
 		_mask.TweenFade (1, 0.5f).OnComplete (delegate() {
 			gridManager.initGrid();
 			resetStats();
