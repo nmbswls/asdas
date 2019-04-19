@@ -76,7 +76,10 @@ public class BattleManager : Singleton<BattleManager> {
 		MapManager.getInstance ().Init ();
 		initBattle ();
 		spawnPlayer ();
-
+		mainUIManager.updateHp ();
+		mainUIManager.updatePotions ();
+		mainUIManager.updateCoin ();
+		mainUIManager.updateLeftEnemy ();
 		StartCoroutine (fadeIn());
 		unlockUI ();
 

@@ -46,7 +46,6 @@ public class SelectionBranchManager : Window
 
 		_branches.onClickItem.Add(clickItem);
 
-		_branches.itemRenderer = RenderListItem;
 		_branches.EnsureBoundsCorrect();
 
 
@@ -82,9 +81,7 @@ public class SelectionBranchManager : Window
 		changeView (stageIndex);
 	}
 
-	void RenderListItem(int index, GObject obj){
-	
-	}
+
 
 	void clickItem(EventContext context){
 		SelectionBranch item = (SelectionBranch)context.data;

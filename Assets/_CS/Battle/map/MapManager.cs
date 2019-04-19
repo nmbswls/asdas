@@ -256,11 +256,11 @@ public class MapManager : MonoBehaviour
 			}
 			//yield return null;
 		}
-		PlayerPrefs.DeleteAll ();
+
 		if (PlayerPrefs.GetInt ("isFirstBattle", 1) == 1) {
 			LoadMap ("toturial");
 		} else {
-			LoadMap ("map01");
+			LoadMap ("test");
 		}
 
 	}

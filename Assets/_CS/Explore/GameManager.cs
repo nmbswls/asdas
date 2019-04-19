@@ -58,6 +58,8 @@ public class GameManager : Singleton<GameManager> {
 
 		GameStaticData.getInstance ();
 		initUI ();
+		resetStats ();
+
 		lockUI ();
 
 		gridManager.initGrid ();
@@ -65,13 +67,13 @@ public class GameManager : Singleton<GameManager> {
 		_mask.visible = true;
 		_mask.alpha = 1;
 
-		//PlayerData.getInstance().enterNextLevel();
 		_mask.TweenFade(0,1.5f).OnComplete(delegate() {
 			_mask.visible = false;
 			if (PlayerData.getInstance ().guideStage == 0) {
 				GuideManager.getInstance ().showGuideMoveMark (gridManager.getToturialGridPos ());
 			}
 			unlockUI();
+			checkBattleRes ();
 		});
 
 		Time.timeScale = 1;
@@ -93,7 +95,6 @@ public class GameManager : Singleton<GameManager> {
 //		if (Input.GetKeyUp (KeyCode.C)) {
 //			getNewScar (new List<Scar>());
 //		}
-		Debug.Log(Time.timeScale);
 
 	}
 
@@ -201,9 +202,7 @@ public class GameManager : Singleton<GameManager> {
 		enterBattlePanel = new EnterBattlePanel ();
 		getItemManager = new GetItemManager ();
 		itemDetailAmplifier = new ItemDetailAmplifier ();
-		resetStats ();
 
-		checkBattleRes ();
 	}
 
 	void initEncounterDetail(){
@@ -235,6 +234,7 @@ public class GameManager : Singleton<GameManager> {
 		}
 		if (showIdx != -1) {
 			sbManager.initEncounter (einfo.eId,showIdx);
+			sbManager.RequestFocus();
 		}
 		PlayerData.getInstance ().isWaitingBattle = false;
 	}

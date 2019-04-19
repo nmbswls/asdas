@@ -74,10 +74,7 @@ public class MainUIManager : MonoBehaviour
 		_coins2 = _mainView.GetChild ("coins2").asTextField;
 
 
-		updateHp ();
-		updatePotions ();
-		updateCoin ();
-		updateLeftEnemy ();
+
 	}
 
 	void handleMove(EventContext context){

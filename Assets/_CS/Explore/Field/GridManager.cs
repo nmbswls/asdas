@@ -361,7 +361,7 @@ public class GridManager : MonoBehaviour {
 
 		cameraBound[2] = activeArea.bounds.size.x/2;
 		cameraBound[3] = activeArea.bounds.size.y/2;
-
+		mainCamera.transform.position = new Vector3 (0,0,-10);
 		Vector2 cameraBoundInWorld = mainCamera.ScreenToWorldPoint (new Vector3 (mainCamera.pixelWidth, mainCamera.pixelHeight, 0));
 
 		//cameraHalfHeight = mainCamera.pixelHeight / 200f;
