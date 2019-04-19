@@ -26,7 +26,7 @@ public class BallisticBullet : BasicBullet
 	}
 
 
-	public virtual void init(Tower owner, GameLife target, bool isHoming, int vHeight = 0,int height = 0){
+	public virtual void init(Tower owner, GameLife target, bool isHoming = true, SkillState skill = null,int vHeight = 0,int height = 0){
 		this.owner = owner;
 		this.target = target;
 		this.vHeight = vHeight;
@@ -38,6 +38,12 @@ public class BallisticBullet : BasicBullet
 			arriveGround = true;
 		else 
 			arriveGround = false;
+
+		isNormalAtk = true;
+		if (skill != null) {
+			isNormalAtk = false;
+			this.skill = skill;
+		}
 		vOriginHeight = vHeight;
 
 		transform.position = owner.transform.position;
@@ -115,9 +121,13 @@ public class BallisticBullet : BasicBullet
 
 	protected override void applyAtk(GameLife hit){
 		if (owner != null && owner.isActiveAndEnabled) {
-			owner.applyNormalAtk (hit);
+			if (isNormalAtk) {
+				owner.applyNormalAtk (hit);
+				EffectManager.inst.EmitAtkCircleEffect (hit.transform, 3);
+			} else {
+				owner.applyMagicAtk (hit, skill);
+			}
 			//hit.DoDamage (owner.damage,owner.property);
-			EffectManager.inst.EmitAtkCircleEffect (hit.transform,3);
 		}
 		//hit.findclosesr ();
 		Release ();

@@ -121,13 +121,15 @@ public class Tower : MapObject
 		initialized = true;
 	}
 
-	void genBullet(string bulletStyle, GameLife target, bool isHoming, bool isBallistic){
+	void genBullet(string bulletStyle, GameLife target, SkillState skill, bool isHoming, bool isBallistic){
 		int originHeight = 0;
 		if (isBallistic) {
 			originHeight = 5000;
 		}
-		BulletManager.inst.EmitBullet (bulletStyle, this,target,isHoming, originHeight);
+		BulletManager.inst.EmitBullet (bulletStyle, this,target,isHoming, skill,originHeight);
 	}
+
+
 
 
 	//private GameLife atkTarget = null;
@@ -174,7 +176,7 @@ public class Tower : MapObject
 				gainBuff ();
 			} else if (s.tsType == eTowerSkillType.ACTIVE) {
 				if (s.targetType == eAtkType.RANGED_HOMING) {
-					genBullet (s.bulletStyle.bulletName,castTarget,true,false);
+					genBullet (s.bulletStyle.bulletName,castTarget,skill,true,false);
 					castTarget = null;
 				} else if (s.targetType == eAtkType.RANGED_INSTANT) {
 					applyNormalAtk (castTarget,s.bulletStyle.bulletName);
@@ -335,13 +337,13 @@ public class Tower : MapObject
 	void applyHomingRangeAtk(GameLife atkTarget){
 		string bulletStyle = tt.tbase.bulletStyle.bulletName;
 
-		genBullet (bulletStyle,atkTarget,true,false);
+		genBullet (bulletStyle,atkTarget,null,true,false);
 	}
 
 	void applyUnhomingRangeAtk(GameLife atkTarget){
 		string bulletStyle = tt.tbase.bulletStyle.bulletName;
 
-		genBullet (bulletStyle,atkTarget,false,false);
+		genBullet (bulletStyle,atkTarget,null,false,false);
 	}
 
 	void applayMeleeAOE(GameLife atkTarget){
@@ -510,7 +512,8 @@ public class Tower : MapObject
 		int damage = 0;
 		switch (skill.skillId) {
 			case "1004":
-				damage = sinfo.x[lv-1];
+				damage = sinfo.x [lv - 1];
+				//damageEffect = "";
 				break;
 			case "1005":
 				damage = sinfo.x[lv-1];

@@ -38,7 +38,7 @@ public class BulletManager
 //		}
 	}
 
-	public void EmitBullet(string style, Tower owner, GameLife target, bool isHoming, int vHight = 0, int height = 0)
+	public void EmitBullet(string style, Tower owner, GameLife target, bool isHoming = true, SkillState skill = null,int vHight = 0, int height = 0)
 	{
 		GameObject b;
 		if (_componentPool.Count > 0)
@@ -65,7 +65,9 @@ public class BulletManager
 
 		BallisticBullet bullet = b.GetComponent<BallisticBullet> ();
 		bullet.GetComponentInChildren<Animator>().runtimeAnimatorController = animCtrl;
-		bullet.init(owner, target, isHoming, vHight, height);
+
+		bullet.init(owner, target, isHoming, skill,vHight, height);
+
 	}
 
 	public void ReturnComponent(GameObject com)
