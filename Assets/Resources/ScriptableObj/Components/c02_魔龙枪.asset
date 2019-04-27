@@ -16,7 +16,7 @@ MonoBehaviour:
   cdesp: "\u9B54\u9F99\u7684\u4E01\u4E01"
   effects:
   - type: 1
-    extra: 1000
-    x: 0
+    extra: 
+    x: 1000
     y: 0
     z: 0

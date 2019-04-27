@@ -16,7 +16,7 @@ MonoBehaviour:
   cdesp: its watching at you
   effects:
   - type: 2
-    extra: 1
-    x: 12000
-    y: 0
+    extra: 
+    x: 1
+    y: 12000
     z: 0

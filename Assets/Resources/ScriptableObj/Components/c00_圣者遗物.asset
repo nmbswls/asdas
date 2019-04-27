@@ -15,8 +15,8 @@ MonoBehaviour:
   cname: Sacre
   cdesp: '.....???'
   effects:
-  - type: 0
+  - type: 2
     extra: 
-    x: 60
-    y: 0
+    x: 0
+    y: 60000
     z: 0

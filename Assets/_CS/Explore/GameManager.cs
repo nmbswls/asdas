@@ -146,6 +146,9 @@ public class GameManager : Singleton<GameManager> {
 
 		UIObjectFactory.SetPackageItemExtension("ui://UIMain/AccesoryView", typeof(AccesoryView));
 
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/PropertyCompareLine", typeof(PropertyCompareLine));
+		UIObjectFactory.SetPackageItemExtension("ui://UIMain/PropertyModify", typeof(PropertyModify));
+
 
 
 

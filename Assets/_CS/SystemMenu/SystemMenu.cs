@@ -16,12 +16,14 @@ public class SystemMenu : Singleton<SystemMenu> {
 	GTextField _info;
 	GTextField _desp;
 
+	GGraph _mask;
 
 	GMovieClip effect;
 	int choosedHeroIdx = -1;
 
 	// Use this for initialization
 	void Start () {
+		PlayerPrefs.DeleteAll ();
 		UIPackage.AddPackage("FairyGUI/UIMain");
 		UIObjectFactory.SetPackageItemExtension("ui://UIMain/ClickShower", typeof(ShowClickMask));
 		hasSave = PlayerPrefs.GetInt ("hasSave",0);
@@ -37,7 +39,7 @@ public class SystemMenu : Singleton<SystemMenu> {
 		_main_menu.GetChild ("quit").onClick.Add (quit);
 
 		//_main_menu.onClick.Add (OnClick);
-		_main_menu.onTouchBegin.Add (OnClickShow);
+		_main_menu.onClick.Add (OnClickShow);
 		effect = _main_menu.GetChild("effect").asMovieClip;
 //		ShowClickMask _maskLayer = (ShowClickMask)UIPackage.CreateObject ("UIMain", "ClickShower").asCom;
 //		_maskLayer.SetSize(GRoot.inst.width, GRoot.inst.height);
@@ -49,6 +51,9 @@ public class SystemMenu : Singleton<SystemMenu> {
 //		_main_menu.AddChild (mask);
 //		Debug.Log (_main_menu.numChildren);
 //		Debug.Log (mask.position);
+
+		_mask = _main_menu.GetChild ("mask").asGraph;
+
 
 		_newHeroPanel = _main_menu.GetChild ("newHeroPanel").asCom;
 		_info = _newHeroPanel.GetChild ("info").asTextField;
@@ -109,13 +114,17 @@ public class SystemMenu : Singleton<SystemMenu> {
 			}
 			else
 			{
-				float ss = 1 + (1 - dist / obj.width) * 0.36f;
+				//float ss = 1.2f;
+				float ss = 1 + (1 - dist / obj.width) * 0.24f;
 				obj.SetScale(ss, ss);
 			}
 		}
 		
 
 	}
+
+
+
 
 	// Update is called once per frame
 	void Update () {
@@ -147,13 +156,25 @@ public class SystemMenu : Singleton<SystemMenu> {
 
 	void newGame(){
 		
-		if (hasSave>0) {
-			_main_menu.GetTransition ("withLoad").Play (onComplete: chooseHero);
-		} else {
-			_main_menu.GetTransition ("withoutLoad").Play (onComplete: chooseHero);
-		}
+//		if (hasSave>0) {
+//			_main_menu.GetTransition ("withLoad").Play (onComplete: chooseHero);
+//		} else {
+//			_main_menu.GetTransition ("withoutLoad").Play (onComplete: chooseHero);
+//		}
+		heiping ();
 	}
 
+
+	public void heiping(){
+		_mask.visible = true;
+		_mask.alpha = 0;
+		_mask.TweenFade (0.8f, 1.5f).OnComplete (delegate() {
+			chooseHero();
+			_mask.TweenFade(0,0.5f).OnComplete(delegate() {
+				_mask.visible = false;	
+			});
+		});
+	}
 
 
 	private AsyncOperation async = null;
