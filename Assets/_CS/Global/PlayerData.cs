@@ -266,13 +266,13 @@ public class PlayerData
 			tt.tbase = tb;
 			ownedTowers.Add (tt);
 		}
-		{
-			TowerTemplate tt = new TowerTemplate ();
-			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t04");
-
-			tt.tbase = tb;
-			ownedTowers.Add (tt);
-		}
+//		{
+//			TowerTemplate tt = new TowerTemplate ();
+//			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t04");
+//
+//			tt.tbase = tb;
+//			ownedTowers.Add (tt);
+//		}
 		{
 			TowerTemplate tt = new TowerTemplate ();
 			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t05");
@@ -311,6 +311,13 @@ public class PlayerData
 		{
 			TowerTemplate tt = new TowerTemplate ();
 			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t11");
+
+			tt.tbase = tb;
+			ownedTowers.Add (tt);
+		}
+		{
+			TowerTemplate tt = new TowerTemplate ();
+			TowerBase tb = GameStaticData.getInstance ().getTowerBase ("t20");
 
 			tt.tbase = tb;
 			ownedTowers.Add (tt);

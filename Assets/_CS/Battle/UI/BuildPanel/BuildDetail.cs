@@ -56,8 +56,8 @@ public class BuildDetail : GComponent
 		_name = this.GetChild ("name").asTextField;
 		_cost_panel = this.GetChild ("cost").asCom;
 		_cost1 = _cost_panel.GetChild ("cost1").asTextField;
-		_cost2 = _cost_panel.GetChild ("cost1").asTextField;
-		_cost3 = _cost_panel.GetChild ("cost1").asTextField;
+		_cost2 = _cost_panel.GetChild ("cost2").asTextField;
+		_cost3 = _cost_panel.GetChild ("cost3").asTextField;
 
 		_hit = this.GetChild ("hit").asTextField;
 		_range = this.GetChild ("range").asTextField;
@@ -91,7 +91,7 @@ public class BuildDetail : GComponent
 		}
 
 		int atkInteval = tb.towerModel.atkInterval;
-		_range.text = getAtkSpdTxt (atkInteval);
+		_spd.text = getAtkSpdTxt (atkInteval);
 
 
 
