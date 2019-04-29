@@ -96,7 +96,8 @@ public class GridManager : MonoBehaviour {
 			}
 		}
 		mainCamera.transform.position = startPos;
-
+		isMovingMap = false;
+		isContinueMovingMap = false;
 
 	}
 
